@@ -1,0 +1,56 @@
+<form autocomplete="off" onsubmit="event.preventDefault();">
+    {{! Skill Selection }}
+    <label>{{localize "fantasycraft.skillSelection"}}</label>
+    <div>
+        <select class="change-skill-selection" name="signatureSkills">
+            {{#select system.signatureSkills}}
+                {{selectOptions choices selected=(lookup (lookup skills 0) 'skillName') localize=true}}
+            {{/select}}
+        </select>
+        <select class="change-skill-grade" name="signatureSkills" selected="V">
+            {{selectOptions grades selected=(lookup (lookup skills 0) 'skillGrade') localize=true}}
+        </select>
+    </div>
+    <div>
+        <select class="change-skill-selection" name="signatureSkills">
+            {{#select system.signatureSkills}}
+                {{selectOptions choices selected=(lookup (lookup skills 1) 'skillName') localize=true}}
+            {{/select}}
+        </select>
+        <select class="change-skill-grade" name="signatureSkills" selected="V">
+            {{selectOptions grades selected=(lookup (lookup skills 1) 'skillGrade')}}
+        </select>
+    </div>
+    <div>
+        <select class="change-skill-selection" name="signatureSkills">
+            {{#select system.signatureSkills}}
+                {{selectOptions choices selected=(lookup (lookup skills 2) 'skillName') localize=true}}
+            {{/select}}
+        </select>
+        <select class="change-skill-grade" name="signatureSkills" selected="V">
+            {{selectOptions grades selected=(lookup (lookup skills 2) 'skillGrade')}}
+        </select>
+    </div>
+    <div>
+        <select class="change-skill-selection" name="signatureSkills">
+            {{#select system.signatureSkills}}
+                {{selectOptions choices selected=(lookup (lookup skills 3) 'skillName') localize=true}}
+            {{/select}}
+        </select>
+        <select class="change-skill-grade" name="signatureSkills" selected="V">
+            {{selectOptions grades selected=(lookup (lookup skills 3) 'skillGrade')}}
+        </select>
+    </div>
+    <div>
+        <select class="change-skill-selection" name="signatureSkills">
+            {{#select system.signatureSkills}}
+                {{selectOptions choices selected=(lookup (lookup skills 4) 'skillName') localize=true}}
+            {{/select}}
+        </select>
+        <select class="change-skill-grade" name="signatureSkills" selected="V">
+            {{selectOptions grades selected=(lookup (lookup skills 4) 'skillGrade')}}
+        </select>
+    </div>
+
+    <button class="submit" type="submit"><i class="far fa-save"></i> {{ localize "fantasycraft.traitSave"}}</button>
+</form>

@@ -1,0 +1,51 @@
+<form class="{{cssClass}} item-form flexcol" autocomplete="off">
+
+    {{!-- Item Sheet Header --}}
+    <header class="itemHeader">
+        <h1 class="itemName flexrow">
+            <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'fantasycraft.ItemName' }}"/>
+        </h1>
+        <div class="item-subtitle flexrow">
+            <input name="system.flavorText" type="text" value="{{item.system.flavorText}}" placeholder="{{ localize 'fantasycraft.flavorText' }}"/>
+        </div>
+
+        <div class="flexrow">
+            <ul class="flexrow">
+                <li>
+                    <select name="system.featType"> 
+                        {{#select item.system.featType}}
+                            {{#each config.featType as |name type|}}
+                                <option value="{{name}}">{{localize name}}</option>
+                            {{/each}}
+                        {{/select}}
+                    </select>
+                </li>
+                <li>
+                    <input type="text" name="system.prerequisites" value="{{item.system.prerequisites}}" placeholder="{{ localize 'fantasycraft.prerequisite' }}"/>
+                </li>
+                <li>
+                    <input type="text" name="system.source" value="{{item.system.source}}" placeholder="{{ localize 'fantasycraft.source' }}"/>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    {{!-- Item Sheet Navigation --}}
+    <nav class="sheet-navigation sheet-tabs" data-group="primary">
+        <a class="item active" data-tab="description">{{ localize "fantasycraft.description" }}</a>
+        <a class="item" data-tab="details">{{ localize "fantasycraft.details" }}</a>
+    </nav>
+
+    {{!-- Item Sheet Body --}}
+    <section class="sheet-body">
+        {{!-- Description Tab --}}
+        <div class="tab attributes flexrow" data-group="primary" data-tab="description">
+            {{> "systems/fantasycraft/templates/items/parts/item-description.handlebars"}}
+        </div>
+        
+        {{!-- Details Tab --}}
+        <div class="tab attributes flexrow" data-group="primary" data-tab="details">
+            {{> "systems/fantasycraft/templates/items/parts/details.handlebars"}}
+        </div>
+    </section>
+</form>

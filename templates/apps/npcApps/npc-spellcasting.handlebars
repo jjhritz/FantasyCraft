@@ -1,0 +1,27 @@
+<form autocomplete="off" onsubmit="event.preventDefault();">
+{{! Spellcasting grade dropdown}}
+    <div>
+        <label>{{localize "fantasycraft.spellcasting"}}: </label>
+        <select class="change-spell-grade" name="spellGrade">
+            {{selectOptions grades selected=(lookup choices 'grade') }}
+        </select>
+    </div>
+
+    <section>
+        {{#each spells as |spell id|}}
+            <div class="item ownedItem item-card flexrow" data-item-id="{{_id}}" data-item-name="{{spell.name}}">
+                <span class="flex5">{{spell.name}}</span>
+                <span>
+                    <a class="editItem">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a class="deleteItem">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </span>
+            </div>
+        {{/each}}
+    </section>
+
+    <button class="submit" type="submit"><i class="far fa-save"></i> {{ localize "fantasycraft.traitSave"}}</button>
+</form>

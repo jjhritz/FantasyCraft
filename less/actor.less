@@ -1,0 +1,345 @@
+@import  "./variables.less";
+
+.fantasycraft.sheet.actor {
+    min-width: 756px;
+    min-height: 680px;
+
+    //// Sheet Header ////
+    .sheet-header
+    {
+        .attributes {
+            flex: 0 0 100%;
+            margin: 0;
+        
+            .attribute {
+                height: 70px;
+                border: none;
+                border-left: @borderGroove;
+                border-radius: 0;
+            }
+        }
+
+        .summary {
+            height: 30px;
+            border-bottom: @borderGroove;
+            font-size: 18px;
+            input, span {
+            display: block;
+            height: 24px;
+            line-height: 24px;
+            }
+        }  
+    }
+
+
+    //// Sheet Attributes ////
+    ul.attributes {
+    flex: 0 0 60px;
+    margin: 0;
+    padding: 0;
+
+        li.attribute 
+        {
+            .attribute-value 
+            {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 28px;
+                line-height: 28px;
+                .title-font ();
+
+                > * 
+                {
+                    text-align: center;
+                    font-weight: 400;
+                    font-size: 24px;
+                }
+                
+                &.multiple input 
+                {
+                    flex: 0 0 33%;
+                }
+
+                input
+                {
+                    text-align: center;
+                    border: none;
+                    border-bottom: 2px solid #000000;
+                    background-color: hsla(0%,0%, 0%, 0);
+                }
+
+            }
+            .button
+            {
+                width: 100%;
+                text-align: center;
+                a 
+                {
+                    display: inline-block;
+                    font-size: 16px;
+                    border: 1px solid #b5b3a4;
+                    border-radius: 2px;
+                    margin: 3px;
+                    padding: 0 2px;
+                    width: 90px;
+                    height: 22px;
+                    background-color: #ffffff;
+                }
+            }
+            
+            .roll
+            {
+                text-align: center;
+                max-height: 18px;
+            }
+        }
+    }
+
+    .footer-text 
+    {
+        flex: 0 0 18px;
+        margin-top: -1px;
+        line-height: 18px;
+        font-family: "Signika", sans-serif;
+        font-size: 12px;
+        font-weight: 400;  
+        text-align: center;
+
+        .flatfooted-input input
+        {
+            width: 20px;
+            height: 15px;
+            background-color: hsla(0%,0%, 0%, 0);
+            border: none;
+            border-bottom: 1px solid #97958d;
+        }
+    }
+
+    .tab.attributes {
+    overflow: hidden;
+    }  
+
+    .tab.spellcasting {
+    overflow-y: hidden; 
+    }
+
+    .sheet-body .tab {
+    padding: 0 5px;
+    overflow: hidden auto;
+    }
+
+    ul.ability-scores {
+        padding: 0px;
+        min-height: 260px; 
+
+        li.ability 
+        {
+            max-width: 240px;
+            line-height: 40px;
+            input 
+            {
+                border: 3px solid white;
+                height: 60px;
+                max-width: 60px;
+                text-align: center;
+                background-color: #444;
+                font-family: arial;
+                font-size: 20px;
+                color: white;
+            }
+        }
+
+        li.mod
+        {
+            input{
+                border: 3px solid white;
+                height: 40px;
+                max-width: 40px;
+                text-align: center;
+                background-color: #444;
+                font-family: arial;
+                font-size: 20px;
+                color: white;
+            }
+        }
+
+    }
+
+    h4.skill-name{
+    min-width: 95px;
+    max-width: 105px;
+    }
+
+    table
+    {
+        tr td input.skill-input 
+        {
+            min-width: 28px;
+        }
+    }
+    ul.skills{
+        -webkit-column-count: 2; /* Chrome, Safari, Opera */
+        -moz-column-count: 2; /* Firefox */
+        column-count: 2;
+        width: 100%;
+        min-width: 28px;
+
+        li.skill input.skill-input 
+        {
+            min-width: 28px;
+        }
+    }
+
+    .skill-container{
+    -webkit-column-count: 2; /* Chrome, Safari, Opera */
+    -moz-column-count: 2; /* Firefox */
+    column-count: 2;
+    }
+    .skill-title{
+        font-size: 10px;
+        font-weight: 100;
+    }
+
+    .checkbox,
+    .ul .li .checkbox
+    {
+        width: 12px;
+        margin: 0px;
+    }
+
+    .med-checkbox,
+    .ul .li .checkbox
+    {
+        width: 15px;
+        margin: 0px;
+        vertical-align: middle;
+    }
+
+    .traits 
+    {
+        .form-group, .form-group-stacked 
+        {
+            margin: 0 0 3px 0;
+            justify-content: space-between;
+        }
+        .configure-flags 
+        {
+            flex: 1;
+        }
+
+        label 
+        {
+            flex: none;
+            line-height: 20px;
+            font-weight: bold;
+            margin: 0 10px 0 0;
+        }
+
+        select 
+        {
+            max-width: 200px;
+        }
+
+        input 
+        {
+            text-align: right;
+        }
+
+        i.fas 
+        {
+            float: right;
+            margin-right: 3px;
+            text-align: right;
+            color: #999;
+
+            &:hover 
+            {
+                color: #111;
+                text-shadow: 0 0 10px red;
+            }
+        }
+
+    }
+
+    .category-label 
+    {
+        flex: 0 0 100%;
+        background-color: maroon;
+        color: white;
+        text-align: center;
+        font-size: 16px;
+        margin-bottom: 0px;
+        text-transform: uppercase;
+    }
+
+    .category-body
+    {
+        margin-top: 0px;
+        padding: 5px;
+        border-left: 1px groove lightgray;
+        min-height: 110px;
+    }
+
+    input.calcBox
+    {
+        background: white;
+
+        &:disabled
+        {
+            background: rgb(216, 216, 216);
+            border-color: black;
+            text-align: center;
+            margin: auto;      
+        }
+    }
+    input.largeBox
+    {
+    height: 30px;
+    width: 30px;
+    border-radius: 2px;
+    font-weight: 300;
+    font-size: 16px;
+    }
+    input.wideBox
+    {
+        height: 20px;
+        width: 27px;
+        border-radius: 1px;
+        font-weight: 200;
+        font-size: 12px;
+    }
+    input.smallBox
+    {
+        height: 20px;
+        min-width: 20px;
+        max-width: 27px;
+        border-radius: 1px;
+        font-weight: 200;
+        font-size: 12px;
+    }
+
+    li.centreItems
+    {
+        height: 50px;
+        line-height: 20px;
+        text-align: center;
+        vertical-align: text-bottom;
+    }
+
+    .feature-list
+    {
+        min-height: 52px;
+        border: 3px outset lightgray;
+        border-radius: 2px;
+    }
+
+    .ownedItem
+    {
+        border: 3px outset lightgray;
+        padding: 2px;
+        border-radius: 2px;
+        background:#efe;
+        height: 26px;
+    }
+}

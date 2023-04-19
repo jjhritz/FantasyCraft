@@ -1,0 +1,26 @@
+{{!-- Magic effects--}}
+<div>
+    {{! Item level and a selector for if it is 1 handed, 2 handed, armour, or none of the above, finally the total reputation cost}}
+    <section>
+        <div>{{localize "fantasycraft.itemLevel"}}
+            <input type="number" class="mediumField" name="system.itemLevel" min="1" max="20" value="{{item.system.itemLevel}}"/>
+            {{#compare item.type "armour" operator="!="}}
+            {{localize "fantasycraft.reputationAdjustment"}}
+            <select name="system.type">
+            {{#select item.system.type}}
+                <option value="0">{{localize "fantasycraft.none"}}</option>
+                <option value="5">{{localize "fantasycraft.oneHanded"}}</option>
+                <option value="10">{{localize "fantasycraft.twoHanded"}}</option>
+                <option value="20">{{localize "fantasycraft.stationary"}}</option>
+            {{/select}}
+            </select>
+            {{/compare}}
+            {{localize "fantasycraft.totalReputationCost"}}: <input type="number" class="mediumField" name="system.totalReputation" value="{{item.system.totalReputation}}"/> </div>
+    </section>
+    <section>
+        {{> "systems/fantasycraft/templates/items/parts/charms.hbs"}}
+    </section>
+    <section>
+        {{> "systems/fantasycraft/templates/items/parts/essences.hbs"}}
+    </section>
+</div>

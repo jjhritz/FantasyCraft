@@ -1,0 +1,119 @@
+{{#compare step.effect1 "other" operator="=="}}
+    {{step.value1}}
+{{/compare}}
+
+{{#compare step.effect1 "resistances" operator="=="}}
+    {{localize "fantasycraft.Dialog.youGain"}} {{localize step.damageType1}} {{localize "fantasycraft.resistance"}} {{step.value1}}
+    {{#compare step.effect1Scaling "false" operator="=="}}
+    {{localize "fantasycraft.Dialog.equalToPathStep"}}
+    {{/compare}}
+{{/compare}}
+
+
+{{#compare step.effect1 "spell" operator="=="}}
+    {{localize "fantasycraft.Dialog.youMayCast"}} {{localize step.value1}} 
+    {{#compare step.spell1Reset "atWill" operator="=="}}
+    {{localize "fantasycraft.atWill"}}
+    {{/compare}}
+    {{#compare step.spell1Reset "perScene" operator="=="}}
+    {{localize "fantasycraft.once"}} {{localize "fantasycraft.perScene"}}
+    {{/compare}}
+    {{#compare step.spell1Reset "perAdventure" operator="=="}}
+    {{localize "fantasycraft.once"}} {{localize "fantasycraft.perAdventure"}}
+    {{/compare}}
+{{/compare}}
+
+
+{{#compare step.effect1 "feat" operator="=="}}
+    {{localize "fantasycraft.Dialog.youGain"}} {{localize "fantasycraft.the"}} {{step.value1}} {{localize "fantasycraft.feat"}}
+{{/compare}}
+
+
+{{#compare step.effect1 "skillBonus" operator="=="}}
+    {{localize "fantasycraft.Dialog.youGain"}} +{{step.value1}} {{localize "fantasycraft.with"}} {{step.target1}} {{localize "fantasycraft.skillChecks"}}
+{{/compare}}
+
+
+{{#compare step.effect1 "damageBonus" operator="=="}}
+    {{localize "fantasycraft.Dialog.youGain"}} +{{step.value1}} {{localize "fantasycraft.Dialog.bonusToDamage"}}
+    {{#compare step.effect1Scaling "true" operator="=="}}
+    {{localize "fantasycraft.Dialog.equalToPathStep"}}
+    {{/compare}}
+{{/compare}}
+
+
+{{#compare step.effect1 "damageImmunity" operator="=="}}
+    {{localize "fantasycraft.Dialog.youGain"}} {{localize step.damageType1}} {{localize "fantasycraft.immunity"}}
+{{/compare}}
+
+
+{{#compare step.effect1 "speedBonus" operator="=="}}
+    {{localize "fantasycraft.Dialog.yourMovementSpeedIncreases"}} {{step.value1}} {{localize "fantasycraft.ft"}}
+{{/compare}}
+
+
+{{#compare step.effect1 "saveBonus" operator="=="}}
+    {{localize "fantasycraft.Dialog.youGain"}} +{{step.value1}} {{localize "fantasycraft.with"}} {{step.target1}} {{localize "fantasycraft.saves"}}
+{{/compare}}
+
+{{#compare step.effect2 "" operator="!="}}
+    {{localize "fantasycraft.and"}}
+{{/compare}}
+
+{{#compare step.effect2 "other" operator="=="}}
+    {{step.value2}}
+{{/compare}}
+
+{{#compare step.effect2 "resistances" operator="=="}}
+    {{localize "fantasycraft.Dialog.youGain"}} {{localize step.damageType2}} {{localize "fantasycraft.resistance"}} {{step.value2}}
+    {{#compare step.effect2Scaling "false" operator="=="}}
+    {{localize "fantasycraft.Dialog.equalToPathStep"}}
+    {{/compare}}
+{{/compare}}
+
+
+{{#compare step.effect2 "spell" operator="=="}}
+    {{localize "fantasycraft.Dialog.youMayCast"}} {{localize step.value2}}
+    {{#compare step.spell2Reset "atWill" operator="=="}}
+    {{localize "fantasycraft.atWill"}}
+    {{/compare}}
+    {{#compare step.spell2Reset "perScene" operator="=="}}
+    {{localize "fantasycraft.once"}} {{localize "fantasycraft.perScene"}}
+    {{/compare}}
+    {{#compare step.spell2Reset "perAdventure" operator="=="}}
+    {{localize "fantasycraft.once"}} {{localize "fantasycraft.perAdventure"}}
+    {{/compare}}
+{{/compare}}
+
+
+{{#compare step.effect2 "feat" operator="=="}}
+    {{localize "fantasycraft.Dialog.youGain"}} {{localize "fantasycraft.the"}} {{step.value2}} {{localize "fantasycraft.feat"}}
+{{/compare}}
+
+
+{{#compare step.effect2 "skillBonus" operator="=="}}
+    {{localize "fantasycraft.Dialog.youGain"}} +{{step.value2}} {{localize "fantasycraft.with"}} {{step.target2}} {{localize "fantasycraft.skillChecks"}}
+{{/compare}}
+
+
+{{#compare step.effect2 "damageBonus" operator="=="}}
+    {{localize "fantasycraft.Dialog.youGain"}} +{{step.value2}} {{localize "fantasycraft.Dialog.bonusToDamage"}}
+    {{#compare step.effect2Scaling "true" operator="=="}}
+    {{localize "fantasycraft.Dialog.equalToPathStep"}}
+    {{/compare}}
+{{/compare}}
+
+
+{{#compare step.effect2 "damageImmunity" operator="=="}}
+    {{localize "fantasycraft.Dialog.youGain"}} {{localize step.damageType2}} {{localize "fantasycraft.immunity"}}
+{{/compare}}
+
+
+{{#compare step.effect2 "speedBonus" operator="=="}}
+    {{localize "fantasycraft.Dialog.yourMovementSpeedIncreases"}} {{step.value2}} {{localize "fantasycraft.ft"}}
+{{/compare}}
+
+
+{{#compare step.effect2 "saveBonus" operator="=="}}
+    {{localize "fantasycraft.Dialog.youGain"}} +{{step.value2}} {{localize "fantasycraft.with"}} {{step.target2}} {{localize "fantasycraft.saves"}}
+{{/compare}}

@@ -1,0 +1,310 @@
+<form class="{{cssClass}} item-form flexcol" autocomplete="off">
+    {{!-- Item Sheet Header --}}
+    <header class="sheet-header flexrow">
+        <img class="profile-left" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
+
+        <div class="header-details flexcol">
+            <h1 class="charname">
+                <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'fantasycraft.itemName' }}"/>
+            </h1>
+
+            <ul class="summary flexrow">
+                <li>
+                    <span>{{item.system.armourCoverage}} {{item.type}}</span>          
+                </li>
+                <li>
+                    <input type="text" name="system.source" value="{{item.system.source}}" placeholder="{{ localize 'fantasycraft.Source' }}"/>
+                </li>
+            </ul>
+            {{!-- Item Sheet Navigation --}}
+            <nav class="sheet-navigation sheet-tabs" data-group="primary">
+                <a class="item active" data-tab="description">{{ localize "fantasycraft.description" }}</a>
+                <a class="item" data-tab="details">{{ localize "fantasycraft.details" }}</a>
+                {{#if item.system.isMagic}}
+                    <a class="item" data-tab="effects">{{ localize "fantasycraft.magic" }}</a>
+                {{/if}}
+            </nav>
+
+        </div>
+    </header>
+
+
+    {{!-- Item Sheet Body --}}
+    <section class="sheet-body">
+
+        {{!-- Description Tab --}}
+        <div class="tab attributes flexrow" data-group="primary" data-tab="description">
+            <div class="flexcol">
+            <table class="item-table">
+              <tr>
+                  <th> {{ localize 'fantasycraft.dr'}} </th>
+                  <th> {{ localize 'fantasycraft.resistances'}} </th>
+                  <th> {{ localize 'fantasycraft.dp'}} </th>
+                  <th> {{ localize 'fantasycraft.acp'}} </th>
+                  <th> {{ localize 'fantasycraft.speed'}} </th>
+                  <th> {{ localize 'fantasycraft.disguise'}} </th>
+                  <th> {{ localize 'fantasycraft.const'}} </th>
+                  <th> {{ localize 'fantasycraft.comp'}} </th>
+                  <th> {{ localize 'fantasycraft.weight'}} </th>
+                  <th> {{ localize 'fantasycraft.era'}} </th>
+                  <th> {{ localize 'fantasycraft.cost'}} </th>
+              </tr>
+              <tr class="table-item">
+                  <td class="table-item"> <span>{{item.system.damageReduction}}</span> </td>
+                  <td class="table-item"> 
+                    <span>
+                    {{#each item.system.resistances as |object key|}} 
+                    {{#compare object.value '0' operator="!="}}
+                        {{object.name}} {{object.value}}
+                    {{/compare}}
+                    {{/each}}
+                    </span>
+                </td> 
+			      <td class="table-item"> <span>{{item.system.defensePenalty}}</span> </td>
+                  <td class="table-item"> <span>{{item.system.armourCheckPenalty}}</span> </td>
+			      <td class="table-item"> <span>{{item.system.speedPenalty}}</span> </td>
+			      <td class="table-item"> <span>{{item.system.disguisePenalty}}</span> </td>
+                  <td class="table-item"> <span>{{item.system.construction.hardness}} {{item.system.construction.saveNumbers}} </span></td>
+                  <td class="table-item"> <span>{{item.system.complexity.number}}{{item.system.complexity.time}} </span></td>
+                  <td class="table-item"> <span>{{item.system.weight}} {{localize "fantasycraft.lbs"}} </span></td>
+                  <td class="table-item"> <span>{{item.system.era}} </span></td>
+                  <td class="table-item"> <span>{{item.system.cost}} {{item.system.currency}} </span></td>
+              </tr>
+            </table>
+            
+            <table class="flexrow">
+              <tr>
+                  <th> {{ localize 'fantasycraft.upgrades'}} </th>
+              </tr>
+              <tr>
+                {{#each config.armourCustomizations as |name id|}}
+                  {{#if  (lookup ../data.upgrades id)}}
+                    <td><span>{{localize name}} {{lookup ../data.upgrades id}}</span></td>
+                  {{/if}}
+                {{/each}}
+                {{#each config.armourUpgrades as |name id|}}
+                  {{#if  (lookup ../data.upgrades id)}}
+                    <td><span>{{localize name}}</span></td>
+                  {{/if}}
+                {{/each}}
+              </tr>
+          </table>
+          </div>
+        </div>
+        {{!-- Details Tab --}}
+        <div class="tab details" data-group="primary" data-tab="details">
+            <h3 class="form-header">{{ localize "fantasycraft.armourDetails" }}</h3>
+
+            <div class="two-column">
+                {{!-- Equipment Type --}}
+                <div class="form-group item-customization-section">
+                    <div>
+                        <label>{{ localize "fantasycraft.armourCoverage" }}</label>
+                        <select name="system.armourCoverage">
+                            {{#select item.system.armourCoverage}}
+                            {{#each config.armourCoverage as |name type|}}
+                                <option value="{{type}}">{{localize name}}</option>
+                            {{/each}}
+                            {{/select}}
+                        </select>
+                    </div>
+                </div>
+
+                {{!-- Equipment Status --}}
+                <div class="form-group item-customization-section">
+                    <div>
+                        <label>{{ localize "fantasycraft.armourStatus" }}</label>
+                        <label class="checkbox">
+                            <input type="checkbox" name="system.equipped" {{checked item.system.equipped}}/> {{ localize "fantasycraft.equipped" }}
+                        </label>
+                        <label class="checkbox">
+                            <input type="checkbox" name="system.identified" {{checked item.system.identified}}/> {{ localize "fantasycraft.identified" }}
+                        </label>
+                    </div>
+                </div>
+
+                {{!-- Damage Reduction --}}
+                <div class="form-group item-customization-section">
+                    <div>
+                        <label>{{ localize "fantasycraft.dr" }}</label>
+                        <div class="form-fields">
+                            <input class="narrowField" style="text-align: right" type="text" name="system.damageReduction" value="{{item.system.damageReduction}}" data-dtype="Number"/>
+                        </div>
+                    </div>
+                </div>
+
+                {{! Resistances }}
+                <div class="form-group item-customization-section">
+                    <div>
+                        <a class="armour-resistances" data-options="damageResistanceArmour" data-target="system.resistances"><label>{{ localize "fantasycraft.resistances" }}</label></a>
+                    </div>
+                </div>
+
+                {{!-- Defense Penalty --}}
+                <div class="form-group item-customization-section">
+                    <div>
+                        <label>{{ localize "fantasycraft.defensePenalty" }}</label>
+                        <div class="form-fields">
+                            <input class="narrowField" style="text-align: right" type="text" name="system.defensePenalty" value="{{item.system.defensePenalty}}" data-dtype="Number" placeholder=0 />
+                        </div>
+                    </div>
+                </div>
+
+                {{!-- ACP --}}
+                <div class="form-group item-customization-section">
+                    <div>
+                        <label>{{ localize "fantasycraft.acp" }}</label>
+                        <div class="form-fields">
+                            <input class="narrowField" style="text-align: right" type="text" name="system.armourCheckPenalty" value="{{item.system.armourCheckPenalty}}" data-dtype="Number" placeholder=0 />
+                        </div>
+                    </div>
+                </div>
+
+                {{!-- Disguise --}}
+                <div class="form-group item-customization-section">
+                    <div>
+                        <label>{{ localize "fantasycraft.disguise" }}</label>
+                        <input class="mediumField" type="text" name="system.disguisePenalty" value="{{item.system.disguisePenalty}}" placeholder=0 />
+                    </div>
+                </div>
+
+                {{!-- Speed Penalty --}}
+                <div class="form-group item-customization-section">
+                    <div>
+                        <label>{{ localize "fantasycraft.speedPenalty" }}</label>
+                        <input class="narrowField" type="number" name="system.speedPenalty" value={{item.system.speedPenalty}} data-dtype="Number" placeholder=0 />
+                    </div>
+                </div>
+
+                {{!-- Complexity --}}
+                <div class="form-group item-customization-section">
+                    <div>
+                        <label>{{ localize "fantasycraft.comp" }}</label>
+                        <input type="number" class="narrowField" name="system.complexity.number" value="{{item.system.complexity.number}}" placeholder="10"/> 
+                        <input type="text" class="narrowField" name="system.complexity.time" value="{{item.system.complexity.time}}" placeholder="D"/>
+                    </div>
+                </div>
+
+                {{!-- Construction --}}
+                <div class="form-group item-customization-section">
+                    <div>
+                        <label>{{ localize "fantasycraft.const" }}</label>
+                        <input type="text" class="mediumField" name="system.construction.hardness" value="{{item.system.construction.hardness}}" placeholder="Hard"/>
+                        <input type="number" class="narrowField" name="system.construction.saveNumbers" value="{{item.system.construction.saveNumbers}}" placeholder="2"/>
+                    </div>
+                </div>
+                
+                {{!-- Weight --}}
+                <div class="form-group item-customization-section">
+                    <div>
+                        <label>{{ localize "fantasycraft.weight" }}</label>
+                        <input class="narrowField" type="number" name="system.weight" value={{item.system.weight}} data-dtype="Number" placeholder=0 />
+                    </div>
+                </div>
+                
+                {{!-- Era --}}
+                <div class="form-group item-customization-section">
+                    <div>
+                        <label>{{ localize "fantasycraft.era" }}</label>
+                        <select name="system.era">
+                            {{#select item.system.era}}
+                                {{#each config.eras as |name type|}}
+                                    <option value="{{type}}">{{localize type}}</option>
+                                {{/each}}
+                            {{/select}}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group item-customization-section">
+                    <div>
+                        <label>{{ localize "fantasycraft.fittings" }}</label>
+                        <div>
+                            <input style="margin: 0px;" type="checkbox" name="system.fittings" {{checked item.system.fittings}}/>
+                            {{#if item.system.fittings}}
+                                <select name="system.upgrades.fittings">
+                                {{#select item.system.upgrades.fittings}}
+                                    <option value="light">{{localize "fantasycraft.light"}}</option>
+                                    <option value="heavy">{{localize "fantasycraft.heavy"}}</option>
+                                {{/select}}
+                                </select>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+                
+                {{!-- Cost --}}
+                <div class="form-group item-customization-section">
+                    <div>
+                        <label>{{ localize "fantasycraft.cost" }}</label>
+                        <input class="mediumField" type="number" name="system.cost" value={{item.system.cost}} data-dtype="Number" placeholder=0 />
+                        <select name="system.currency">
+                            {{#select item.system.currency}}
+                            <option value="Silver">{{localize "fantasycraft.silver"}}</option>
+                            <option value="Reputation">{{localize "fantasycraft.reputation"}}</option>
+                            {{/select}}
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            {{!upgrades}}
+            <section class="flexrow">
+                <div>
+                    <div class="form-group item-upgrades">
+                        <label>{{localize "fantasycraft.customization"}}</label>
+                    </div>
+                    <div>
+                        <select name="system.upgrades.craftsmanship">
+                            {{#select item.system.upgrades.craftsmanship}}
+                                <option value="none">{{localize "fantasycraft.none"}}</option>
+                                {{#each config.customizations as |name type|}}
+                                    <option value="{{name}}">{{localize type}}</option>
+                                {{/each}}
+                            {{/select}}
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <div class="form-group item-upgrades">
+                        <label>{{localize "fantasycraft.materials"}}</label>
+                    </div>
+                    <div>
+                        <select name="system.upgrades.materials">
+                            {{#select item.system.upgrades.materials}}
+                                <option value="none">{{localize "fantasycraft.none"}}</option>
+                                {{#each config.materials as |name type|}}
+                                    <option value="{{name}}">{{localize type}}</option>
+                                {{/each}}
+                            {{/select}}
+                        </select>
+                    </div>
+                </div>
+                {{!-- Magical Check --}}
+                <div>
+                    <div class="form-group item-upgrades">
+                        <label style="flex:0 0 100%;">{{ localize "fantasycraft.magic" }}</label>
+                        <label class="checkbox">
+                            <input type="checkbox" name="system.isMagic" {{checked item.system.isMagic}}/> {{localize "fantasycraft.isMagic"}}
+                        </label>
+                    </div>
+                </div>
+            </section>
+            <section>
+                {{!-- Armour Upgrades --}}
+                <div class="form-group item-upgrades">
+                    <label style="flex:0 0 100%;">{{ localize "fantasycraft.upgrades" }}</label>
+                    {{#each config.armourUpgrades as |name id|}}
+                    <label class="checkbox">
+                        <input type="checkbox" name="system.upgrades.{{id}}" {{checked (lookup ../item.system.upgrades id)}}/> {{ id }}
+                    </label>
+                    {{/each}}
+                </div>
+            </section>
+        </div>
+
+        <div class="tab attributes flexrow" data-group="primary" data-tab="effects">
+            {{> "systems/fantasycraft/templates/items/parts/effects.handlebars"}}
+        </div>
+    </section>
+</form>

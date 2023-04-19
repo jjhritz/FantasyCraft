@@ -1,0 +1,188 @@
+<form class="{{cssClass}}" autocomplete="off">
+    <header></header>
+    <div class="flexrow">
+        {{!-- Class Image --}}
+        <div style="max-width: 300px">
+            <img class="classPicture" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
+        </div>
+        <div class="flexcol">
+            {{!-- Class Name --}}
+            <div class="flex1">
+                <h1><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+            </div>
+            {{!-- Navigation Buttons --}}
+            <nav class="sheet-navigation sheet-tabs flex1" data-group="primary">
+                <a class="item active" data-tab="class-features">{{ localize "fantasycraft.features" }}</a>
+                <a class="item" data-tab="class-abilities">{{ localize "fantasycraft.abilities" }}</a>
+                <a class="item" data-tab="class-settings">{{ localize "fantasycraft.settings" }}</a>
+            </nav>
+            <section class="sheet-body" style="flex: 18">
+                {{!-- Features Tab --}}
+                <div class="tab attributes flexcol" data-group="primary" data-tab="class-features">
+                    {{editor item.system.description.value target="system.description.value" button=true owner=owner editable=editable}}
+                </div>
+                {{!-- Abilities Tab --}}
+                <div class="tab attributes flexrow" data-group="primary" data-tab="class-abilities">
+                    {{{editor item.system.abilities target="system.abilities" button=true owner=owner editable=editable}}}
+                </div>
+                {{!-- Class Settings Tab --}}
+                <div class="tab attributes flexcol" data-group="primary" data-tab="class-settings">
+                    <div class="flexrow">
+                        {{!-- Table to set the classes numerical progression --}}
+                        <table>
+                            <tr>
+                                <th>{{localize "fantasycraft.vitality"}}</th>
+                                <th>{{localize "fantasycraft.proficiencies"}}</th>
+                                <th>{{localize "fantasycraft.skillPoints"}}</th>
+                                <th>{{localize "fantasycraft.attackBonus"}}</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select name="system.vitality"> 
+                                        {{#select item.system.vitality}}
+                                        {{#each config.classVitality as |name type|}}
+                                            <option value="{{name}}">{{localize type}}: {{name}}</option>
+                                        {{/each}}
+                                        {{/select}}
+                                    </select>
+                                </td>
+                                <td> <input name="system.proficiencies.value" type="text" value="{{numberFormat item.system.proficiencies.value decimals=0 sign=false}}" disabled=true/></td>
+                                <td> <input name="system.skillPoints" type="text" value="{{numberFormat item.system.skillPoints decimals=0 sign=false}}" disabled=true/></td>
+                                <td> 
+                                    <select name="system.baseAttack">
+                                        {{#select item.system.baseAttack}}
+                                        {{#each config.classBAB as |name type|}}
+                                            <option value="{{type}}">{{localize type}}</option>
+                                        {{/each}}
+                                        {{/select}}
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>{{localize "fantasycraft.fortitude"}}</th>
+                                <th>{{localize "fantasycraft.reflex"}}</th>
+                                <th>{{localize "fantasycraft.will"}}</th>
+                                <th>{{localize "fantasycraft.defense"}}</th>
+                            </tr>
+                            <tr>
+                                <td> 
+                                    <select name="system.fortitude">
+                                        {{#select item.system.fortitude}}
+                                        {{#each config.classSaves as |name type|}}
+                                            <option value="{{type}}">{{localize type}}</option>
+                                        {{/each}}
+                                        {{/select}}
+                                    </select>
+                                </td>
+                                <td> 
+                                    <select name="system.reflex">
+                                        {{#select item.system.reflex}}
+                                        {{#each config.classSaves as |name type|}}
+                                            <option value="{{type}}">{{localize type}}</option>
+                                        {{/each}}
+                                        {{/select}}
+                                    </select>
+                                </td>
+                                <td> 
+                                    <select name="system.will">
+                                        {{#select item.system.will}}
+                                        {{#each config.classSaves as |name type|}}
+                                            <option value="{{type}}">{{localize type}}</option>
+                                        {{/each}}
+                                        {{/select}}
+                                    </select>
+                                </td>
+                                <td> 
+                                    <select name="system.defense">
+                                        {{#select item.system.defense}}
+                                        {{#each config.classDefense as |name type|}}
+                                            <option value='{{type}}'>{{localize type}}</option>
+                                        {{/each}}
+                                        {{/select}}
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>{{localize "fantasycraft.initiative"}}</th>
+                                <th>{{localize "fantasycraft.lifeStyle"}}</th>                
+                                <th>{{localize "fantasycraft.legend"}}</th>
+                                <th>{{localize "fantasycraft.spellPoints"}}</th>
+                            </tr>
+                            <tr>
+                                <td> 
+                                    <select name="system.initiative">
+                                        {{#select item.system.initiative}}
+                                        {{#each config.classInitiative as |name type|}}
+                                            <option value='{{type}}'>{{localize type}}</option>
+                                        {{/each}}
+                                        {{/select}}
+                                    </select>
+                                </td>
+                                <td> 
+                                    <select name="system.lifeStyle">
+                                        {{#select item.system.lifeStyle}}
+                                        {{#each config.classSaves as |name type|}}
+                                            <option value="{{type}}">{{localize type}}</option>
+                                        {{/each}}
+                                        {{/select}}
+                                    </select>
+                                </td>
+                                <td> 
+                                    <select name="system.legend">
+                                        {{#select item.system.legend}}
+                                        {{#each config.classLegend as |name type|}}
+                                            <option value="{{type}}">{{localize type}}</option>
+                                        {{/each}}
+                                        {{/select}}
+                                    </select>
+                                </td>
+                                <td> 
+                                    <select name="system.spellPoints">
+                                        {{#select item.system.spellPoints}}
+                                        {{#each config.classSpellPoints as |name type|}}
+                                            <option value="{{type}}">{{localize type}}</option>
+                                        {{/each}}
+                                        {{/select}}
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div>
+                        <label>{{localize "fantasycraft.classType"}}</label>
+                        <select name="system.classType">
+                            {{#select item.system.classType}}
+                                <option value="base">{{localize "fantasycraft.baseClass"}}</option>
+                                <option value="expert">{{localize "fantasycraft.expertClass"}}</option>
+                                <option value="master">{{localize "fantasycraft.masterClass"}}</option>
+                            {{/select}}
+                        </select>
+                    </div>
+                    {{!-- Class Skills --}}
+                    <div class="flexrow">
+                        <div class="form-group {{item.system.cssClass}} flexrow">
+                            <label style="flex: 0 0 10%">{{localize "fantasycraft.skills"}}</label>
+                            <a class="trait-selector" data-options="skills" data-target="system.classSkills" style="flex: 0 0 5%">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <ul class="traits-list flexrow" style="flex: 0 0 85%">
+                                {{#each item.system.classSkills.value as |v k|}}
+                                    <li class="tag {{k}}">
+                                        <span class="bordered-text">{{v}}</span>
+                                    </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        {{!-- Set the class as a caster or not --}}
+                        {{localize "fantasycraft.casting"}}:
+                        <input class="checkbox remove-space" style="padding: 0px;" type="checkbox" name="system.castingLevel" {{checked item.system.castingLevel}}/> 
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    {{!-- Class Table --}}
+    {{editor item.system.classTable target="system.classTable" button=true owner=owner editable=editable}}
+</form>

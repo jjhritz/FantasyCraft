@@ -1,0 +1,242 @@
+<h1>{{localize "fantasycraft.charmNumber"}}:
+    <input class="narrowField tall" type="number" min="0" max="4" name="system.charms.charmNumber" value="{{item.system.charms.charmNumber}}">
+</h1>
+
+{{#compare item.system.charms.charmNumber 1 operator=">="}}
+{{!Determine the type of Charm}}
+    <select class="charmSelecter" name="system.charms.charm1.ability">
+        {{#select item.system.charms.charm1.ability}}
+            {{#each config.magicItemCharms as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+        {{/select}}
+    </select>
+
+    {{! Is the Charm a greater or Lesser Charm?}}
+    <span>{{localize "fantasycraft.greater"}}?</span><input type="checkbox" name="system.charms.charm1.greater" {{checked item.system.charms.charm1.greater}}>
+
+    {{! If the Charm is Skill Ranks, Select field for the skill it affects}}
+    {{#compare item.system.charms.charm1.ability "skillRanks" operator="=="}}
+    <select name="system.charms.charm1.target">
+        {{#select item.system.charms.charm1.target}}
+            {{#each config.skills as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+        {{/select}}
+    </select>
+    {{/compare}}
+
+    {{! If the Charm is Bane, Select field for the creature Type}}
+    {{#compare item.system.charms.charm1.ability "bane" operator="=="}}
+    <select name="system.charms.charm1.target">
+        {{#select item.system.charms.charm1.target}}
+            {{#each config.creatureType as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+        {{/select}}
+    </select>
+    {{/compare}}
+
+    {{! If the Charm is Attribute Bonus, Select field for the target Attribute}}
+    {{#compare item.system.charms.charm1.ability "attributeBonus" operator="=="}}
+    <select name="system.charms.charm1.target">
+        {{#select item.system.charms.charm1.target}}
+            {{#each config.abilityScores as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+        {{/select}}
+    </select>
+    {{/compare}}
+
+    {{! If the Charm is accuracy or damage Bonus, and the item is not a weapon, Select field for the target attack Type}}
+    {{#compare item.system.charms.charm1.ability "accuracyBonus" operator="=="}}
+        {{#compare item.type "weapon" operator="!="}}
+        <select name="system.charms.charm1.target">
+            {{#select item.system.charms.charm1.target}}
+                {{#each config.attackType as |v k|}}
+                    <option value="{{k}}"> {{localize v}}</option>
+                {{/each}}
+            {{/select}}
+        </select>
+        {{/compare}}
+    {{/compare}}
+    {{#compare item.system.charms.charm1.ability "damageBonus" operator="=="}}
+        {{#compare item.type "weapon" operator="!="}}
+        <select name="system.charms.charm1.target">
+            {{#select item.system.charms.charm1.target}}
+                {{#each config.attackType as |v k|}}
+                    <option value="{{k}}"> {{localize v}}</option>
+                {{/each}}
+            {{/select}}
+        </select>
+        {{/compare}}
+    {{/compare}}
+    
+    {{! If the Charm is Spell effect, input field for the spell level and field to display a spell that has been dropped onto the sheet and an input that displays the number of casts per refresh}}
+    {{#compare item.system.charms.charm1.ability "spellEffect" operator="=="}}
+        <span>{{localize "fantasycraft.spellLevel"}}: </span><input type="number" name="system.charms.charm1.spellLevel" value="{{item.system.charms.charm1.spellLevel}}">
+        <input type="text" name="system.charms.charm1.target" value="{{item.system.charms.charm1.target}}">
+    {{/compare}}
+
+{{/compare}}
+<br>
+{{#compare item.system.charms.charmNumber 2 operator=">="}}
+    {{!Determine the type of Charm}}
+    <select class="charmSelecter" name="system.charms.charm2.ability">
+        {{#select item.system.charms.charm2.ability}}
+            {{#each config.magicItemCharms as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+        {{/select}}
+    </select>
+
+    {{! Is the Charm a greater or Lesser Charm?}}
+    <span>{{localize "fantasycraft.greater"}}?</span><input type="checkbox" name="system.charms.charm2.greater" {{checked item.system.charms.charm2.greater}}>
+
+    {{! If the Charm is Skill Ranks, Select field for the skill it affects}}
+    {{#compare item.system.charms.charm2.ability "skillRanks" operator="=="}}
+    <select name="system.charms.charm2.target">
+        {{#select item.system.charms.charm2.target}}
+            {{#each config.skills as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+        {{/select}}
+    </select>
+    {{/compare}}
+
+    {{! If the Charm is Bane, Select field for the creature Type}}
+    {{#compare item.system.charms.charm2.ability "bane" operator="=="}}
+    <select name="system.charms.charm2.target">
+        {{#select item.system.charms.charm2.target}}
+            {{#each config.creatureType as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+        {{/select}}
+    </select>
+    {{/compare}}
+
+    {{! If the Charm is Attribute Bonus, Select field for the target Attribute}}
+    {{#compare item.system.charms.charm2.ability "attributeBonus" operator="=="}}
+    <select name="system.charms.charm2.target">
+        {{#select item.system.charms.charm2.target}}
+            {{#each config.abilityScores as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+        {{/select}}
+    </select>
+    {{/compare}}
+    
+    {{! If the Charm is Spell effect, input field for the spell level and field to display a spell that has been dropped onto the sheet and an input that displays the number of casts per refresh}}
+    {{#compare item.system.charms.charm2.ability "spellEffect" operator="=="}}
+        <span>{{localize "fantasycraft.spellLevel"}}: </span><input type="number" name="system.charms.charm2.spellLevel" value="{{item.system.charms.charm2.spellLevel}}">
+        <input type="text" name="system.charms.charm2.target" value="{{item.system.charms.charm2.target}}">
+    {{/compare}}
+
+{{/compare}}
+<br>
+{{#compare item.system.charms.charmNumber 3 operator=">="}}
+    {{!Determine the type of Charm}}
+    <select class="charmSelecter" name="system.charms.charm3.ability">
+        {{#select item.system.charms.charm3.ability}}
+            {{#each config.magicItemCharms as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+        {{/select}}
+    </select>
+
+    {{! Is the Charm a greater or Lesser Charm?}}
+    <span>{{localize "fantasycraft.greater"}}?</span><input type="checkbox" name="system.charms.charm3.greater" {{checked item.system.charms.charm3.greater}}>
+
+    {{! If the Charm is Skill Ranks, Select field for the skill it affects}}
+    {{#compare item.system.charms.charm3.ability "skillRanks" operator="=="}}
+    <select name="system.charms.charm3.target">
+        {{#select item.system.charms.charm3.target}}
+            {{#each config.skills as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+        {{/select}}
+    </select>
+    {{/compare}}
+
+    {{! If the Charm is Bane, Select field for the creature Type}}
+    {{#compare item.system.charms.charm3.ability "bane" operator="=="}}
+    <select name="system.charms.charm3.target">
+        {{#select item.system.charms.charm3.target}}
+            {{#each config.creatureType as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+        {{/select}}
+    </select>
+    {{/compare}}
+
+    {{! If the Charm is Attribute Bonus, Select field for the target Attribute}}
+    {{#compare item.system.charms.charm3.ability "attributeBonus" operator="=="}}
+    <select name="system.charms.charm3.target">
+        {{#select item.system.charms.charm3.target}}
+            {{#each config.abilityScores as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+        {{/select}}
+    </select>
+    {{/compare}}
+    
+    {{! If the Charm is Spell effect, input field for the spell level and field to display a spell that has been dropped onto the sheet and an input that displays the number of casts per refresh}}
+    {{#compare item.system.charms.charm3.ability "spellEffect" operator="=="}}
+        <span>{{localize "fantasycraft.spellLevel"}}: </span><input type="number" name="system.charms.charm3.spellLevel" value="{{item.system.charms.charm3.spellLevel}}">
+        <input type="text" name="system.charms.charm3.target" value="{{item.system.charms.charm3.target}}">
+    {{/compare}}
+
+{{/compare}}
+<br>
+{{#compare item.system.charms.charmNumber 4 operator=">="}}
+    {{!Determine the type of Charm}}
+    <select class="charmSelecter" name="system.charms.charm4.ability">
+        {{#select item.system.charms.charm4.ability}}
+            {{#each config.magicItemCharms as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+        {{/select}}
+    </select>
+
+    {{! Is the Charm a greater or Lesser Charm?}}
+    <span>{{localize "fantasycraft.greater"}}?</span><input type="checkbox" name="system.charms.charm4.greater" {{checked item.system.charms.charm4.greater}}>
+
+    {{! If the Charm is Skill Ranks, Select field for the skill it affects}}
+    {{#compare item.system.charms.charm4.ability "skillRanks" operator="=="}}
+    <select name="system.charms.charm4.target">
+        {{#select item.system.charms.charm4.target}}
+            {{#each config.skills as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+        {{/select}}
+    </select>
+    {{/compare}}
+
+    {{! If the Charm is Bane, Select field for the creature Type}}
+    {{#compare item.system.charms.charm4.ability "bane" operator="=="}}
+    <select name="system.charms.charm4.target">
+        {{#select item.system.charms.charm4.target}}
+            {{#each config.creatureType as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+        {{/select}}
+    </select>
+    {{/compare}}
+
+    {{! If the Charm is Attribute Bonus, Select field for the target Attribute}}
+    {{#compare item.system.charms.charm4.ability "attributeBonus" operator="=="}}
+    <select name="system.charms.charm4.target">
+        {{#select item.system.charms.charm4.target}}
+            {{#each config.abilityScores as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+        {{/select}}
+    </select>
+    {{/compare}}
+    
+    {{! If the Charm is Spell effect, input field for the spell level and field to display a spell that has been dropped onto the sheet and an input that displays the number of casts per refresh}}
+    {{#compare item.system.charms.charm4.ability "spellEffect" operator="=="}}
+        <span>{{localize "fantasycraft.spellLevel"}}: </span><input type="number" name="system.charms.charm4.spellLevel" value="{{item.system.charms.charm4.spellLevel}}">
+        <input type="text" name="system.charms.charm4.target" value="{{item.system.charms.charm4.target}}">
+    {{/compare}}
+{{/compare}}

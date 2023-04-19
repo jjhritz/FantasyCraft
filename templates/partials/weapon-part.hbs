@@ -1,0 +1,38 @@
+<div class="item ownedItem flexrow" data-item-id="{{id}}" data-item-name="{{name}}">
+    <div class="flex6">
+        <a class="roll-weapon" data-roll-info='{{id}}'>
+            <i class="fas fa-dice-d20"></i>
+        </a>
+        <span>{{name}} </span>
+        {{#if inSheet}} 
+            {{system.damage}} {{localize "fantasycraft.threat"}} {{system.threatRange}} 
+            {{else}} 
+            <br> 
+        {{/if}} 
+
+        <br>
+        {{localize "fantasycraft.qualities"}}: 
+        {{#each system.weaponProperties as |prop id|}}
+            {{#if prop}}
+            {{#compare prop "none" operator="!="}}
+                {{id}}{{#if (isBool prop)}}{{else}} {{prop}}{{/if}}
+                {{/compare}}
+            {{/if}}
+        {{/each}}
+    </div>
+    <div class="flex1">
+        <a class="readyWeapon">
+            {{#if system.readied}}
+            <i class="fa fa-swords"></i>
+            {{else}}
+            <i class="fa-light fa-swords"></i>
+            {{/if}}
+        </a>
+        <a class="editItem">
+            <i class="fas fa-edit"></i>
+        </a>
+        <a class="deleteItem">
+            <i class="fas fa-trash"></i>
+        </a>
+    </div>
+</div>

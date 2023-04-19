@@ -1,0 +1,201 @@
+@import  "./variables.less";
+
+.fantasycraft.item
+{
+  .item-form
+  {
+    header 
+    {
+      background: url(../fantasycraft/assets/ui/header2.png) repeat-x local;
+      background-size: auto;
+      color: white
+    }
+
+    header input
+    {
+      color: white
+    }
+
+    header select
+    {
+      color: white
+    }
+  }
+
+}
+
+.fantasycraft.sheet.item
+{
+  min-width: 600px;
+  max-width: 685px;
+  min-height: 525px;
+
+
+
+  input.short
+  {
+    max-height: 15px;
+  }
+
+  input.tall
+  {
+    max-height: 25px;
+  }
+
+  input.narrowField 
+  {
+    width: 25px;
+  }
+  input.mediumField 
+  {
+    max-width: 50px;
+  }
+  input.wideField 
+  {
+    width: 100px;
+  }
+
+
+  header.itemHeader
+  {
+    position: relative;
+    padding: 5px;
+    max-height: 120px;
+  }
+  
+  //// Sheet Header ////
+  .sheet-header
+  {
+
+      .attributes {
+          flex: 0 0 100%;
+          margin: 0;
+      
+          .attribute {
+              height: 70px;
+              border: none;
+              border-left: @borderGroove;
+              border-radius: 0;
+          }
+      }
+  }
+
+  ul.attributes {
+    flex: 0 0 60px;
+    margin: 0;
+    padding: 0;
+
+        li.attribute 
+        {
+            .attribute-value 
+            {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 28px;
+                line-height: 28px;
+                .title-font ();
+
+                > * 
+                {
+                    text-align: center;
+                    font-weight: 400;
+                    font-size: 18px;
+                }
+                
+                &.multiple input 
+                {
+                    flex: 0 0 33%;
+                }
+
+                input
+                {
+                    text-align: center;
+                    border: none;
+                    border-bottom: 2px solid #000000;
+                    background-color: hsla(0%,0%, 0%, 0);
+                }
+            }
+            .button
+            {
+                width: 100%;
+                text-align: center;
+                a 
+                {
+                    display: inline-block;
+                    font-size: 16px;
+                    border: 1px solid #b5b3a4;
+                    border-radius: 2px;
+                    margin: 3px;
+                    padding: 0 2px;
+                    width: 90px;
+                    height: 22px;
+                    background-color: #ffffff;
+                }
+            }
+        }
+    }
+
+
+  .itemName
+  {
+      text-align: center;
+      flex: 0 0 100%;
+  }
+  
+  .item-subtitle
+  {
+      text-align: center;
+      font-style: italic;  
+  }
+
+  .form-group.stacked {
+    label 
+    {
+      flex: 0 0 100%;
+      margin: 0;
+    }
+    label.checkbox 
+    {
+      flex: auto;
+      text-align: left;
+    }
+  }
+
+  .item-customization-section 
+  {
+    &.margins
+    {
+      margin-top: 3px;
+      margin-bottom: 3px;
+    }
+
+    //TODO add font information
+    padding: 2px 16px;
+    line-height: 1.4;
+
+    & > div {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+
+      & > div:last-child {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      & > input
+      {
+        text-align: right;
+      }
+    }  
+  }
+
+
+  .item-upgrades label.checkbox 
+  {
+    flex: 0 0 98px;
+  } 
+}

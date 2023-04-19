@@ -1,0 +1,760 @@
+<h1>Essence number:
+    <input class="narrowField tall" type="number" min="0" max="4" name="system.essences.essenceNumber" value="{{item.system.essences.essenceNumber}}">
+</h1> {{!-- radio button to select how many essences a weapon should have --}}
+<div>
+
+{{#compare item.system.essences.essenceNumber 1 operator=">="}}
+{{!Determine the type of essence}}
+<div class="flexrow">
+    <select class="flex 2 essenceSelecter" name="system.essences.essence1.ability">
+        {{#select item.system.essences.essence1.ability}}
+            {{#each config.magicItemEssences as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+        {{/select}}
+    </select>
+
+    {{! Is the essence a greater or Lesser essence?}}
+    {{#if item.system.essences.essence1.canBeGreater}}
+        <span>{{localize "fantasycraft.greater"}}?<input type="checkbox" name="system.essences.essence1.greater" {{checked item.system.essences.essence1.greater}}></span>
+    {{/if}}
+
+    {{! If the essence is DamageAura, Select field for the Aura damage it affects}}
+    {{#compare item.system.essences.essence1.ability "damageAura" operator="=="}}
+    <select name="system.essences.essence1.target">
+        {{#select item.system.essences.essence1.target}}
+            {{#each config.damageAuraTypes as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+        {{/select}}
+    </select>
+    {{/compare}}
+
+    {{! If the essence is Damage Resistance, Select field for the creature Type}}
+    {{#compare item.system.essences.essence1.ability "damageResistance" operator="=="}}
+    <select name="system.essences.essence1.target">
+        {{#select item.system.essences.essence1.target}}
+            {{#each config.damageTypes as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+        {{/select}}
+    </select>
+    {{/compare}}
+
+    {{! Exotic Damage: Select Field}}
+    {{#compare item.system.essences.essence1.ability "exoticDamage" operator="=="}}
+        <select name="system.essences.essence1.target">
+            {{#select item.system.essences.essence1.target}}
+                {{#each config.damageTypes as |v k|}}
+                    <option value="{{k}}"> {{localize v}}</option>
+                {{/each}}
+            {{/select}}
+        </select>
+        <select name="system.essences.essence1.attackType">
+            {{#select item.system.essences.essence1.attackType}}
+                <option value="unarmed">{{localize "fantasycraft.unarmed"}}</option>
+                <option value="melee">{{localize "fantasycraft.melee"}}</option>
+                <option value="ranged">{{localize "fantasycraft.ranged"}}</option>
+            {{/select}}
+        </select>
+    {{/compare}}
+    
+    {{! Aligned Damage: Input Field}}
+    {{#compare item.system.essences.essence1.ability "alignedDamage" operator="=="}}
+    <div class="flexrow">
+        <span>{{localize fantasycraft.alignment}}: </span><input class="flex3" type="text" name="system.essences.essence1.target" value="{{item.system.essences.essence1.target}}">
+        <select name="system.essences.essence1.attackType">
+            {{#select item.system.essences.essence1.attackType}}
+                <option value="unarmed">{{localize "fantasycraft.unarmed"}}</option>
+                <option value="melee">{{localize "fantasycraft.melee"}}</option>
+                <option value="ranged">{{localize "fantasycraft.ranged"}}</option>
+            {{/select}}
+        </select>
+    </div>
+    {{/compare}}
+
+    {{! Class Enhancement: Dropdown Field}}
+    {{#compare item.system.essences.essence1.ability "classEnhancement" operator="=="}}
+        <select name="system.essences.essence1.target">
+            {{#select item.system.essences.essence1.target}}
+                {{#each config.classes as |v k|}}
+                    <option value="{{k}}"> {{localize v}}</option>
+                {{/each}}
+            {{/select}}
+        </select>
+    {{/compare}}
+
+    {{! Input Field}}
+    {{#compare item.system.essences.essence1.ability "damageReduction" operator="=="}}
+        <span>{{localize "fantasycraft.dr"}} 2</span>
+        <span> {{localize "fantasycraft.Dialog.unlessBy"}}: </span><input type="text" name="system.essences.essence1.target" value="{{item.system.essences.essence1.target}}">
+    {{/compare}}
+
+    {{! Class Ability: Input Field}}
+    {{#compare item.system.essences.essence1.ability "classAbility" operator="=="}}
+        <span>{{localize "fantasycraft.Dialog.gainClassAbility"}}: </span>
+        <input type="text" name="system.essences.essence1.target" value="{{item.system.essences.essence1.target}}">
+    {{/compare}}
+    
+    {{! Input Field}}
+    {{#compare item.system.essences.essence1.ability "interest" operator="=="}}
+        <input type="text" name="system.essences.essence1.target" value="{{item.system.essences.essence1.target}}">
+    {{/compare}}
+
+    {{! Dropdown }}
+    {{#compare item.system.essences.essence1.ability "npcQuality" operator="=="}}
+    {{#if item.system.essences.essence1.greater}}
+        <select name="system.essences.essence1.target">
+            {{#select item.system.essences.essence1.target}}
+                {{#each config.npcQualityGreater as |v k|}}
+                    <option value="{{k}}"> {{localize v}}</option>
+                {{/each}}
+            {{/select}}
+        </select>
+    {{else}}
+        <select name="system.essences.essence1.target">
+            {{#select item.system.essences.essence1.target}}
+                {{#each config.npcQualityLesser as |v k|}}
+                    <option value="{{k}}"> {{localize v}}</option>
+                {{/each}}
+            {{/select}}
+        </select>
+    {{/if}}
+    {{/compare}}
+    
+    {{! Dropdown }}
+    {{#compare item.system.essences.essence1.ability "proficiency" operator="=="}}
+        <select name="system.essences.essence1.target">
+            {{#select item.system.essences.essence1.target}}
+                {{#each config.attackProficiency as |v k|}}
+                    <option value="{{k}}"> {{localize v}}</option>
+                {{/each}}
+            {{/select}}
+        </select>
+    {{/compare}}
+    
+    {{! Dropdown }}
+    {{#compare item.system.essences.essence1.ability "threatRange" operator="=="}}
+        <select name="system.essences.essence1.attackType">
+            {{#select item.system.essences.essence1.attackType}}
+                <option value="unarmed">{{localize "fantasycraft.unarmed"}}</option>
+                <option value="melee">{{localize "fantasycraft.melee"}}</option>
+                <option value="ranged">{{localize "fantasycraft.ranged"}}</option>
+                <option value="skill">{{localize "fantasycraft.skill"}}</option>
+            {{/select}}
+        </select>
+        {{#compare item.system.essences.essence1.attackType "skill" operator="=="}}
+        <select name="system.essences.essence1.target">
+            {{#select item.system.essences.essence1.target}}
+            {{#each config.skills as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+        {{/compare}}
+    {{/compare}}
+
+    {{! Dropdown }}
+    {{#compare item.system.essences.essence1.ability "trainedSkill" operator="=="}}
+        <select name="system.essences.essence1.target">
+            {{#select item.system.essences.essence1.target}}    
+            {{#each config.skills as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+    {{/compare}}
+
+    {{! Input }}
+    {{#compare item.system.essences.essence1.ability "trick" operator="=="}}
+        <span>{{localize "fantasycraft.Dialog.gainTrick"}}: </span>
+        <input type="text" name="system.essences.essence1.target" value="{{item.system.essences.essence1.target}}">
+    {{/compare}}
+    
+    {{! Input Field}}
+    {{#compare item.system.essences.essence1.ability "feat" operator="=="}}
+        <span>{{localize "fantasycraft.Dialog.gainFeat"}}: </span>
+        <input type="text" name="system.essences.essence1.target" value="{{item.system.essences.essence1.target}}">
+    {{/compare}}
+    
+    {{! Input }}
+    {{#compare item.system.essences.essence1.ability "saveBonus" operator="=="}}
+    <select name="system.essences.essence1.target">
+        {{#select item.system.essences.essence1.target}}
+        {{#each config.savingThrow as |v k|}}
+            <option value="{{k}}"> {{localize v}}</option>
+        {{/each}}
+        {{/select}}
+    </select>
+    {{/compare}}
+    </div>
+
+{{/compare}}
+<br>
+
+{{#compare item.system.essences.essenceNumber 2 operator=">="}}
+{{!Determine the type of essence}}
+<div class="flexrow">
+    <select class="flex 2 essenceSelecter" name="system.essences.essence2.ability">
+        {{#select item.system.essences.essence2.ability}}
+            {{#each config.magicItemEssences as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+        {{/select}}
+    </select>
+
+    {{! Is the essence a greater or Lesser essence?}}
+    {{#if item.system.essences.essence2.canBeGreater}}
+        <span>{{localize "fantasycraft.greater"}}?<input type="checkbox" name="system.essences.essence2.greater" {{checked item.system.essences.essence2.greater}}></span>
+    {{/if}}
+
+    {{! If the essence is DamageAura, Select field for the Aura damage it affects}}
+    {{#compare item.system.essences.essence2.ability "damageAura" operator="=="}}
+    <select name="system.essences.essence2.target">
+        {{#select item.system.essences.essence2.target}}
+            {{#each config.damageAuraTypes as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+        {{/select}}
+    </select>
+    {{/compare}}
+
+    {{! If the essence is Damage Resistance, Select field for the creature Type}}
+    {{#compare item.system.essences.essence2.ability "damageResistance" operator="=="}}
+    <select name="system.essences.essence2.target">
+        {{#select item.system.essences.essence2.target}}
+            {{#each config.damageTypes as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+        {{/select}}
+    </select>
+    {{/compare}}
+
+    {{! Exotic Damage: Select Field}}
+    {{#compare item.system.essences.essence2.ability "exoticDamage" operator="=="}}
+        <select name="system.essences.essence2.target">
+            {{#select item.system.essences.essence2.target}}
+                {{#each config.damageTypes as |v k|}}
+                    <option value="{{k}}"> {{localize v}}</option>
+                {{/each}}
+            {{/select}}
+        </select>
+        <select name="system.essences.essence2.attackType">
+            {{#select item.system.essences.essence2.attackType}}
+                <option value="unarmed">{{localize "fantasycraft.unarmed"}}</option>
+                <option value="melee">{{localize "fantasycraft.melee"}}</option>
+                <option value="ranged">{{localize "fantasycraft.ranged"}}</option>
+            {{/select}}
+        </select>
+    {{/compare}}
+    
+    {{! Aligned Damage: Input Field}}
+    {{#compare item.system.essences.essence2.ability "alignedDamage" operator="=="}}
+    <div class="flexrow">
+        <span>{{localize fantasycraft.alignment}}: </span><input class="flex3" type="text" name="system.essences.essence2.target" value="{{item.system.essences.essence2.target}}">
+        <select name="system.essences.essence2.attackType">
+            {{#select item.system.essences.essence2.attackType}}
+                <option value="unarmed">{{localize "fantasycraft.unarmed"}}</option>
+                <option value="melee">{{localize "fantasycraft.melee"}}</option>
+                <option value="ranged">{{localize "fantasycraft.ranged"}}</option>
+            {{/select}}
+        </select>
+    </div>
+    {{/compare}}
+
+    {{! Class Enhancement: Dropdown Field}}
+    {{#compare item.system.essences.essence2.ability "classEnhancement" operator="=="}}
+        <select name="system.essences.essence2.target">
+            {{#select item.system.essences.essence2.target}}
+                {{#each config.classes as |v k|}}
+                    <option value="{{k}}"> {{localize v}}</option>
+                {{/each}}
+            {{/select}}
+        </select>
+    {{/compare}}
+
+    {{! Input Field}}
+    {{#compare item.system.essences.essence2.ability "damageReduction" operator="=="}}
+        <span>{{localize "fantasycraft.dr"}} 2</span>
+        <span> {{localize "fantasycraft.Dialog.unlessBy"}}: </span><input type="text" name="system.essences.essence2.target" value="{{item.system.essences.essence2.target}}">
+    {{/compare}}
+
+    {{! Class Ability: Input Field}}
+    {{#compare item.system.essences.essence2.ability "classAbility" operator="=="}}
+        <span>{{localize "fantasycraft.Dialog.gainClassAbility"}}: </span>
+        <input type="text" name="system.essences.essence2.target" value="{{item.system.essences.essence2.target}}">
+    {{/compare}}
+    
+    {{! Input Field}}
+    {{#compare item.system.essences.essence2.ability "interest" operator="=="}}
+        <input type="text" name="system.essences.essence2.target" value="{{item.system.essences.essence2.target}}">
+    {{/compare}}
+
+    {{! Dropdown }}
+    {{#compare item.system.essences.essence2.ability "npcQuality" operator="=="}}
+    {{#if item.system.essences.essence2.greater}}
+        <select name="system.essences.essence2.target">
+            {{#select item.system.essences.essence2.target}}
+                {{#each config.npcQualityGreater as |v k|}}
+                    <option value="{{k}}"> {{localize v}}</option>
+                {{/each}}
+            {{/select}}
+        </select>
+    {{else}}
+        <select name="system.essences.essence2.target">
+            {{#select item.system.essences.essence2.target}}
+                {{#each config.npcQualityLesser as |v k|}}
+                    <option value="{{k}}"> {{localize v}}</option>
+                {{/each}}
+            {{/select}}
+        </select>
+    {{/if}}
+    {{/compare}}
+    
+    {{! Dropdown }}
+    {{#compare item.system.essences.essence2.ability "proficiency" operator="=="}}
+        <select name="system.essences.essence2.target">
+            {{#select item.system.essences.essence2.target}}
+                {{#each config.attackProficiency as |v k|}}
+                    <option value="{{k}}"> {{localize v}}</option>
+                {{/each}}
+            {{/select}}
+        </select>
+    {{/compare}}
+    
+    {{! Dropdown }}
+    {{#compare item.system.essences.essence2.ability "threatRange" operator="=="}}
+        <select name="system.essences.essence2.attackType">
+            {{#select item.system.essences.essence2.attackType}}
+                <option value="unarmed">{{localize "fantasycraft.unarmed"}}</option>
+                <option value="melee">{{localize "fantasycraft.melee"}}</option>
+                <option value="ranged">{{localize "fantasycraft.ranged"}}</option>
+                <option value="skill">{{localize "fantasycraft.skill"}}</option>
+            {{/select}}
+        </select>
+        {{#compare item.system.essences.essence2.attackType "skill" operator="=="}}
+        <select name="system.essences.essence2.target">
+            {{#select item.system.essences.essence2.target}}
+            {{#each config.skills as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+        {{/compare}}
+    {{/compare}}
+
+    {{! Dropdown }}
+    {{#compare item.system.essences.essence2.ability "trainedSkill" operator="=="}}
+        <select name="system.essences.essence2.target">
+            {{#select item.system.essences.essence2.target}}    
+            {{#each config.skills as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+    {{/compare}}
+
+    {{! Input }}
+    {{#compare item.system.essences.essence2.ability "trick" operator="=="}}
+        <span>{{localize "fantasycraft.Dialog.gainTrick"}}: </span>
+        <input type="text" name="system.essences.essence2.target" value="{{item.system.essences.essence2.target}}">
+    {{/compare}}
+    
+    {{! Input Field}}
+    {{#compare item.system.essences.essence2.ability "feat" operator="=="}}
+        <span>{{localize "fantasycraft.Dialog.gainFeat"}}: </span>
+        <input type="text" name="system.essences.essence2.target" value="{{item.system.essences.essence2.target}}">
+    {{/compare}}
+    
+    {{! Input }}
+    {{#compare item.system.essences.essence2.ability "saveBonus" operator="=="}}
+    <select name="system.essences.essence2.target">
+        {{#select item.system.essences.essence2.target}}
+        {{#each config.savingThrow as |v k|}}
+            <option value="{{k}}"> {{localize v}}</option>
+        {{/each}}
+        {{/select}}
+    </select>
+    {{/compare}}
+    </div>
+
+{{/compare}}
+<br>
+
+{{#compare item.system.essences.essenceNumber 3 operator=">="}}
+{{!Determine the type of essence}}
+<div class="flexrow">
+    <select class="flex 2 essenceSelecter" name="system.essences.essence3.ability">
+        {{#select item.system.essences.essence3.ability}}
+            {{#each config.magicItemEssences as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+        {{/select}}
+    </select>
+
+    {{! Is the essence a greater or Lesser essence?}}
+    {{#if item.system.essences.essence3.canBeGreater}}
+        <span>{{localize "fantasycraft.greater"}}?<input type="checkbox" name="system.essences.essence3.greater" {{checked item.system.essences.essence3.greater}}></span>
+    {{/if}}
+
+    {{! If the essence is DamageAura, Select field for the Aura damage it affects}}
+    {{#compare item.system.essences.essence3.ability "damageAura" operator="=="}}
+    <select name="system.essences.essence3.target">
+        {{#select item.system.essences.essence3.target}}
+            {{#each config.damageAuraTypes as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+        {{/select}}
+    </select>
+    {{/compare}}
+
+    {{! If the essence is Damage Resistance, Select field for the creature Type}}
+    {{#compare item.system.essences.essence3.ability "damageResistance" operator="=="}}
+    <select name="system.essences.essence3.target">
+        {{#select item.system.essences.essence3.target}}
+            {{#each config.damageTypes as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+        {{/select}}
+    </select>
+    {{/compare}}
+
+    {{! Exotic Damage: Select Field}}
+    {{#compare item.system.essences.essence3.ability "exoticDamage" operator="=="}}
+        <select name="system.essences.essence3.target">
+            {{#select item.system.essences.essence3.target}}
+                {{#each config.damageTypes as |v k|}}
+                    <option value="{{k}}"> {{localize v}}</option>
+                {{/each}}
+            {{/select}}
+        </select>
+        <select name="system.essences.essence3.attackType">
+            {{#select item.system.essences.essence3.attackType}}
+                <option value="unarmed">{{localize "fantasycraft.unarmed"}}</option>
+                <option value="melee">{{localize "fantasycraft.melee"}}</option>
+                <option value="ranged">{{localize "fantasycraft.ranged"}}</option>
+            {{/select}}
+        </select>
+    {{/compare}}
+    
+    {{! Aligned Damage: Input Field}}
+    {{#compare item.system.essences.essence3.ability "alignedDamage" operator="=="}}
+    <div class="flexrow">
+        <span>{{localize fantasycraft.alignment}}: </span><input class="flex3" type="text" name="system.essences.essence3.target" value="{{item.system.essences.essence3.target}}">
+        <select name="system.essences.essence3.attackType">
+            {{#select item.system.essences.essence3.attackType}}
+                <option value="unarmed">{{localize "fantasycraft.unarmed"}}</option>
+                <option value="melee">{{localize "fantasycraft.melee"}}</option>
+                <option value="ranged">{{localize "fantasycraft.ranged"}}</option>
+            {{/select}}
+        </select>
+    </div>
+    {{/compare}}
+
+    {{! Class Enhancement: Dropdown Field}}
+    {{#compare item.system.essences.essence3.ability "classEnhancement" operator="=="}}
+        <select name="system.essences.essence3.target">
+            {{#select item.system.essences.essence3.target}}
+                {{#each config.classes as |v k|}}
+                    <option value="{{k}}"> {{localize v}}</option>
+                {{/each}}
+            {{/select}}
+        </select>
+    {{/compare}}
+
+    {{! Input Field}}
+    {{#compare item.system.essences.essence3.ability "damageReduction" operator="=="}}
+        <span>{{localize "fantasycraft.dr"}} 2</span>
+        <span> {{localize "fantasycraft.Dialog.unlessBy"}}: </span><input type="text" name="system.essences.essence3.target" value="{{item.system.essences.essence3.target}}">
+    {{/compare}}
+
+    {{! Class Ability: Input Field}}
+    {{#compare item.system.essences.essence3.ability "classAbility" operator="=="}}
+        <span>{{localize "fantasycraft.Dialog.gainClassAbility"}}: </span>
+        <input type="text" name="system.essences.essence3.target" value="{{item.system.essences.essence3.target}}">
+    {{/compare}}
+    
+    {{! Input Field}}
+    {{#compare item.system.essences.essence3.ability "interest" operator="=="}}
+        <input type="text" name="system.essences.essence3.target" value="{{item.system.essences.essence3.target}}">
+    {{/compare}}
+
+    {{! Dropdown }}
+    {{#compare item.system.essences.essence3.ability "npcQuality" operator="=="}}
+    {{#if item.system.essences.essence3.greater}}
+        <select name="system.essences.essence3.target">
+            {{#select item.system.essences.essence3.target}}
+                {{#each config.npcQualityGreater as |v k|}}
+                    <option value="{{k}}"> {{localize v}}</option>
+                {{/each}}
+            {{/select}}
+        </select>
+    {{else}}
+        <select name="system.essences.essence3.target">
+            {{#select item.system.essences.essence3.target}}
+                {{#each config.npcQualityLesser as |v k|}}
+                    <option value="{{k}}"> {{localize v}}</option>
+                {{/each}}
+            {{/select}}
+        </select>
+    {{/if}}
+    {{/compare}}
+    
+    {{! Dropdown }}
+    {{#compare item.system.essences.essence3.ability "proficiency" operator="=="}}
+        <select name="system.essences.essence3.target">
+            {{#select item.system.essences.essence3.target}}
+                {{#each config.attackProficiency as |v k|}}
+                    <option value="{{k}}"> {{localize v}}</option>
+                {{/each}}
+            {{/select}}
+        </select>
+    {{/compare}}
+    
+    {{! Dropdown }}
+    {{#compare item.system.essences.essence3.ability "threatRange" operator="=="}}
+        <select name="system.essences.essence3.attackType">
+            {{#select item.system.essences.essence3.attackType}}
+                <option value="unarmed">{{localize "fantasycraft.unarmed"}}</option>
+                <option value="melee">{{localize "fantasycraft.melee"}}</option>
+                <option value="ranged">{{localize "fantasycraft.ranged"}}</option>
+                <option value="skill">{{localize "fantasycraft.skill"}}</option>
+            {{/select}}
+        </select>
+        {{#compare item.system.essences.essence3.attackType "skill" operator="=="}}
+        <select name="system.essences.essence3.target">
+            {{#select item.system.essences.essence3.target}}
+            {{#each config.skills as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+        {{/compare}}
+    {{/compare}}
+
+    {{! Dropdown }}
+    {{#compare item.system.essences.essence3.ability "trainedSkill" operator="=="}}
+        <select name="system.essences.essence3.target">
+            {{#select item.system.essences.essence3.target}}    
+            {{#each config.skills as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+    {{/compare}}
+
+    {{! Input }}
+    {{#compare item.system.essences.essence3.ability "trick" operator="=="}}
+        <span>{{localize "fantasycraft.Dialog.gainTrick"}}: </span>
+        <input type="text" name="system.essences.essence3.target" value="{{item.system.essences.essence3.target}}">
+    {{/compare}}
+    
+    {{! Input Field}}
+    {{#compare item.system.essences.essence3.ability "feat" operator="=="}}
+        <span>{{localize "fantasycraft.Dialog.gainFeat"}}: </span>
+        <input type="text" name="system.essences.essence3.target" value="{{item.system.essences.essence3.target}}">
+    {{/compare}}
+    
+    {{! Input }}
+    {{#compare item.system.essences.essence3.ability "saveBonus" operator="=="}}
+    <select name="system.essences.essence3.target">
+        {{#select item.system.essences.essence3.target}}
+        {{#each config.savingThrow as |v k|}}
+            <option value="{{k}}"> {{localize v}}</option>
+        {{/each}}
+        {{/select}}
+    </select>
+    {{/compare}}
+    </div>
+
+{{/compare}}
+<br>
+
+{{#compare item.system.essences.essenceNumber 4 operator=">="}}
+{{!Determine the type of essence}}
+<div class="flexrow">
+    <select class="flex 2 essenceSelecter" name="system.essences.essence4.ability">
+        {{#select item.system.essences.essence4.ability}}
+            {{#each config.magicItemEssences as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+        {{/select}}
+    </select>
+
+    {{! Is the essence a greater or Lesser essence?}}
+    {{#if item.system.essences.essence4.canBeGreater}}
+        <span>{{localize "fantasycraft.greater"}}?<input type="checkbox" name="system.essences.essence4.greater" {{checked item.system.essences.essence4.greater}}></span>
+    {{/if}}
+
+    {{! If the essence is DamageAura, Select field for the Aura damage it affects}}
+    {{#compare item.system.essences.essence4.ability "damageAura" operator="=="}}
+    <select name="system.essences.essence4.target">
+        {{#select item.system.essences.essence4.target}}
+            {{#each config.damageAuraTypes as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+        {{/select}}
+    </select>
+    {{/compare}}
+
+    {{! If the essence is Damage Resistance, Select field for the creature Type}}
+    {{#compare item.system.essences.essence4.ability "damageResistance" operator="=="}}
+    <select name="system.essences.essence4.target">
+        {{#select item.system.essences.essence4.target}}
+            {{#each config.damageTypes as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+        {{/select}}
+    </select>
+    {{/compare}}
+
+    {{! Exotic Damage: Select Field}}
+    {{#compare item.system.essences.essence4.ability "exoticDamage" operator="=="}}
+        <select name="system.essences.essence4.target">
+            {{#select item.system.essences.essence4.target}}
+                {{#each config.damageTypes as |v k|}}
+                    <option value="{{k}}"> {{localize v}}</option>
+                {{/each}}
+            {{/select}}
+        </select>
+        <select name="system.essences.essence4.attackType">
+            {{#select item.system.essences.essence4.attackType}}
+                <option value="unarmed">{{localize "fantasycraft.unarmed"}}</option>
+                <option value="melee">{{localize "fantasycraft.melee"}}</option>
+                <option value="ranged">{{localize "fantasycraft.ranged"}}</option>
+            {{/select}}
+        </select>
+    {{/compare}}
+    
+    {{! Aligned Damage: Input Field}}
+    {{#compare item.system.essences.essence4.ability "alignedDamage" operator="=="}}
+    <div class="flexrow">
+        <span>{{localize fantasycraft.alignment}}: </span><input class="flex3" type="text" name="system.essences.essence4.target" value="{{item.system.essences.essence4.target}}">
+        <select name="system.essences.essence4.attackType">
+            {{#select item.system.essences.essence4.attackType}}
+                <option value="unarmed">{{localize "fantasycraft.unarmed"}}</option>
+                <option value="melee">{{localize "fantasycraft.melee"}}</option>
+                <option value="ranged">{{localize "fantasycraft.ranged"}}</option>
+            {{/select}}
+        </select>
+    </div>
+    {{/compare}}
+
+    {{! Class Enhancement: Dropdown Field}}
+    {{#compare item.system.essences.essence4.ability "classEnhancement" operator="=="}}
+        <select name="system.essences.essence4.target">
+            {{#select item.system.essences.essence4.target}}
+                {{#each config.classes as |v k|}}
+                    <option value="{{k}}"> {{localize v}}</option>
+                {{/each}}
+            {{/select}}
+        </select>
+    {{/compare}}
+
+    {{! Input Field}}
+    {{#compare item.system.essences.essence4.ability "damageReduction" operator="=="}}
+        <span>{{localize "fantasycraft.dr"}} 2</span>
+        <span> {{localize "fantasycraft.Dialog.unlessBy"}}: </span><input type="text" name="system.essences.essence4.target" value="{{item.system.essences.essence4.target}}">
+    {{/compare}}
+
+    {{! Class Ability: Input Field}}
+    {{#compare item.system.essences.essence4.ability "classAbility" operator="=="}}
+        <span>{{localize "fantasycraft.Dialog.gainClassAbility"}}: </span>
+        <input type="text" name="system.essences.essence4.target" value="{{item.system.essences.essence4.target}}">
+    {{/compare}}
+    
+    {{! Input Field}}
+    {{#compare item.system.essences.essence4.ability "interest" operator="=="}}
+        <input type="text" name="system.essences.essence4.target" value="{{item.system.essences.essence4.target}}">
+    {{/compare}}
+
+    {{! Dropdown }}
+    {{#compare item.system.essences.essence4.ability "npcQuality" operator="=="}}
+    {{#if item.system.essences.essence4.greater}}
+        <select name="system.essences.essence4.target">
+            {{#select item.system.essences.essence4.target}}
+                {{#each config.npcQualityGreater as |v k|}}
+                    <option value="{{k}}"> {{localize v}}</option>
+                {{/each}}
+            {{/select}}
+        </select>
+    {{else}}
+        <select name="system.essences.essence4.target">
+            {{#select item.system.essences.essence4.target}}
+                {{#each config.npcQualityLesser as |v k|}}
+                    <option value="{{k}}"> {{localize v}}</option>
+                {{/each}}
+            {{/select}}
+        </select>
+    {{/if}}
+    {{/compare}}
+    
+    {{! Dropdown }}
+    {{#compare item.system.essences.essence4.ability "proficiency" operator="=="}}
+        <select name="system.essences.essence4.target">
+            {{#select item.system.essences.essence4.target}}
+                {{#each config.attackProficiency as |v k|}}
+                    <option value="{{k}}"> {{localize v}}</option>
+                {{/each}}
+            {{/select}}
+        </select>
+    {{/compare}}
+    
+    {{! Dropdown }}
+    {{#compare item.system.essences.essence4.ability "threatRange" operator="=="}}
+        <select name="system.essences.essence4.attackType">
+            {{#select item.system.essences.essence4.attackType}}
+                <option value="unarmed">{{localize "fantasycraft.unarmed"}}</option>
+                <option value="melee">{{localize "fantasycraft.melee"}}</option>
+                <option value="ranged">{{localize "fantasycraft.ranged"}}</option>
+                <option value="skill">{{localize "fantasycraft.skill"}}</option>
+            {{/select}}
+        </select>
+        {{#compare item.system.essences.essence4.attackType "skill" operator="=="}}
+        <select name="system.essences.essence4.target">
+            {{#select item.system.essences.essence4.target}}
+            {{#each config.skills as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+        {{/compare}}
+    {{/compare}}
+
+    {{! Dropdown }}
+    {{#compare item.system.essences.essence4.ability "trainedSkill" operator="=="}}
+        <select name="system.essences.essence4.target">
+            {{#select item.system.essences.essence4.target}}    
+            {{#each config.skills as |v k|}}
+                <option value="{{k}}"> {{localize v}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+    {{/compare}}
+
+    {{! Input }}
+    {{#compare item.system.essences.essence4.ability "trick" operator="=="}}
+        <span>{{localize "fantasycraft.Dialog.gainTrick"}}: </span>
+        <input type="text" name="system.essences.essence4.target" value="{{item.system.essences.essence4.target}}">
+    {{/compare}}
+    
+    {{! Input Field}}
+    {{#compare item.system.essences.essence4.ability "feat" operator="=="}}
+        <span>{{localize "fantasycraft.Dialog.gainFeat"}}: </span>
+        <input type="text" name="system.essences.essence4.target" value="{{item.system.essences.essence4.target}}">
+    {{/compare}}
+    
+    {{! Input }}
+    {{#compare item.system.essences.essence4.ability "saveBonus" operator="=="}}
+    <select name="system.essences.essence4.target">
+        {{#select item.system.essences.essence4.target}}
+        {{#each config.savingThrow as |v k|}}
+            <option value="{{k}}"> {{localize v}}</option>
+        {{/each}}
+        {{/select}}
+    </select>
+    {{/compare}}
+    </div>
+
+{{/compare}}
+<br>

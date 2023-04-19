@@ -1,0 +1,20 @@
+<div class="chat-card spell" data-option-id="{{_id}}" data-actor-id="{{actor._id}}">
+
+    <header class="flexxol card-header">
+        <div><strong>{{name}}</strong></div>
+    </header>
+
+    <div class="card-buttons">
+        <button class="linkOption">{{localize "fantasycraft.linkSpellInChat"}} </button>
+    </div>
+    {{#if system.damage.dealsDamage}}
+    <div class="card-buttons">
+        <button class="spellDamage">{{localize "fantasycraft.rollSpellDamage"}} </button>
+    </div>  
+        {{#compare system.damage.secondaryDamage "none" operator="!="}}
+        <div class="card-buttons">
+            <button class="secondarySpellDamage">{{localize "fantasycraft.rollSecondaryDamage"}} </button>
+        </div>  
+        {{/compare}}
+    {{/if}}
+</div>

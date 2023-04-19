@@ -1,0 +1,272 @@
+<div>
+    <h3 class="form-header">{{ localize "fantasycraft.spellCustomization" }}</h3>    
+    {{! School}}
+    <div class="form-group">
+        <label>{{ localize "fantasycraft.spellSchool"}}: </label>
+        <select name="system.school">
+            {{#select item.system.school}}
+            {{#each config.spellSchool as |name school|}}
+            <option value="{{school}}">{{localize name}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+    </div>
+    {{! Discipline}}
+    <div class="form-group">
+        <label>{{ localize "fantasycraft.spellDiscipline"}}: </label>
+        <select name="system.discipline">
+            {{#select item.system.discipline}}
+            {{#each spellDisciplines as |name disc|}}
+            <option value="{{disc}}">{{localize name}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+    </div>
+    {{! Additional Terms}}
+    <div class="form-group">
+        <label>{{localize "fantasycraft.additionalTerms"}}</label>
+        <a class="trait-selector" data-options="spellTerms" data-target="system.secondaryTerms">
+            <i class="fas fa-edit"></i>
+        </a>
+        <ul class="traits-list flexrow">
+        {{#each item.system.secondaryTerms.value as |v k|}}
+            <li class="tag {{k}} bordered-text">{{v}}</li>
+        {{/each}}
+        </ul>
+    </div>
+    {{! Level}}
+    <div class="form-group">
+        <label>{{ localize "fantasycraft.spellLevel" }}: </label>
+        <select name="system.level">
+            {{#select item.system.level}}
+            {{#each config.spellLevel as |name level|}}
+            <option value="{{level}}">{{localize name}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+    </div>
+    <h3 class="form-header">{{ localize "fantasycraft.spellCustomization" }}</h3>
+    {{! Casting Time}}
+    <div class="form-group">
+        <label>{{ localize "fantasycraft.castingTime"}}: </label>
+        <input type="number" class="smallBox" name="system.castingTime.value" value="{{item.system.castingTime.value}}">
+        <select name="system.castingTime.increment">
+            {{#select item.system.castingTime.increment}}
+            {{#each config.timeIncrements as |name disc|}}
+            <option value="{{name}}">{{localize name}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+    </div>
+    {{! Distance}}
+    <div class="form-group">
+        <label>{{ localize "fantasycraft.distance"}}: </label>
+        <label>{{ localize "fantasycraft.rangedAttack"}} <input type="checkbox" name="system.distance.rangedAttack" {{checked item.system.distance.rangedAttack}}></label>
+        <select name="system.distance.value">
+            {{#select item.system.distance.value}}
+            {{#each config.distance as |name disc|}}
+            <option value="{{disc}}">{{localize name}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+    </div>
+    {{! Area}}
+    <div class="form-group">
+        <label>{{ localize "fantasycraft.area"}}: </label>
+        <input type="text" class="smallBox" name="system.area.value" value="{{item.system.area.value}}">
+        {{ localize "fantasycraft.penetrating"}}: <input class="checkbox" type="checkbox" name="system.area.penetrating" {{checked item.system.area.penetrating}}/>
+        {{ localize "fantasycraft.perCastingLevel"}}: <input class="checkbox" type="checkbox" name="system.area.perLevel" {{checked item.system.area.perLevel}}/>
+        <select name="system.area.shape">
+            {{#select item.system.area.shape}}
+            {{#each config.spellArea as |name disc|}}
+            <option value="{{disc}}">{{localize name}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+    </div>
+    {{! Duration}}
+    {{! instant/permanent then timed durations with the potential keywords of (concentration upto duration) (concentration plus duration) (dismisable) (enduring)}}
+    <div class="form-group">
+        <label>{{ localize "fantasycraft.spellDuration"}}: </label>
+        {{#if item.system.duration.isNotInstantOrPermanent}}
+        <input type="text" class="smallBox" name="system.duration.number" value="{{item.system.duration.number}}">
+        <select name="system.duration.increment">
+            {{#select item.system.duration.increment}}
+            {{#each config.durationTimeIncrements as |name disc|}}
+            <option value="{{disc}}">{{localize name}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+        {{/if}}
+        {{! }}
+        <select name="system.duration.value">
+            {{#select item.system.duration.value}}
+            {{#each config.spellDuration as |name disc|}}
+            <option value="{{disc}}">{{localize name}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+    </div>
+    {{! duration keywords}}
+    <div class="form-group">
+        <label>{{ localize "fantasycraft.spellDurationKeywords"}}: </label>
+        {{localize "fantasycraft.dismissable"}}: <input class="checkbox" type="checkbox" name="system.duration.dismissable" {{checked item.system.duration.dismissable}}/>
+        {{localize "fantasycraft.enduring"}}: <input class="checkbox" type="checkbox" name="system.duration.enduring" {{checked item.system.duration.enduring}}/>
+        {{localize "fantasycraft.perCastingLevel"}}: <input class="checkbox" type="checkbox" name="system.duration.perCastingLevel" {{checked item.system.duration.perCastingLevel}}/>
+    </div>
+    {{! Saving Throw}}
+    <div class="form-group">
+        <label>{{ localize "fantasycraft.savingThrow"}}: </label>
+        <select name="system.save.saveType">
+            {{#select item.system.save.saveType}}
+            {{#each config.savingThrow as |name disc|}}
+            <option value="{{disc}}">{{localize name}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+        <select name="system.save.saveEffect">
+            {{#select item.system.save.saveEffect}}
+            {{#each config.savingThrowEffects as |name disc|}}
+            <option value="{{disc}}">{{localize name}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+        <a class="trait-selector" data-options="savingThrowTerms" data-target="system.save.saveKeywords">
+            <i class="fas fa-edit"></i>
+        </a>
+    </div>
+
+    {{! second saving throw -- this is mostly for Phantasmal killer, lets be honest}}
+    <div class="form-group">
+        <label>{{ localize "fantasycraft.savingThrow"}}: </label>
+        <select name="system.save2.saveType">
+            {{#select item.system.save2.saveType}}
+            {{#each config.savingThrow as |name disc|}}
+            <option value="{{disc}}">{{localize name}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+        <select name="system.save2.saveEffect">
+            {{#select item.system.save2.saveEffect}}
+            {{#each config.savingThrowEffects as |name disc|}}
+            <option value="{{disc}}">{{localize name}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+        <a class="trait-selector" data-options="savingThrowTerms" data-target="system.save2.saveKeywords">
+            <i class="fas fa-edit"></i>
+        </a>
+    </div>
+
+    {{! Preparation Cost}}
+    <div class="form-group">
+        <label>{{ localize "fantasycraft.preparationCost"}}: </label>
+        <input type="text" name="system.preparationCost" value="{{item.system.preparationCost}}">
+    </div>
+
+    {{#if item.system.damage.dealsDamage}}
+    <h3 class="form-header">{{ localize "fantasycraft.damage" }}</h3>    
+    {{/if}}
+
+    <div class="form-group">
+        <label>{{localize "fantasycraft.damage"}}</label>
+        <input type="checkbox" name="system.damage.dealsDamage" {{checked item.system.damage.dealsDamage}}>
+    </div>
+    {{#if item.system.damage.dealsDamage}}
+    <div class="form-group">
+        <label>{{localize "fantasycraft.flatOrRandom"}}</label>
+        <select name="system.damage.flatOrRandom">
+            {{#select item.system.damage.flatOrRandom}}
+                <option value="flat">{{localize "fantasycraft.flatDamage"}}</option>
+                <option value="random">{{localize "fantasycraft.randomDamage"}}</option>
+            {{/select}}
+        </select>
+    </div>
+    <div class="form-group">
+        {{#compare item.system.damage.flatOrRandom "flat" operator="=="}}
+        <label>{{localize "fantasycraft.damage"}}</label>
+            <input class="mediumField" type="number" name="system.damage.flatDamage" value="{{item.system.damage.flatDamage}}">
+        {{/compare}}
+        {{#compare item.system.damage.flatOrRandom "random" operator="=="}}
+    </div>
+    <div class="form-group">
+            <label>{{localize "fantasycraft.diceValues"}}</label>
+            <input class="mediumField" type="number" name="system.damage.diceNum" value="{{item.system.damage.diceNum}}">
+            <select name="system.damage.diceSize">
+                {{#select item.system.damage.diceSize}}
+                    <option value="d3">{{localize "fantasycraft.d3"}}</option>
+                    <option value="d4">{{localize "fantasycraft.d4"}}</option>
+                    <option value="d6">{{localize "fantasycraft.d6"}}</option>
+                    <option value="d8">{{localize "fantasycraft.d8"}}</option>
+                    <option value="d10">{{localize "fantasycraft.d10"}}</option>
+                    <option value="d12">{{localize "fantasycraft.d12"}}</option>
+                {{/select}}
+            </select>
+        {{/compare}}
+        </div>
+        <div class="form-group">
+
+            <label>{{localize "fantasycraft.damageType"}}</label>
+
+            <select name="system.damage.damageType">
+                {{#select item.system.damage.damageType}}
+                {{#each config.damageTypes as |name desc|}}
+                    <option value="{{desc}}">{{localize name}}</option>
+                {{/each}}
+                {{/select}}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>{{localize "fantasycraft.damageScaling"}}</label>
+            <select name="system.damage.scaling">
+                {{#select item.system.damage.scaling}}
+                    <option value="none">{{localize "fantasycraft.none"}}</option>
+                    <option value="1">{{localize "fantasycraft.perCastingLevel"}}</option>
+                    <option value="2">{{localize "fantasycraft.per2CastingLevels"}}</option>
+                    <option value="3">{{localize "fantasycraft.per3CastingLevels"}}</option>
+                    <option value="4">{{localize "fantasycraft.per4CastingLevels"}}</option>
+                    <option value="5">{{localize "fantasycraft.per5CastingLevels"}}</option>
+                {{/select}}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>{{localize "fantasycraft.damageBonus"}}</label>
+            <input class="mediumField" type="number" name="system.damage.bonusDamage" value="{{item.system.damage.bonusDamage}}">
+        </div>
+        <div class="form-group">
+            <label>{{localize "fantasycraft.maximum"}}</label> <input class="mediumField" type="number" name="system.damage.maxDamage" value="{{item.system.damage.maxDamage}}"/> 
+        </div>
+        <div class="form-group">
+            <label>{{localize "fantasycraft.ap"}}</label>
+            <input class="mediumField" type="number" name="system.damage.ap" value="{{item.system.damage.ap}}">
+        </div>
+        <div class="form-group">
+            <label>{{localize "fantasycraft.alternateDamage"}}</label>
+            <div>
+                <select name="system.damage.secondaryDamage">
+                    {{#select item.system.damage.secondaryDamage}}
+                        <option value="none">{{localize "fantasycraft.none"}}</option>
+                        <option value="d3">{{localize "fantasycraft.d3"}}</option>
+                        <option value="d4">{{localize "fantasycraft.d4"}}</option>
+                        <option value="d6">{{localize "fantasycraft.d6"}}</option>
+                        <option value="d8">{{localize "fantasycraft.d8"}}</option>
+                        <option value="d10">{{localize "fantasycraft.d10"}}</option>
+                        <option value="d12">{{localize "fantasycraft.d12"}}</option>
+                    {{/select}}
+                </select>
+                <select name="system.damage.secondaryDamageType">
+                    {{#select item.system.damage.secondaryDamageType}}
+                    {{#each config.damageTypes as |name desc|}}
+                        <option value="{{desc}}">{{localize name}}</option>
+                    {{/each}}
+                    {{/select}}
+                </select>
+            </div>
+        </div>
+    {{/if}}
+    {{! Effect}}
+    <div class="form-group">
+        <label>{{ localize "fantasycraft.spellEffect"}}: </label>
+    </div>
+        {{editor item.system.description.value target="system.description.value" button=true owner=owner editable=editable}}
+</div>

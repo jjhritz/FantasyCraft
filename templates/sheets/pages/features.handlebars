@@ -1,0 +1,130 @@
+<div class="inventory-filters flexcol">
+    <ul class="flexcol attributes">
+        {{! Classes}}
+        <li class ="attribute">
+            <h4 class="category-label"> {{localize "fantasycraft.classes"}} </h4>
+            <section class="feature-list flexcol">
+                {{#each classes as |class id|}}
+                <div class="item ownedItem flexrow" data-item-id="{{class.id}}" data-item-name="{{class.name}}">
+                    <span style="flex: 0 0 15%;">{{class.name}}</span>
+                    <span style="flex: 0 0 10%;">{{localize "fantasycraft.level"}}: {{class.system.levels}}</span>
+                    <span style="flex: 0 0 60%;">{{!-- BAB: {{class.system.baseAttack}}, Fort: {{class.system.fortitude}}, Ref: {{class.system.reflex}}, Will: {{class.system.will}}, Def: {{class.system.defense}}, Init: {{class.system.initiative}}, Life: {{class.system.lifeStyle}}, Leg: {{class.system.legend}} --}}</span>
+                    <a class="levelDown" style="flex: 0 0 5%;">
+                        <i class="fas fa-minus"></i>
+                    </a>
+                    <a class="levelUp" style="flex: 0 0 5%;">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                    <a class="deleteItem push" style="flex: 0 0 5%;">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </div>
+                {{/each}}
+            </section>
+        </li>
+
+        {{! Class Abilities}}
+        <li class ="attribute">
+            <h4 class="category-label"> {{localize "fantasycraft.classAbilities"}} </h4>
+            <section class="feature-list two-column">
+                {{#each classFeatures as |feature id|}}
+                {{> "systems/fantasycraft/templates/partials/item-part.hbs" feature id=_id inSheet=true}}
+                {{/each}}
+            </section>
+        </li>
+
+        {{! Feats}}
+        <li class ="attribute">
+            <h4 class="category-label"> {{localize "fantasycraft.feats"}} </h4>
+            <div class="flexrow" style="align-items: center;">
+                <label>{{ localize "fantasycraft.basic"}} </label> <input class="narrowField" type="number" name="basicFeats" value="{{basicFeats}}" disabled=true>
+                <label>{{ localize "fantasycraft.melee"}} </label> <input class="narrowField" type="number" name="meleeFeats" value="{{meleeFeats}}" disabled=true>
+                <label>{{ localize "fantasycraft.ranged"}} </label> <input class="narrowField" type="number" name="rangedFeats" value="{{rangedFeats}}" disabled=true>
+                <label>{{ localize "fantasycraft.unarmed"}} </label> <input class="narrowField" type="number" name="unarmedFeats" value="{{unarmedFeats}}" disabled=true>
+                <label>{{ localize "fantasycraft.chance"}} </label> <input class="narrowField" type="number" name="chanceFeats" value="{{chanceFeats}}" disabled=true>
+                <label>{{ localize "fantasycraft.covert"}} </label> <input class="narrowField" type="number" name="covertFeats" value="{{covertFeats}}" disabled=true>
+                <label>{{ localize "fantasycraft.gear"}} </label> <input class="narrowField" type="number" name="gearFeats" value="{{gearFeats}}" disabled=true>
+                <label>{{ localize "fantasycraft.skill"}} </label> <input class="narrowField" type="number" name="skillFeats" value="{{skillFeats}}" disabled=true>
+                <label>{{ localize "fantasycraft.spellcasting"}} </label> <input class="narrowField" type="number" name="spellcastingFeats" value="{{spellcastingFeats}}" disabled=true>
+                <label>{{ localize "fantasycraft.species"}} </label> <input class="narrowField" type="number" name="speciesFeats" value="{{speciesFeats}}" disabled=true>
+                <label>{{ localize "fantasycraft.style"}} </label> <input class="narrowField" type="number" name="styleFeats" value="{{styleFeats}}" disabled=true>
+                <label>{{ localize "fantasycraft.terrain"}} </label> <input class="narrowField" type="number" name="terrainFeats" value="{{terrainFeats}}" disabled=true>
+            </div>
+            <div class="feature-list two-column">
+                {{#each feats as |feat id|}}
+                {{> "systems/fantasycraft/templates/partials/item-part.hbs" feat id=_id inSheet=true}}
+                {{/each}}
+            </div>
+        </li>
+
+        {{! Origins: races, talents, and specialty along with their abilities}}
+        <li class ="attribute">
+            <h4 class="category-label"> {{localize "fantasycraft.origins"}} </h4>
+            <section class="feature-list flexcol">
+                
+                {{#each ancestries as |ancestry id|}}
+                <div class="item ownedItem flexrow" data-item-id="{{ancestry.id}}" data-item-name="{{ancestry.name}}">
+                    <span style="flex: 0 0 11%;">{{ancestry.name}}</span>
+                    <span style="flex: 0 0 12%;">{{#if ancestry.system.isTalent}} {{else}} {{localize "fantasycraft.size"}}: {{ancestry.system.size}} {{/if}}</span>
+                    <span style="flex: 0 0 13%;">{{#if ancestry.system.isTalent}} {{else}} {{localize "fantasycraft.type"}}: {{ancestry.system.type}} {{/if}}</span>
+                    <span style="flex: 0 0 11%;">{{#if ancestry.system.speed}} {{localize "fantasycraft.speed"}}: {{ancestry.system.speed}}{{localize "fantasycraft.ft"}} {{/if}}</span>
+                    {{#each ancestry.system.stats as |stat id|}}
+                    {{#if stat.value}} 
+                    <span style="flex: 0 0 16%;">
+                        {{#if stat.isChoice}}
+                            <select class="selectStat" id="{{stat.label}}">
+                                {{#select stat.ability}}
+                                {{#each stat.choices as |v k|}}
+                                    <option value="{{v}}">{{localize v}}</option>
+                                {{/each}}
+                                {{/select}}
+                            </select>
+                            : {{stat.value}} 
+                        {{else}}
+                            {{stat.ability}}: {{stat.value}} 
+                        {{/if}}
+                    </span>
+                    {{/if}}
+                    {{/each}}         
+                    <a class="deleteItem push" style="flex: 0 0 5%;">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </div>
+                {{/each}}
+
+                {{#each ancestryFeatures as |feature id|}}
+                <div class="item ownedItem flexrow item-card" data-item-id="{{feature._id}}" data-item-name="{{feature.name}}">
+                    <span style="flex: 0 0 3%;"></span>
+                    <span style="flex: 0 0 22%;">{{feature.name}}</span>
+                    <span style="flex: 0 0 70%;">{{{feature.system.description.value}}}</span>
+                    <a class="deleteItem" style="flex: 0 0 5%;">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </div>
+                {{/each}}
+
+                {{#each specialty as |spec id|}}
+                <div class="item ownedItem flexrow item-card" data-item-id="{{spec._id}}" data-item-name="{{spec.name}}">
+                    <span style="flex: 0 0 15%;">{{spec.name}}</span>
+                    <span style="flex: 0 0 20%;">{{localize "fantasycraft.feat"}}: {{spec.system.feat}}</span>
+                    <span style="flex: 0 0 60%;"></span>
+                    <a class="deleteItem" style="flex: 0 0 5%;">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </div>
+                {{/each}}
+
+                {{#each specialties as |specialty id|}}
+                <div class="item ownedItem flexrow item-card" data-item-id="{{specialty._id}}" data-item-name="{{specialty.name}}">
+                    <span style="flex: 0 0 3%;"></span>
+                    <span style="flex: 0 0 22%;">{{specialty.name}}</span>
+                    <span style="flex: 0 0 70%;">{{{specialty.system.description.value}}}</span>
+                    <a class="deleteItem" style="flex: 0 0 5%;">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </div>
+                {{/each}}
+            </section>
+        </li>
+    </ul>
+</div>

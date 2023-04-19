@@ -1,0 +1,119 @@
+<form class="{{cssClass}} item-form flexcol" autocomplete="off">
+
+    {{!-- Item Sheet Header --}}
+    <header class="sheet-header flexrow">
+        <section class="header-details flexrow">
+            <h1 class="itemName flexrow">
+                <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'fantasycraft.ItemName' }}"/>
+            </h1>
+            
+            <ul class="attributes flexrow">
+                <li class="attribute">
+                    <h4 class="box-title">{{localize "fantasycraft.spellSchool"}}</h4>
+                    <div class="attribute-value">
+                        <label>{{item.system.school}}</label>
+                    </div>
+                </li>
+                <li class="flex2 attribute">
+                    <h4 class="box-title">{{localize "fantasycraft.spellDiscipline"}}</h4>
+                    <div class="attribute-value">
+                        <label>{{item.system.discipline}} {{#if item.system.secondaryTerms.value}} ({{item.system.secondaryTerms.value}}) {{/if}}</label>    
+                    </div>
+                </li>
+                <li class="attribute">
+                    <h4 class="box-title">{{ localize "fantasycraft.spellLevel" }} </h4>
+                    <div class="attribute-value">
+                        <label>{{localize "fantasycraft.level"}} {{item.system.level}}</label>
+                    </div>
+                </li>
+                <li class="flex2 attribute">
+                    <h4 class="box-title">{{ localize 'fantasycraft.source' }} </h4>
+                    <div class="attribute-value">
+                        <input type="text" name="system.source" value="{{item.system.source}}" placeholder="{{ localize 'fantasycraft.source' }}"/>
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </header>
+
+    {{!-- Item Sheet Navigation --}}
+    <nav class="sheet-navigation sheet-tabs" data-group="primary">
+        <a class="item active" data-tab="description">{{ localize "fantasycraft.description" }}</a>
+        <a class="item" data-tab="spell-customization">{{ localize "fantasycraft.customization" }}</a>
+    </nav>
+
+    {{!-- Item Sheet Body --}}
+    <section class="sheet-body">
+        {{!-- Description Tab --}}
+        <div class="tab attributes" data-group="primary" data-tab="description">
+            <div>
+                <strong><label>{{ localize "fantasycraft.castingTime"}}: </label></strong>
+                <span> {{item.system.castingTime.value}} {{localize item.system.castingTime.increment}}</span>
+            </div>
+            <div>
+                <strong><label>{{ localize "fantasycraft.distance"}}: </label></strong>
+                <span> {{localize item.system.distance.description}} {{#if item.system.distance.rangedAttack}}{{localize "fantasycraft.rangedAttack"}} {{/if}}</span>
+            </div>
+            {{#if item.system.area.value}}
+            <div>
+                <strong><label>{{ localize "fantasycraft.area"}}: </label></strong>
+                <span> {{item.system.area.value}} 
+                    {{#if item.system.area.customShape}}{{else}}{{localize "fantasycraft.ft"}}{{/if}} 
+                    {{#if item.system.area.perLevel}}{{localize "fantasycraft.perCastingLevel"}}{{/if}} 
+                    {{#if item.system.area.penetrating}}{{localize "fantasycraft.penetrating"}}{{/if}} 
+                    {{#if item.system.area.customShape}}{{else}}{{localize item.system.area.shape}}{{/if}}
+                </span>
+            </div>
+            {{/if}}
+            <div>
+                <strong><label>{{ localize "fantasycraft.spellDuration"}}: </label></strong>
+                <span> 
+                    {{#if item.system.duration.isNotInstantOrPermanent}}
+                        {{> "systems/fantasycraft/templates/items/parts/durationInformation.handlebars"}}
+                    {{else}}
+                        {{localize item.system.duration.durationText}}
+                    {{/if}}
+
+                    {{#if item.system.duration.durationKeyword}} ({{~/if}}
+                    {{~#if item.system.duration.dismissable}}
+                        {{~localize "fantasycraft.dismissable"~}}                    
+                    {{/if}}
+                    {{#if item.system.duration.enduring~}}
+                        {{~localize "fantasycraft.enduring"~}}
+                    {{/if~}}
+                    {{#if item.system.duration.durationKeyword~}}){{/if}}
+                </span>
+            </div>
+            {{#if item.system.save.hasSave}}
+            <div>
+                <strong><label>{{ localize "fantasycraft.savingThrow"}}: </label></strong>
+                {{item.system.save.saveType}} {{item.system.save.saveEffect}} (
+                {{#each item.system.save.saveKeywords as |v k|}}
+                    {{v}}
+                {{/each}}
+                )
+            {{#if item.system.save2.hasSave}}
+                , {{item.system.save2.saveType}} {{item.system.save2.saveEffect}} (
+                {{#each item.system.save2.saveKeywords as |v k|}}
+                    {{v}}
+                {{/each}}
+                )
+            {{/if}}
+            </div>
+            {{/if}}
+            {{#if item.system.preparationCost}}
+            <div>
+                <strong><label>{{ localize "fantasycraft.preparationCost"}}: </label></strong>
+                <span> {{item.system.preparationCost}}</span>
+            </div>
+            {{/if}}
+            <div>
+                <strong><label>{{ localize "fantasycraft.spellEffect"}}: </strong></label>
+                <span>{{{item.system.description.value}}}</span>
+            </div>
+        </div>
+        <div class="tab attributes flexrow" data-group="primary" data-tab="spell-customization">
+            {{> "systems/fantasycraft/templates/items/parts/spell-customization.handlebars"}}
+        </div>
+    </section>
+</form>

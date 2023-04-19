@@ -1,0 +1,14 @@
+<form autocomplete="off" onsubmit="event.preventDefault();">
+    <section>
+        {{#each choices as |value resistance|}}
+            <div class="item ownedItem item-card flexrow">
+                <span class="flex5" style="text-transform: capitalize;">{{localize resistance}}</span>
+                <span>
+                    {{value}}
+                </span>
+            </div>
+        {{/each}}
+    </section>
+
+    <button type="submit" name="submit" value="1">{{ localize "fantasycraft.close"}}</button>
+</form>

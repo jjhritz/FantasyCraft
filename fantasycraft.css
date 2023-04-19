@@ -1,0 +1,851 @@
+.fantasycraft.sheet.actor {
+  min-width: 756px;
+  min-height: 680px;
+}
+.fantasycraft.sheet.actor .sheet-header .attributes {
+  flex: 0 0 100%;
+  margin: 0;
+}
+.fantasycraft.sheet.actor .sheet-header .attributes .attribute {
+  height: 70px;
+  border: none;
+  border-left: 2px groove #eeede0;
+  border-radius: 0;
+}
+.fantasycraft.sheet.actor .sheet-header .summary {
+  height: 30px;
+  border-bottom: 2px groove #eeede0;
+  font-size: 18px;
+}
+.fantasycraft.sheet.actor .sheet-header .summary input,
+.fantasycraft.sheet.actor .sheet-header .summary span {
+  display: block;
+  height: 24px;
+  line-height: 24px;
+}
+.fantasycraft.sheet.actor ul.attributes {
+  flex: 0 0 60px;
+  margin: 0;
+  padding: 0;
+}
+.fantasycraft.sheet.actor ul.attributes li.attribute .attribute-value {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 28px;
+  line-height: 28px;
+  font-family: "Freebooter", "Palatino Linotype", serif;
+  font-size: 20px;
+  font-weight: 700;
+}
+.fantasycraft.sheet.actor ul.attributes li.attribute .attribute-value > * {
+  text-align: center;
+  font-weight: 400;
+  font-size: 24px;
+}
+.fantasycraft.sheet.actor ul.attributes li.attribute .attribute-value.multiple input {
+  flex: 0 0 33%;
+}
+.fantasycraft.sheet.actor ul.attributes li.attribute .attribute-value input {
+  text-align: center;
+  border: none;
+  border-bottom: 2px solid #000000;
+  background-color: hsla(0, 0%, 0%, 0);
+}
+.fantasycraft.sheet.actor ul.attributes li.attribute .button {
+  width: 100%;
+  text-align: center;
+}
+.fantasycraft.sheet.actor ul.attributes li.attribute .button a {
+  display: inline-block;
+  font-size: 16px;
+  border: 1px solid #b5b3a4;
+  border-radius: 2px;
+  margin: 3px;
+  padding: 0 2px;
+  width: 90px;
+  height: 22px;
+  background-color: #ffffff;
+}
+.fantasycraft.sheet.actor ul.attributes li.attribute .roll {
+  text-align: center;
+  max-height: 18px;
+}
+.fantasycraft.sheet.actor .footer-text {
+  flex: 0 0 18px;
+  margin-top: -1px;
+  line-height: 18px;
+  font-family: "Signika", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  text-align: center;
+}
+.fantasycraft.sheet.actor .footer-text .flatfooted-input input {
+  width: 20px;
+  height: 15px;
+  background-color: hsla(0, 0%, 0%, 0);
+  border: none;
+  border-bottom: 1px solid #97958d;
+}
+.fantasycraft.sheet.actor .tab.attributes {
+  overflow: hidden;
+}
+.fantasycraft.sheet.actor .tab.spellcasting {
+  overflow-y: hidden;
+}
+.fantasycraft.sheet.actor .sheet-body .tab {
+  padding: 0 5px;
+  overflow: hidden auto;
+}
+.fantasycraft.sheet.actor ul.ability-scores {
+  padding: 0px;
+  min-height: 260px;
+}
+.fantasycraft.sheet.actor ul.ability-scores li.ability {
+  max-width: 240px;
+  line-height: 40px;
+}
+.fantasycraft.sheet.actor ul.ability-scores li.ability input {
+  border: 3px solid white;
+  height: 60px;
+  max-width: 60px;
+  text-align: center;
+  background-color: #444;
+  font-family: arial;
+  font-size: 20px;
+  color: white;
+}
+.fantasycraft.sheet.actor ul.ability-scores li.mod input {
+  border: 3px solid white;
+  height: 40px;
+  max-width: 40px;
+  text-align: center;
+  background-color: #444;
+  font-family: arial;
+  font-size: 20px;
+  color: white;
+}
+.fantasycraft.sheet.actor h4.skill-name {
+  min-width: 95px;
+  max-width: 105px;
+}
+.fantasycraft.sheet.actor table tr td input.skill-input {
+  min-width: 28px;
+}
+.fantasycraft.sheet.actor ul.skills {
+  -webkit-column-count: 2;
+  /* Chrome, Safari, Opera */
+  -moz-column-count: 2;
+  /* Firefox */
+  column-count: 2;
+  width: 100%;
+  min-width: 28px;
+}
+.fantasycraft.sheet.actor ul.skills li.skill input.skill-input {
+  min-width: 28px;
+}
+.fantasycraft.sheet.actor .skill-container {
+  -webkit-column-count: 2;
+  /* Chrome, Safari, Opera */
+  -moz-column-count: 2;
+  /* Firefox */
+  column-count: 2;
+}
+.fantasycraft.sheet.actor .skill-title {
+  font-size: 10px;
+  font-weight: 100;
+}
+.fantasycraft.sheet.actor .checkbox,
+.fantasycraft.sheet.actor .ul .li .checkbox {
+  width: 12px;
+  margin: 0px;
+}
+.fantasycraft.sheet.actor .med-checkbox,
+.fantasycraft.sheet.actor .ul .li .checkbox {
+  width: 15px;
+  margin: 0px;
+  vertical-align: middle;
+}
+.fantasycraft.sheet.actor .traits .form-group,
+.fantasycraft.sheet.actor .traits .form-group-stacked {
+  margin: 0 0 3px 0;
+  justify-content: space-between;
+}
+.fantasycraft.sheet.actor .traits .configure-flags {
+  flex: 1;
+}
+.fantasycraft.sheet.actor .traits label {
+  flex: none;
+  line-height: 20px;
+  font-weight: bold;
+  margin: 0 10px 0 0;
+}
+.fantasycraft.sheet.actor .traits select {
+  max-width: 200px;
+}
+.fantasycraft.sheet.actor .traits input {
+  text-align: right;
+}
+.fantasycraft.sheet.actor .traits i.fas {
+  float: right;
+  margin-right: 3px;
+  text-align: right;
+  color: #999;
+}
+.fantasycraft.sheet.actor .traits i.fas:hover {
+  color: #111;
+  text-shadow: 0 0 10px red;
+}
+.fantasycraft.sheet.actor .category-label {
+  flex: 0 0 100%;
+  background-color: maroon;
+  color: white;
+  text-align: center;
+  font-size: 16px;
+  margin-bottom: 0px;
+  text-transform: uppercase;
+}
+.fantasycraft.sheet.actor .category-body {
+  margin-top: 0px;
+  padding: 5px;
+  border-left: 1px groove lightgray;
+  min-height: 110px;
+}
+.fantasycraft.sheet.actor input.calcBox {
+  background: white;
+}
+.fantasycraft.sheet.actor input.calcBox:disabled {
+  background: #d8d8d8;
+  border-color: black;
+  text-align: center;
+  margin: auto;
+}
+.fantasycraft.sheet.actor input.largeBox {
+  height: 30px;
+  width: 30px;
+  border-radius: 2px;
+  font-weight: 300;
+  font-size: 16px;
+}
+.fantasycraft.sheet.actor input.wideBox {
+  height: 20px;
+  width: 27px;
+  border-radius: 1px;
+  font-weight: 200;
+  font-size: 12px;
+}
+.fantasycraft.sheet.actor input.smallBox {
+  height: 20px;
+  min-width: 20px;
+  max-width: 27px;
+  border-radius: 1px;
+  font-weight: 200;
+  font-size: 12px;
+}
+.fantasycraft.sheet.actor li.centreItems {
+  height: 50px;
+  line-height: 20px;
+  text-align: center;
+  vertical-align: text-bottom;
+}
+.fantasycraft.sheet.actor .feature-list {
+  min-height: 52px;
+  border: 3px outset lightgray;
+  border-radius: 2px;
+}
+.fantasycraft.sheet.actor .ownedItem {
+  border: 3px outset lightgray;
+  padding: 2px;
+  border-radius: 2px;
+  background: #efe;
+  height: 26px;
+}
+.flexrow {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+.flexrow .flex1 {
+  flex: 1;
+}
+.flexrow .flex2 {
+  flex: 2;
+}
+.flexrow .flex3 {
+  flex: 3;
+}
+.flexrow .flex4 {
+  flex: 4;
+}
+.flexrow .flex5 {
+  flex: 5;
+}
+.flexrow .flex6 {
+  flex: 6;
+}
+.flexrow > * {
+  flex: 1;
+}
+.flexcol {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+.flexcol > * {
+  flex: 1;
+}
+@font-face {
+  font-family: 'Freebooter';
+  font-style: normal;
+  font-weight: 700;
+  src: url('fonts/FREEBOOT.woff') format('woff'), url('fonts/FREEBOOT.woff2') format('woff2'), url('fonts/FREEBOOT.otf') format('opentype');
+}
+.title-font {
+  font-family: "Freebooter", "Palatino Linotype", serif;
+  font-size: 20px;
+  font-weight: 700;
+}
+.fantasycraft {
+  /* Form Groups */
+  /* Tags */
+}
+.fantasycraft .form-group label {
+  flex: 2;
+  font-weight: bold;
+}
+.fantasycraft .form-group .form-fields {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+.fantasycraft .form-group .form-fields .flex1 {
+  flex: 1;
+}
+.fantasycraft .form-group .form-fields .flex2 {
+  flex: 2;
+}
+.fantasycraft .form-group .form-fields .flex3 {
+  flex: 3;
+}
+.fantasycraft .form-group .form-fields .flex4 {
+  flex: 4;
+}
+.fantasycraft .form-group .form-fields .flex5 {
+  flex: 5;
+}
+.fantasycraft .form-group .form-fields .flex6 {
+  flex: 6;
+}
+.fantasycraft .form-group .form-fields > * {
+  flex: 1;
+}
+.fantasycraft .form-group .form-fields > * {
+  margin: 0 3px 0 0;
+}
+.fantasycraft .form-group .form-fields > *:last-child {
+  margin-right: 0;
+}
+.fantasycraft .form-group.stacked label {
+  flex: 0 0 100%;
+  margin: 0;
+}
+.fantasycraft .form-group.stacked label.checkbox {
+  flex: auto;
+  text-align: left;
+}
+.fantasycraft span.categorylabel {
+  font-weight: bold;
+}
+.fantasycraft .form-header {
+  margin: 0 0 0.25em 0;
+  padding: 2px 0;
+  border-top: 2px groove #eeede0;
+  border-bottom: 2px groove #eeede0;
+  font-family: "Freebooter", "Palatino Linotype", serif;
+  font-size: 20px;
+  font-weight: 700;
+}
+.fantasycraft .tag {
+  display: inline-block;
+  margin: 0 2px 0 0;
+  padding: 0 3px;
+  font-size: 10px;
+  line-height: 16px;
+  border: 1px solid #999;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.05);
+}
+.sheet {
+  /* ----------------------------------------- */
+  /*  Element Styles                           */
+  /* ----------------------------------------- */
+  /* ----------------------------------------- */
+  /*  TinyMCE                                  */
+  /* ----------------------------------------- */
+  /* ----------------------------------------- */
+  /*  Sheet Header                             */
+  /* ----------------------------------------- */
+  /* ----------------------------------------- */
+  /*  Sheet Navigation                         */
+  /* ----------------------------------------- */
+  /* ----------------------------------------- */
+  /*  Sheet Body                               */
+  /* ----------------------------------------- */
+  /* ----------------------------------------- */
+  /*  List Filters                             */
+  /* ----------------------------------------- */
+  /* ----------------------------------------- */
+  /*  Trait Lists                              */
+  /* ----------------------------------------- */
+}
+.sheet .window-content {
+  overflow-y: hidden;
+  padding: 0px;
+  font-size: 13px;
+  color: #111;
+}
+.sheet .window-content form {
+  overflow: hidden;
+}
+.sheet .window-content .tab {
+  height: 100%;
+  overflow-y: auto;
+  align-content: flex-start;
+}
+.sheet input[type="text"],
+.sheet input[type="number"] {
+  background: none;
+  border: 1px solid transparent;
+}
+.sheet input[type="text"]:hover,
+.sheet input[type="number"]:hover,
+.sheet input[type="text"]:focus,
+.sheet input[type="number"]:focus {
+  border: 1px solid #111;
+}
+.sheet select {
+  flex: 1;
+  font-size: 12px;
+  height: 22px;
+  background: transparent;
+}
+.sheet .editable .rollable:hover {
+  color: #000;
+  text-shadow: 0 0 10px red;
+  cursor: pointer;
+}
+.sheet span.sep {
+  flex: none;
+  margin: 0 1px;
+  display: inline;
+  position: relative;
+  color: tan;
+  font-weight: normal;
+}
+.sheet .remove-space {
+  margin: 0px;
+  padding: 0px;
+}
+.sheet .two-column {
+  display: grid;
+  grid-template-columns: auto auto;
+  min-height: 52px;
+}
+.sheet .three-column {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+.sheet .push {
+  margin-left: auto;
+}
+.sheet .message-content {
+  display: flex;
+  flex-direction: column;
+}
+.sheet .editor {
+  height: 100%;
+}
+.sheet .editor .tox-toolbar-overlord,
+.sheet .editor .tox-toolbar__primary {
+  background: none;
+}
+.sheet .sheet-header {
+  flex: 0 0 160px;
+  border-bottom: 2px groove #eeede0;
+  /* Character Name */
+  /* Profile Image */
+}
+.sheet .sheet-header .header-details {
+  vertical-align: top;
+  font-family: "Freebooter", "Palatino Linotype", serif;
+  font-size: 20px;
+  font-weight: 700;
+}
+.sheet .sheet-header ul.summary {
+  height: 30px;
+  border-bottom: 2px groove #eeede0;
+  font-size: 18px;
+  list-style: none;
+}
+.sheet .sheet-header ul.summary input,
+.sheet .sheet-header ul.summary span {
+  display: block;
+  height: 24px;
+  line-height: 24px;
+}
+.sheet .sheet-header h1 {
+  flex: 1;
+  border-bottom: none;
+  min-height: 20px;
+  margin: 0;
+  padding: 5px;
+}
+.sheet .sheet-header h1 input {
+  display: block;
+  height: 25px;
+  font-size: 32px;
+  margin: 0;
+  border: none;
+}
+.sheet .sheet-header img.profile {
+  flex: 0 0 160px;
+  max-width: 160px;
+  height: 160px;
+  object-fit: contain;
+  border: none;
+  border-left: 2px groove #eeede0;
+}
+.sheet .sheet-header img.profile-left {
+  flex: 0 0 160px;
+  max-width: 160px;
+  height: 160px;
+  object-fit: contain;
+  border: none;
+}
+.sheet .sheet-header img.profile-small {
+  flex: 0 0 120px;
+  max-width: 120px;
+  height: 120px;
+  object-fit: contain;
+  border: none;
+  border-right: 2px groove #eeede0;
+}
+.sheet img.classPicture {
+  flex: 0 0 160px;
+  max-width: 300px;
+  object-fit: contain;
+  border: none;
+}
+.sheet .sheet-navigation {
+  flex: 0 0 30px;
+  margin-bottom: 5px;
+  font-family: "Freebooter", "Palatino Linotype", serif;
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+}
+.sheet .sheet-navigation .item {
+  height: 30px;
+  line-height: 32px;
+  margin: 0 15px;
+  border-bottom: 3px solid beige;
+}
+.sheet .sheet-navigation .item.active {
+  border-bottom: 3px solid crimson;
+}
+.sheet .sheet-body {
+  flex: 1;
+  overflow: hidden;
+}
+.sheet .filter-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  line-height: 16px;
+  max-width: 70%;
+}
+.sheet .filter-list .filter-icon {
+  flex: none;
+  font-size: 14px;
+  color: tan;
+}
+.sheet .filter-list .filter-item {
+  text-align: center;
+  font-size: 12px;
+  margin: 0 6px 0 0;
+  border-bottom: 3px solid beige;
+  white-space: nowrap;
+}
+.sheet .filter-list .filter-item:last-child {
+  margin: 0;
+}
+.sheet .filter-list .filter-item:hover {
+  text-shadow: 0 0 4px red;
+  border-bottom: 3px solid tan;
+}
+.sheet .filter-list .filter-item.active {
+  border-bottom: 3px solid crimson;
+}
+.sheet .traits {
+  margin: 5px 0 0;
+}
+.sheet .traits .trait-selector {
+  flex: 0 0 16px;
+  padding: 2px 0;
+  color: #999;
+  font-size: 10px;
+}
+.sheet .traits .traits-list {
+  line-height: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-transform: capitalize;
+}
+/* ----------------------------------------- */
+/* Trait Selector
+  /* ----------------------------------------- */
+#trait-selector .trait-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#trait-selector input[type="text"] {
+  height: 24px;
+  margin: 2px;
+}
+.sheet ul.traits-list li.bordered-text {
+  border: 2px groove #eeede0;
+}
+ul {
+  list-style: none;
+}
+table.item-table {
+  margin: 0;
+}
+table.item-table tr td.table-item {
+  text-align: center;
+}
+h3.box-title {
+  height: 20px;
+  line-height: 16px;
+  margin: 0px 0px 0px;
+  font-family: "Freebooter", "Palatino Linotype", serif;
+  font-size: 20px;
+  font-weight: 700;
+  font-size: 16px;
+  color: #4b4a44;
+  border-bottom: 1px solid #c9c7b8;
+  text-align: center;
+}
+h4.box-title {
+  height: 18px;
+  line-height: 16px;
+  margin: 0px 0px 0px;
+  font-family: "Freebooter", "Palatino Linotype", serif;
+  font-size: 20px;
+  font-weight: 700;
+  font-size: 16px;
+  color: #4b4a44;
+  border-bottom: 1px solid #c9c7b8;
+  text-align: center;
+}
+h4.ability-name {
+  min-width: 100px;
+  line-height: 35px;
+  margin: 4px 8px 2px;
+  font-family: "Freebooter", "Palatino Linotype", serif;
+  font-size: 20px;
+  font-weight: 700;
+  font-size: 17px;
+  text-align: center;
+}
+input.narrowField {
+  width: 25px;
+}
+input.mediumField {
+  max-width: 50px;
+}
+input.wideField {
+  width: 100px;
+}
+input.underline {
+  border: 0;
+  outline: 0;
+  border-bottom: 1px solid black;
+}
+button.smallButton {
+  padding: 0px;
+  width: 100px;
+  height: 30px;
+}
+textarea.text-area {
+  min-width: 100%;
+  max-width: 100%;
+  height: 175px;
+}
+.fantasycraft.item .item-form header {
+  background: url(../fantasycraft/assets/ui/header2.png) repeat-x local;
+  background-size: auto;
+  color: white;
+}
+.fantasycraft.item .item-form header input {
+  color: white;
+}
+.fantasycraft.item .item-form header select {
+  color: white;
+}
+.fantasycraft.sheet.item {
+  min-width: 600px;
+  max-width: 685px;
+  min-height: 525px;
+}
+.fantasycraft.sheet.item input.short {
+  max-height: 15px;
+}
+.fantasycraft.sheet.item input.tall {
+  max-height: 25px;
+}
+.fantasycraft.sheet.item input.narrowField {
+  width: 25px;
+}
+.fantasycraft.sheet.item input.mediumField {
+  max-width: 50px;
+}
+.fantasycraft.sheet.item input.wideField {
+  width: 100px;
+}
+.fantasycraft.sheet.item header.itemHeader {
+  position: relative;
+  padding: 5px;
+  max-height: 120px;
+}
+.fantasycraft.sheet.item .sheet-header .attributes {
+  flex: 0 0 100%;
+  margin: 0;
+}
+.fantasycraft.sheet.item .sheet-header .attributes .attribute {
+  height: 70px;
+  border: none;
+  border-left: 2px groove #eeede0;
+  border-radius: 0;
+}
+.fantasycraft.sheet.item ul.attributes {
+  flex: 0 0 60px;
+  margin: 0;
+  padding: 0;
+}
+.fantasycraft.sheet.item ul.attributes li.attribute .attribute-value {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 28px;
+  line-height: 28px;
+  font-family: "Freebooter", "Palatino Linotype", serif;
+  font-size: 20px;
+  font-weight: 700;
+}
+.fantasycraft.sheet.item ul.attributes li.attribute .attribute-value > * {
+  text-align: center;
+  font-weight: 400;
+  font-size: 18px;
+}
+.fantasycraft.sheet.item ul.attributes li.attribute .attribute-value.multiple input {
+  flex: 0 0 33%;
+}
+.fantasycraft.sheet.item ul.attributes li.attribute .attribute-value input {
+  text-align: center;
+  border: none;
+  border-bottom: 2px solid #000000;
+  background-color: hsla(0, 0%, 0%, 0);
+}
+.fantasycraft.sheet.item ul.attributes li.attribute .button {
+  width: 100%;
+  text-align: center;
+}
+.fantasycraft.sheet.item ul.attributes li.attribute .button a {
+  display: inline-block;
+  font-size: 16px;
+  border: 1px solid #b5b3a4;
+  border-radius: 2px;
+  margin: 3px;
+  padding: 0 2px;
+  width: 90px;
+  height: 22px;
+  background-color: #ffffff;
+}
+.fantasycraft.sheet.item .itemName {
+  text-align: center;
+  flex: 0 0 100%;
+}
+.fantasycraft.sheet.item .item-subtitle {
+  text-align: center;
+  font-style: italic;
+}
+.fantasycraft.sheet.item .form-group.stacked label {
+  flex: 0 0 100%;
+  margin: 0;
+}
+.fantasycraft.sheet.item .form-group.stacked label.checkbox {
+  flex: auto;
+  text-align: left;
+}
+.fantasycraft.sheet.item .item-customization-section {
+  padding: 2px 16px;
+  line-height: 1.4;
+}
+.fantasycraft.sheet.item .item-customization-section.margins {
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+.fantasycraft.sheet.item .item-customization-section > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.fantasycraft.sheet.item .item-customization-section > div > div:last-child {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.fantasycraft.sheet.item .item-customization-section > div > input {
+  text-align: right;
+}
+.fantasycraft.sheet.item .item-upgrades label.checkbox {
+  flex: 0 0 98px;
+}
+.body {
+  font-family: 'ariel';
+  font-style: normal;
+  font-weight: 300;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Freebooter';
+  font-style: normal;
+  font-size: 18px;
+  font-weight: 700;
+  src: url('fonts/FREEBOOT.woff') format('woff'), url('fonts/FREEBOOT.woff2') format('woff2'), url('fonts/FREEBOOT.otf') format('opentype');
+}
+.attackbox .boxline {
+  flex-direction: row;
+  display: flex;
+}
+.card-header .headertext {
+  float: left;
+  padding-left: 5px;
+  text-transform: capitalize;
+}
+.threat {
+  color: green;
+}
+.error {
+  color: red;
+}

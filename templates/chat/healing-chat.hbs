@@ -1,0 +1,36 @@
+<div class="chat-card weapon" data-owner-id="{{actor._id}}">
+
+    <header class="card-header">
+      <div class="attackbox">
+        <div class="boxline">
+          <div class="headertext"><b>{{rollDescription}}</b></div>
+        </div>
+    </header>
+
+        <div class="dice-roll">
+        <div class="dice-result">
+            <div class="dice-formula">
+                {{data.formula}}
+            </div>
+            <div class="dice-tooltip">
+                <section class="tooltip-part">
+                    <div class="dice">
+                        <header class="part-header flexrow">
+                            <span class="part-formula">{{data.formula}}</span>
+                            {{#if this.flavor}}<span class="part-flavor">{{data.flavor}}</span>{{/if}}
+                            <span class="part-total">{{data.diceRoll}}</span>
+                        </header>
+                        <ol class="dice-rolls">
+                        {{#each data.rolls}}
+                            <li class="roll {{data.classes}}">{{{data.result}}}</li>
+                        {{/each}}
+                        </ol>
+                    </div>
+                </section>
+            </div>
+            <div class="dice-total {{#if data.threat}}threat{{/if}} {{#if data.error}}error{{/if}} ">
+                {{data.roll}}
+            </div>
+        </div>
+    </div>
+</div>

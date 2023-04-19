@@ -1,0 +1,25 @@
+<form autocomplete="off" onsubmit="event.preventDefault();">
+    {{! primary movement type}}
+    <label>{{localize "fantasycraft.primaryMovement"}}</label>
+    <select class="change-base-movement" name="system.primaryMovement">
+        {{#select system.primaryMovement}}
+        <option value="immobile"> {{localize "fantasycraft.immobile"}}</option>
+        <option value="walker"> {{localize "fantasycraft.walker"}}</option>
+        <option value="flyer"> {{localize "fantasycraft.flyer"}}</option>
+        <option value="swimmer"> {{localize "fantasycraft.swimmer"}}</option>
+        <option value="burrower"> {{localize "fantasycraft.burrower"}}</option>
+        {{/select}}
+    </select>
+
+    {{! mobility in each movement type}}
+    {{#compare "immobile" system.primaryMovement operator="!="}}
+    <ul>
+    {{#each choices as |name id|}}
+        <li class="flexrow">
+            <span class="flex4">{{localize name.label}}:</span> <input class="move-value flex1" type="number" name="movement.{{id}}" value="{{name.speed}}" />
+        </li>
+    {{/each}}
+    </ul>
+    {{/compare}}
+    <button class="submit" type="submit"><i class="far fa-save"></i> {{ localize "fantasycraft.traitSave"}}</button>
+</form>

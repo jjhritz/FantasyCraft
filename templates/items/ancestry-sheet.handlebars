@@ -1,0 +1,207 @@
+<form class="{{cssClass}} item-form flexcol" autocomplete="off">
+
+    {{!-- Item Sheet Header --}}
+    <header class="itemHeader">
+        <h1 class="itemName flexrow">
+            <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'fantasycraft.ItemName' }}"/>
+        </h1>
+        <section>
+            <input type="text" name="system.source" value="{{item.system.source}}" placeholder="{{ localize 'fantasycraft.source' }}"/>
+        </section>
+        <nav class="sheet-navigation sheet-tabs" data-group="primary">
+            <a class="item active" data-tab="description">{{ localize "fantasycraft.description" }}</a>
+            <a class="item" data-tab="details">{{ localize "fantasycraft.details" }}</a>        
+        </nav>
+    </header>
+    <body>
+        <section class="sheet-body">
+        {{!-- Description Tab --}}
+            <div class="tab attributes" data-group="primary" data-tab="description">
+                <div>
+                {{{item.system.description.value}}}
+                </div>
+                <div>
+                {{{item.system.description.chat}}}
+                </div>
+            </div>
+            <div class="tab attributes flexcol" data-group="primary" data-tab="details">
+                {{!Size, width by height}}
+                <div class="form-group item-customization-section">
+                    <div>
+                    <label>{{localize "fantasycraft.size"}}</label> 
+                        <select name="system.size">
+                            {{#select item.system.size}}
+                            {{#each config.size as |v k|}}
+                                <option value="{{k}}">{{localize v}}</option>
+                            {{/each}}
+                            {{/select}}
+                        </select>
+                        <div>
+                            <input class="narrowField" type="number" name="system.footprint.width" value="{{item.system.footprint.width}}">
+                            x
+                            <input class="narrowField" type="number" name="system.footprint.height" value="{{item.system.footprint.height}}">
+                        </div>
+                    </div>
+                </div>
+                {{!Reach}}
+                <div class="form-group item-customization-section">
+                    <div>
+                    <label>{{localize "fantasycraft.reach"}}</label> 
+                    
+                    <input class="narrowField" type="number" name="system.reach" value="{{item.system.reach}}">
+                    </div>
+                </div>
+                {{!biped/quadraped}}
+                <div class="form-group item-customization-section">
+                    <div>
+                        <label>{{localize "fantasycraft.locomotion"}}</label>
+                        <select name="system.locomotion">
+                            {{#select item.system.locomotion}}
+                                <option value="bipedal">{{localize "fantasycraft.bipedal"}}</option>
+                                <option value="quadrupedal">{{localize "fantasycraft.quadrupedal"}}</option>
+                            {{/select}}
+                        </select>
+                    </div>
+                </div>
+                {{!creature type}}
+                <div class="form-group item-customization-section">
+                    <div>
+                    <label>{{localize "fantasycraft.type"}}</label> 
+                    <select name="system.type">
+                        {{#select item.system.type}}
+                        {{#each config.creatureType as |v k|}}
+                            <option value="{{k}}">{{localize v}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
+                    </div>
+                </div>
+                {{!Attribute changes}}
+                <div class="form-group item-customization-section">
+                    <div>
+                        <label>{{localize "fantasycraft.attributes"}}</label> 
+                        {{ localize "fantasycraft.isChoice" }} <input type="checkbox" name="system.stats.stat1.isChoice" {{checked item.system.stats.stat1.isChoice}}/> 
+                        {{#if item.system.stats.stat1.isChoice}}
+                            <span>{{localize "fantasycraft.choices"}}</span>
+
+                            <a class="trait-selector" data-options="abilityScores" data-target="system.stats.stat1.choices">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        {{else}}
+                        <select name="system.stats.stat1.ability">
+                            {{#select item.system.stats.stat1.ability}}
+                                <option value=""></option>
+                            {{#each config.abilityScores as |v k|}}
+                                <option value="{{k}}">{{localize v}}</option>
+                            {{/each}}
+                            {{/select}}
+                        </select>
+                        {{/if}}
+                        <input class="narrowField" type="number" name="system.stats.stat1.value" value="{{item.system.stats.stat1.value}}"/>
+                    </div>
+                </div>
+                <div class="form-group item-customization-section">
+                    {{!Attribute 2}}
+                    <div>
+                        <label>{{localize "fantasycraft.attributes"}}</label> 
+                        {{ localize "fantasycraft.isChoice" }} <input type="checkbox" name="system.stats.stat2.isChoice" {{checked item.system.stats.stat2.isChoice}}/> 
+                        {{#if item.system.stats.stat2.isChoice}}
+                            <span>{{localize "fantasycraft.choices"}}</span>
+
+                            <a class="trait-selector" data-options="abilityScores" data-target="system.stats.stat2.choices">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        {{else}}
+                            <select name="system.stats.stat2.ability">
+                                {{#select item.system.stats.stat2.ability}}
+                                    <option value=""></option>
+                                {{#each config.abilityScores as |v k|}}
+                                    <option value="{{k}}">{{localize v}}</option>
+                                {{/each}}
+                                {{/select}}
+                            </select>
+                        {{/if}}
+                        <input class="narrowField" type="number" name="system.stats.stat2.value" value="{{item.system.stats.stat2.value}}"/>
+                    </div>
+                </div>
+                <div class="form-group item-customization-section">
+                    <div>
+                    {{!Attribute 3}}
+                        <label>{{localize "fantasycraft.attributes"}}</label> 
+                        {{ localize "fantasycraft.isChoice" }} <input type="checkbox" name="system.stats.stat3.isChoice" {{checked item.system.stats.stat3.isChoice}}/> 
+                        {{#if item.system.stats.stat3.isChoice}}
+                            <span>{{localize "fantasycraft.choices"}}</span>
+
+                            <a class="trait-selector" data-options="abilityScores" data-target="system.stats.stat3.choices">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        {{else}}
+                            <select name="system.stats.stat3.ability">
+                                {{#select item.system.stats.stat3.ability}}
+                                    <option value=""></option>
+                                {{#each config.abilityScores as |v k|}}
+                                    <option value="{{k}}">{{localize v}}</option>
+                                {{/each}}
+                                {{/select}}
+                            </select>
+                        {{/if}}
+                        <input class="narrowField" type="number" name="system.stats.stat3.value" value="{{item.system.stats.stat3.value}}"/>
+                    </div>
+                </div>
+                <div class="form-group item-customization-section">
+                    {{!Attribute 4}}
+                    <div>
+                        <label>{{localize "fantasycraft.attributes"}}</label> 
+                        {{ localize "fantasycraft.isChoice" }} <input type="checkbox" name="system.stats.stat4.isChoice" {{checked item.system.stats.stat4.isChoice}}/> 
+                        {{#if item.system.stats.stat4.isChoice}}
+                            <span>{{localize "fantasycraft.choices"}}</span>
+
+                            <a class="trait-selector" data-options="abilityScores" data-target="system.stats.stat4.choices">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        {{else}}
+                            <select name="system.stats.stat4.ability">
+                                {{#select item.system.stats.stat4.ability}}
+                                    <option value=""></option>
+                                {{#each config.abilityScores as |v k|}}
+                                    <option value="{{k}}">{{localize v}}</option>
+                                {{/each}}
+                                {{/select}}
+                            </select>
+                        {{/if}}
+                        <input class="narrowField" type="number" name="system.stats.stat4.value" value="{{item.system.stats.stat4.value}}"/>
+                    </div>
+                </div>
+                {{!speed}}
+                <div class="form-group item-customization-section">
+                    <div>
+                        <label>{{localize "fantasycraft.speed"}}</label> 
+                        <span>{{localize "fantasycraft.ground"}}</span>
+                        <input class="mediumField" type="number" name="system.speed" value="{{item.system.speed}}">
+                    </div>
+                </div>
+                <div class="form-group item-customization-section">
+                    <div>
+                        <label>{{localize "fantasycraft.speed"}}</label> 
+                        <select name="system.speed2.type">
+                            {{#select item.system.speed2.type}}
+                                <option value=""></option>
+                            {{#each config.moveType as |v k|}}
+                                <option value="{{k}}">{{localize v}}</option>
+                            {{/each}}
+                            {{/select}}
+                        </select>
+                        <input class="mediumField" type="number" name="system.speed2.value" value="{{item.system.speed2.value}}">
+                    </div>
+                </div>
+                <div>
+                    <label>{{localize "fantasycraft.description"}}</label>
+                    {{editor item.system.description.value target="system.description.value" button=true owner=owner editable=editable}}
+                </div>
+                <div>
+                    <label>{{localize "fantasycraft.details"}}</label> 
+                    {{editor item.system.decription.chat target="system.description.chat" button=true owner=owner editable=editable}}
+                </div>
+            </div>
+    </body>
+</form>

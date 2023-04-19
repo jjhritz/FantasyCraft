@@ -1,0 +1,11 @@
+<form autocomplete="off" onsubmit="event.preventDefault();">
+    {{!This app is mostly just a dialog box telling the player to just drop items onto the character}}
+    {{localize "fantasycraft.Dialog.gearDialog"}}
+
+    <br>
+    {{! checkbox for "Character is player controlled"}}
+    {{localize "fantasycraft.playerControlled"}}<input class="is-player-controlled" type="checkbox" name="system.playerControlled" {{checked choices.playerControlled}}/> 
+    {{localize "fantasycraft.xp"}}: <span>{{exp}}</span>
+    {{!Save button}}
+    <button class="submit" type="submit"><i class="far fa-save"></i> {{ localize "fantasycraft.traitSave"}}</button>
+</form>

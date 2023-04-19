@@ -1,0 +1,66 @@
+<div class="chat-card spell" data-spell-id="{{_id}}">
+
+    <header class="flexxol card-header">
+      <div>
+        <div>
+           <div><strong>{{name}}</strong></div>
+           <div><strong>{{localize "fantasycraft.level"}}: {{system.level}}</strong></div>
+           <div><strong>{{localize "fantasycraft.castingTime"}}:</strong>{{system.castingTime.value}} {{localize system.castingTime.increment}}</div>
+           <div><strong>{{localize "fantasycraft.distance"}}:</strong>{{localize system.distance.description}} {{#if system.distance.rangedAttack}}{{localize "fantasycraft.rangedAttack"}} {{/if}}</div>
+            {{#compare system.area.value "0" operator="!="}}
+            <div><strong>{{ localize "fantasycraft.area"}}: </strong>
+                {{system.area.value}} 
+                {{#if system.area.customShape}}{{else}}{{localize "fantasycraft.ft"}}{{/if}} 
+                {{#if system.area.perLevel}}{{localize "fantasycraft.perCastingLevel"}}{{/if}} 
+                {{#if system.area.penetrating}}{{localize "fantasycraft.penetrating"}}{{/if}} 
+                {{#if system.area.customShape}}{{else}}{{localize system.area.shape}}{{/if}}
+            </div>
+            {{/compare}}
+            <div>
+                <strong>{{ localize "fantasycraft.spellDuration"}}:</strong>
+                {{#if system.duration.isNotInstantOrPermanent}}
+                {{system.duration.number}} {{localize system.duration.increment}} 
+                {{#if system.duration.perCastingLevel}}
+                    {{localize "fantasycraft.perCastingLevel"}}
+                {{/if}}
+                {{else}}
+                    {{localize system.duration.durationText}}
+                {{/if}}
+                {{#if system.duration.durationKeyword}} ({{~/if}}
+                {{~#if system.duration.dismissable}}{{~localize "fantasycraft.dismissable"}}{{/if}}
+                {{#if system.duration.enduring}}{{localize "fantasycraft.enduring"~}}{{/if~}}
+                {{#if system.duration.durationKeyword~}}){{/if}}
+            </div>
+            {{#if system.save.hasSave}}
+            <div>
+                <strong>{{ localize "fantasycraft.savingThrow"}}: </strong>
+                {{system.save.saveType}} {{system.save.saveEffect}} (
+                {{#each system.save.saveKeywords as |v k|}}
+                    {{v}}
+                {{/each}})
+                {{#if system.save2.hasSave}}
+                    , {{system.save2.saveType}} {{system.save2.saveEffect}} (
+                    {{#each system.save2.saveKeywords as |v k|}}
+                        {{v}}
+                    {{/each}})
+                {{/if}}
+            </div>
+            {{/if}}
+            {{#if system.preparationCost}}
+            <div>
+                <strong>{{ localize "fantasycraft.preparationCost"}}: </strong>
+                <span> {{system.preparationCost}}</span>
+            </div>
+            {{/if}}
+            </div>
+      </div>
+    </header>
+    
+    <footer class="card-content">
+        <div>
+            <div>
+                <div><b>{{localize "fantasycraft.effect"}}</b> {{{system.description.value}}}</div>
+            </div>
+        </div>
+    </div>
+</div>

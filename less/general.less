@@ -1,0 +1,447 @@
+@import "./variables.less";
+
+@navHeight: 30px;
+@headerHeight: 160px;
+@detailsHeight: 40px;
+
+.fantasycraft {
+    /* Form Groups */
+    .form-group 
+    {
+        label 
+        {
+            flex: 2;
+            font-weight: bold;
+        }
+        .form-fields 
+        {
+            .flexrow();
+
+            > * {
+                margin: 0 3px 0 0;
+                &:last-child { margin-right: 0; }
+            }
+        }
+    }
+  
+    // Stacked Groups
+    .form-group.stacked {
+        label 
+        {
+            flex: 0 0 100%;
+            margin: 0;
+        }
+        label.checkbox 
+        {
+            flex: auto;
+            text-align: left;
+        }
+    }
+
+    span.categorylabel 
+    {
+      font-weight: bold;
+    }
+  
+    // Form Headers
+    .form-header {
+        margin: 0 0 0.25em 0;
+        padding: 2px 0;
+        border-top: @borderGroove;
+        border-bottom: @borderGroove;
+        .title-font();
+    }
+  
+    /* Tags */
+    .tag {
+        display: inline-block;
+        margin: 0 2px 0 0;
+        padding: 0 3px;
+        font-size: 10px;
+        line-height: 16px;
+        border: 1px solid #999;
+        border-radius: 3px;
+        background: rgba(0, 0, 0, 0.05);
+    }
+} 
+
+.sheet {
+    .window-content {
+      overflow-y: hidden;
+      padding: 0px;
+      font-size: 13px;
+      color: #111;
+  
+      form {
+        overflow: hidden;
+      }
+  
+      .tab {
+        height: 100%;
+        overflow-y: auto;
+        align-content: flex-start;
+      }
+    }
+  
+    /* ----------------------------------------- */
+    /*  Element Styles                           */
+    /* ----------------------------------------- */
+  
+    // Input Fields
+    input[type="text"],
+    input[type="number"] {
+      background: none;
+      border: 1px solid transparent;
+      &:hover,
+      &:focus {
+        border: 1px solid #111;
+      }
+    }
+  
+    // Select Fields
+    select {
+      flex: 1;
+      font-size: 12px;
+      height: 22px;
+      background: transparent;
+    }
+  
+    // Rollable Links
+    .editable .rollable:hover {
+      color: #000;
+      text-shadow: 0 0 10px red;
+      cursor: pointer;
+    }
+  
+    // Separators
+    span.sep {
+      flex: none;
+      margin: 0 1px;
+      display: inline;
+      position: relative;
+      color: tan;
+      font-weight: normal;
+    }
+
+    // class to remove margins and padding
+    .remove-space
+    {
+      margin: 0px;
+      padding: 0px;
+    }
+
+    //classes to split things into 2 or 3 column layouts
+    .two-column
+    {
+        display: grid;
+        grid-template-columns: auto auto;
+        min-height: 52px;
+    }
+    .three-column {
+      display: grid;
+      grid-template-columns: auto auto auto;
+    }
+    
+    .push
+    {
+      margin-left: auto;
+    }
+  
+    .message-content 
+    {
+      display: flex;
+      flex-direction: column;
+    }
+    /* ----------------------------------------- */
+    /*  TinyMCE                                  */
+    /* ----------------------------------------- */
+  
+    .editor {
+      height: 100%;
+      .tox-toolbar-overlord,
+      .tox-toolbar__primary {
+        background: none;
+      }
+    }
+  
+    /* ----------------------------------------- */
+    /*  Sheet Header                             */
+    /* ----------------------------------------- */
+  
+    .sheet-header {
+      flex: 0 0 @headerHeight;
+      border-bottom: @borderGroove;
+  
+      .header-details {
+          vertical-align: top;
+          .title-font();
+      }
+  
+      ul.summary {
+        height: 30px;
+        border-bottom: @borderGroove;
+        font-size: 18px;
+        list-style: none;
+        
+        input, span 
+        {
+          display: block;
+          height: 24px;
+          line-height: 24px;
+        }
+      } 
+
+      /* Character Name */
+      h1 {
+        flex: 1;
+        border-bottom: none;
+        min-height: 20px;
+        margin: 0;
+        padding: 5px;
+  
+        input {
+          display: block;
+          height: 25px;
+          font-size: 32px;
+          margin: 0;
+          border: none;
+        }
+      }
+  
+      /* Profile Image */
+      img.profile {
+        flex: 0 0 @headerHeight;
+        max-width: @headerHeight;
+        height: @headerHeight;
+        object-fit: contain;
+        border: none;
+        border-left: @borderGroove;
+      }
+
+      img.profile-left 
+      {
+        flex: 0 0 @headerHeight;
+        max-width: @headerHeight;
+        height: @headerHeight;
+        object-fit: contain;
+        border: none;
+      }
+
+      img.profile-small
+      {
+        flex: 0 0 120px;
+        max-width: 120px;
+        height: 120px;
+        object-fit: contain;
+        border: none;
+        border-right: @borderGroove;
+
+      }
+    }
+      
+    img.classPicture
+    { 
+      flex: 0 0 @headerHeight;
+      max-width: 300px;
+      object-fit: contain;
+      border: none;
+    }
+
+    /* ----------------------------------------- */
+    /*  Sheet Navigation                         */
+    /* ----------------------------------------- */
+  
+    .sheet-navigation {
+      flex: 0 0 @navHeight;
+      margin-bottom: 5px;
+      .title-font();
+      text-align: center;
+  
+      .item {
+        height: 30px;
+        line-height: 32px;
+        margin: 0 15px;
+        border-bottom: 3px solid beige;
+  
+        &.active {
+          border-bottom: 3px solid crimson;
+        }
+      }
+    }
+  
+    /* ----------------------------------------- */
+    /*  Sheet Body                               */
+    /* ----------------------------------------- */
+  
+    .sheet-body {
+      flex: 1;
+      overflow: hidden;
+    }
+  
+    /* ----------------------------------------- */
+    /*  List Filters                             */
+    /* ----------------------------------------- */
+  
+    .filter-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      line-height: 16px;
+      max-width: 70%;
+  
+      .filter-icon {
+        flex: none;
+        font-size: 14px;
+        color: tan;
+      }
+  
+      .filter-item {
+        text-align: center;
+        font-size: 12px;
+        margin: 0 6px 0 0;
+        border-bottom: 3px solid beige;
+        white-space: nowrap;
+  
+        &:last-child {
+          margin: 0;
+        }
+  
+        &:hover {
+          text-shadow: 0 0 4px red;
+          border-bottom: 3px solid tan;
+        }
+  
+        &.active {
+          border-bottom: 3px solid crimson;
+        }
+      }
+    }
+  
+    /* ----------------------------------------- */
+    /*  Trait Lists                              */
+    /* ----------------------------------------- */
+  
+    .traits {
+      margin: 5px 0 0;
+  
+      .trait-selector {
+        flex: 0 0 16px;
+        padding: 2px 0;
+        color: #999;
+        font-size: 10px;
+      }
+  
+      .traits-list {
+        line-height: 20px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        text-transform: capitalize;
+      }
+    }
+  }
+  
+  
+  /* ----------------------------------------- */
+  /* Trait Selector
+  /* ----------------------------------------- */
+  
+  #trait-selector {
+    .trait-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+  
+    input[type="text"] {
+      height: 24px;
+      margin: 2px;
+    }
+  }
+
+  .sheet ul.traits-list{
+    li.bordered-text 
+    { 
+      border: 2px groove #eeede0;
+    }
+  }
+
+
+  ul{
+    list-style: none;
+}
+
+table.item-table
+{
+  margin: 0;
+  tr td.table-item
+  {
+    text-align: center;
+  }
+  
+}
+
+h3.box-title {
+    height: 20px;
+    line-height: 16px;
+    margin: 0px 0px 0px;
+    .title-font();
+    font-size: 16px;
+    color: #4b4a44;
+    border-bottom: 1px solid #c9c7b8;
+    text-align: center;
+}
+
+h4.box-title {
+    height: 18px;
+    line-height: 16px;
+    margin: 0px 0px 0px;
+    .title-font();
+    font-size: 16px;
+    color: #4b4a44;
+    border-bottom: 1px solid #c9c7b8;
+    text-align: center;
+}
+
+h4.ability-name{
+    min-width: 100px;
+    line-height: 35px;
+    margin: 4px 8px 2px;
+    .title-font();
+    font-size: 17px;
+    text-align: center;
+}
+
+input.narrowField 
+{
+  width: 25px;
+}
+input.mediumField 
+{
+  max-width: 50px;
+}
+input.wideField 
+{
+  width: 100px;
+}
+
+input.underline
+{
+  border: 0;
+  outline: 0;
+  border-bottom: 1px solid black;
+}
+
+button.smallButton
+{
+  padding: 0px;
+  width: 100px;
+  height: 30px;
+}
+
+textarea.text-area
+{
+  min-width: 100%;
+  max-width: 100%;
+  height: 175px;
+}

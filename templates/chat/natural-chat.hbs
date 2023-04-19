@@ -1,0 +1,76 @@
+<div class="chat-card weapon" data-item-id="{{item.id}}" data-owner-id="{{actor._id}}">
+
+
+    <header class="card-header">
+      <div class="attackbox">
+        <div class="boxline">
+          <div><b>{{localize "fantasycraft.attack"}}:</b></div>
+          <div class="headertext">{{item.name}}</div>
+        </div>
+    </header>
+
+        <div class="dice-roll">
+        <div class="dice-result">
+            <div class="dice-formula">
+                {{data.formula}}
+            </div>
+            <div class="dice-tooltip">
+                <section class="tooltip-part">
+                    <div class="dice">
+                        <header class="part-header flexrow">
+                            <span class="part-formula">{{data.formula}}</span>
+                            {{#if this.flavor}}<span class="part-flavor">{{data.flavor}}</span>{{/if}}
+                            <span class="part-total">{{data.diceRoll}}</span>
+                        </header>
+                        <ol class="dice-rolls">
+                        {{#each data.rolls}}
+                            <li class="roll {{data.classes}}">{{{data.result}}}</li>
+                        {{/each}}
+                        </ol>
+                    </div>
+                </section>
+            </div>
+            <div class="dice-total {{#if data.threat}}threat{{/if}} {{#if data.error}}error{{/if}} ">
+                {{data.roll}}
+            </div>
+        </div>
+    </div>
+
+    {{#compare data.trick1 "" operator="!="}}
+    <div class="card-content">
+        <div><b>{{localize "fantasycraft.trick"}}: </b></div>
+        <div>{{data.trick1.name}}</div>
+    </div>
+    {{/compare}}
+
+    <div class="card-content">
+        {{#if data.areaSize}}
+        <div><b>{{localize "fantasycraft.area"}}: </b></div>
+        <div>{{data.areaSize}} {{localize "fantasycraft.ft"}} {{data.areaShape}}</div>
+        {{/if}}
+        <div><b>{{localize "fantasycraft.weaponProperties"}}: </b></div>
+        <div>
+            {{#compare data.attackType "extraSave" operator="=="}}
+                {{data.saveType}}
+            {{/compare}}
+            {{#each data.qualities as |quality id|}}
+                {{#if quality}}
+                {{#compare quality "none" operator="!="}}
+                    {{id}}{{#if (isBool quality)}}{{else}} {{quality}}{{/if}}
+                    {{/compare}}
+                {{/if}}
+            {{/each}}
+        </div>
+    </div>
+
+    {{#compare data.attackType "extraSave" operator="!="}}
+    <div class="card-buttons">
+        <button class="damage">{{localize "fantasycraft.damage"}} </button>
+    </div>
+    {{/compare}}
+    {{#compare data.attackType "extraSave" operator="=="}}
+    <div class="card-buttons">
+        <button class="applyCondition">{{localize "fantasycraft.applyCondition"}} </button>
+    </div>
+    {{/compare}}
+</div>

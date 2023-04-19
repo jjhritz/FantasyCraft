@@ -1,0 +1,36 @@
+<div class="chat-card spell" data-spell-id="{{_id}}">
+
+    <header class="flexxol card-header">
+      <div>
+        <div>
+           <div><strong>{{name}}</strong></div>
+            <div>
+                {{!if feat include prereq}}
+                {{#compare type "feat" operator="=="}}
+                    <div>
+                        <strong>{{ localize "fantasycraft.type"}}: </strong>
+                        {{localize system.featType}}
+                    </div>
+                    
+                    <div>
+                        <strong>{{ localize "fantasycraft.prerequisite"}}: </strong>
+                        {{system.prerequisites}}
+                    </div>
+                {{/compare}}
+                {{!if feature, include Source}}
+                {{#compare type "feature" operator="=="}}
+                {{/compare}}
+
+            </div>   
+        </div>
+      </div>
+    </header>
+    
+    <footer class="card-content">
+        <div>
+            <div>
+                <div>{{{system.description.value}}}</div>
+            </div>
+        </div>
+    </div>
+</div>

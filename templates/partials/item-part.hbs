@@ -1,0 +1,24 @@
+<div class="item ownedItem flexrow item-card" data-item-id="{{id}}" data-item-name="{{name}}">
+    <div class="flexrow">
+        <span class="flex1">{{name}}{{#if system.numerals}} I {{#convertToNumeral system.number}} {{/convertToNumeral}}
+            {{else}} 
+                {{#timesOverOne system.number}} <i class="fas fa-times fa-xs"></i> {{/timesOverOne}}
+            {{/if}}
+        </span>
+        {{#if system.weight}}
+        <div class="flex1" style="text-align:right">
+            <span>{{localize "fantasycraft.quantity"}}: {{system.quantity}} {{system.totalWeight}} {{localize "fantasycraft.lbs"}}</span>
+            <a class="decreaseItem">
+                <i class="fas fa-minus"></i>
+            </a>
+            <a class="increaseItem">
+                <i class="fas fa-plus"></i>
+            </a>
+            <a class="deleteItem push">
+                <i class="fas fa-trash"></i>
+            </a>
+        </div>
+        {{/if}}
+        {{#if system.featType}}<span style="text-align: right;"> ({{localize system.featType}})  </span>{{/if}}
+    </div>
+</div>

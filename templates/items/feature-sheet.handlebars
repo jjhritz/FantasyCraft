@@ -1,0 +1,177 @@
+<form class="{{cssClass}} item-form flexcol" autocomplete="off">
+    {{!-- Item Sheet Header --}}
+    <header class="itemHeader">
+        <h1 class="itemName flexrow">
+            <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'fantasycraft.ItemName' }}"/>
+        </h1>
+        {{#compare item.system.featureType "class" operator="=="}}
+        <div class="item-subtitle flexrow">
+            <input name="system.description.chat" type="text" value="{{item.system.description.chat}}" placeholder="{{ localize 'fantasycraft.flavorText' }}"/>
+        </div>
+        {{/compare}}
+        <div class="flexrow">
+            <ul class="flexrow">
+                <li>
+                    <label>{{localize "fantasycraft.featureType"}}</label>
+                    <select class="dropdown" name="system.featureType">
+                        {{selectOptions config.featureType selected=item.system.featureType localize=true}}
+                    </select>
+                </li>
+                <li class="flexrow">
+                    <label class="flex1">{{localize "fantasycraft.source"}}</label>
+                    <input class="flex3" type="text" name="system.source" value="{{item.system.source}}" placeholder="{{ localize 'fantasycraft.source' }}"/>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <nav class="sheet-navigation sheet-tabs" data-group="primary">
+        <a class="item active" data-tab="description">{{ localize "fantasycraft.description" }}</a>
+        <a class="item" data-tab="feature-customization">{{ localize "fantasycraft.customization" }}</a>
+    </nav>
+    {{!-- Item Sheet Body --}}
+    <section class="sheet-body">
+        <div class="tab attributes" data-group="primary" data-tab="description">
+            {{!-- Description Tab --}}
+            <span>
+                <b>
+                    {{item.name}} {{#if item.system.xpValue}}({{item.system.xpValue}}{{localize "fantasycraft.xp"~}} 
+                    {{#compare "none" item.system.xpMultiplier operator="!="}}
+
+                        {{#compare "damageType" item.system.xpMultiplier operator="=="}}
+                            {{localize "fantasycraft.or"}} {{item.system.xpPerGrade}} {{localize "fantasycraft.Dialog.ifDamageIsNotLethal"}}
+                        {{/compare}}
+
+                        {{#compare "damageType" item.system.xpMultiplier operator="!="}}
+                            {{localize "fantasycraft.per"}} 
+                        {{/compare~}}
+                        {{#compare "entries" item.system.xpMultiplier operator="=="}}
+                            {{localize "fantasycraft.entry"~}}
+                        {{/compare~}}
+                        {{#compare "grades" item.system.xpMultiplier operator="=="}}
+                            {{localize "fantasycraft.grade"~}}
+                        {{/compare~}}
+                        {{#compare "points" item.system.xpMultiplier operator="=="}}
+                            {{localize "fantasycraft.point"~}}
+                        {{/compare~}}
+                    {{/compare}}): {{/if}}
+                </b>
+                {{{item.system.description.value}}}
+            </span>
+        </div>
+        {{!customization}}
+        <div class="tab attributes" data-group="primary" data-tab="feature-customization">
+            {{#compare item.system.featureType "class" operator="=="}}
+            <div class="form-group item-customization-section">
+                <label>{{localize "fantasycraft.flawless"}}</label>
+                <input type="checkbox" name="system.flawless.isFlawless" {{checked item.system.flawless.isFlawless}}>
+            </div>
+            {{#if item.system.flawless.isFlawless}}
+            <div class="form-group item-customization-section">
+                <label>{{localize "fantasycraft.skills"}}</label>
+                <select name="system.flawless.skill1">
+                    {{#select item.system.flawless.skill1}}
+                    {{#each config.skills as |name type|}}
+                        <option value="{{type}}">{{localize name}}</option>
+                    {{/each}}
+                    {{/select}}
+                </select>    
+                <select name="system.flawless.skill2">
+                    {{#select item.system.flawless.skill2}}
+                    {{#each config.skills as |name type|}}
+                        <option value="{{type}}">{{localize name}}</option>
+                    {{/each}}
+                    {{/select}}
+                </select>
+                <label>{{localize "fantasycraft.source"}}</label>
+                <select name="system.flawless.classSource">
+                    {{#select item.system.flawless.classSource}}
+                    {{#each config.classes as |name type|}}
+                        <option value="{{type}}">{{localize name}}</option>
+                    {{/each}}
+                    {{/select}}
+                </select>    
+            </div>
+            {{/if}}
+            {{/compare}}
+            {{! NPC Quality customization}}
+            {{#compare item.system.featureType "origin" operator="!="}}
+                <div class="form-group item-customization-section">
+                    <label>{{localize "fantasycraft.xp"}}</label>
+                    <input class="mediumField" type="number" name="system.xpValue" value="{{item.system.xpValue}}">
+                    <select name="system.xpMultiplier">
+                        {{selectOptions xpChoices selected=item.system.xpMultiplier localize=true}}
+                    </select>
+                </div>
+                {{#compare item.system.xpMultiplier "grades" operator="=="}}
+                <div class="form-group item-customization-section">
+                    <label>{{localize "fantasycraft.Dialog.gradeDifference"}}</label>
+                    <input type="checkbox" name="system.xpDifferentOnIncrease" data-dtype="Boolean" {{checked item.system.xpDifferentOnIncrease}}>
+                    {{#if item.system.xpDifferentOnIncrease}}
+                        <input type="number" name="system.xpPerGrade" value="{{item.system.xpPerGrade}}">
+                    {{/if}}
+                </div>
+                {{/compare}}
+
+                {{#compare item.system.xpMultiplier "points" operator="=="}}
+                <div class="form-group item-customization-section">
+                    <label>{{localize "fantasycraft.points"}}:</label>
+                    <input type="number" name="system.number" value="{{item.system.number}}" />
+                </div>
+                {{/compare}}
+
+                {{#compare item.system.xpMultiplier "grades" operator="=="}}
+                <div class="form-group item-customization-section">
+                    <label>{{localize "fantasycraft.grade"}}:</label>
+                    <select name="system.grades.value">
+                        {{selectOptions grades selected=item.system.grades.value localize=true}}
+                    </select>
+                </div>
+                <div class="form-group item-customization-section">
+                    <label>{{localize "fantasycraft.maxGrade"}}:</label>
+                    <select name="system.grades.maximum">
+                        {{selectOptions grades selected=item.system.grades.maximum localize=true}}
+                    </select>
+                </div>
+                {{/compare}}
+                
+                {{#compare item.system.xpMultiplier "entries" operator="=="}}
+                    <div class="form-group item-customization-section">
+                        <label>{{localize "fantasycraft.Dialog.entriesDialog"}}</label>
+                    </div>
+                    <input type="text" name="system.damageTypes.string" value="{{item.system.damageTypes.string}}">
+                {{/compare}}
+                
+                {{#compare item.system.xpMultiplier "damageType" operator="=="}}
+                    <div class="form-group item-customization-section">
+                        <label>{{localize "fantasycraft.damageType"}}</label>
+                        <select name="system.damageTypes.string">
+                            {{#select item.system.damageTypes.string}}
+                            {{#each config.damageTypes as |damage id|}}
+                                <option value="{{id}}">{{localize damage}}</option>
+                            {{/each}}
+                            {{/select}}
+                        </select>
+                    </div>
+                    <div class="form-group item-customization-section">
+                        <label>{{localize "fantasycraft.Dialog.xpForNonLethal"}}</label>
+                        <input style="max-width: 100px" type="number" name="system.xpPerGrade" value="{{item.system.xpPerGrade}}">
+                    </div>
+                {{/compare}}
+
+            {{/compare}}
+            <div class="form-group item-customization-section">
+                <label>{{localize "fantasycraft.description"}}</label>
+                <input type="text" name="system.description.value" value="{{item.system.description.value}}">
+            </div>
+        </div>
+    </section>
+
+    
+{{!-- Information that the Feature sheet needs to have}}
+Customizations the sheet needs to include for NPC features.
+XP value (per grade)
+    - if so how many times?
+    - When duplicated does it add a grade/increase the value (dark vision, damage reduction) or does it add another copy (damage immunities)
+Does this feature create a flag?
+{{--}}
+</form>

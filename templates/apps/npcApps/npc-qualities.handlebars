@@ -1,0 +1,89 @@
+<form autocomplete="off" onsubmit="event.preventDefault();">
+{{! Spellcasting grade dropdown}}
+    {{#if classFeatures}}
+    <section>
+        <label><h4 class="box-title">{{localize "fantasycraft.classFeatures"}}</h4></label>
+        {{#each classFeatures as |ability id|}}
+            <div class="item ownedItem item-card flexrow" data-item-id="{{_id}}" data-item-name="{{ability.name}}">
+                <span class="flex5">{{ability.name}}
+                {{#compare ability.system.xpMultiplier "grades" operator="=="}}
+                    {{ability.system.grades.value}}
+                {{/compare}}
+                {{#compare ability.system.xpMultiplier "points" operator="=="}}
+                    {{ability.system.number}}
+                {{/compare}}
+                </span>
+                <span>
+                    <a class="editItem">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a class="deleteItem">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </span>
+            </div>
+        {{/each}}
+    </section>
+    {{/if}}
+    {{#if feats}}
+    <section>
+        <label><h4 class="box-title">{{localize "fantasycraft.feats"}}</h4></label>
+        {{#each feats as |feat id|}}
+            <div class="item ownedItem item-card flexrow" data-item-id="{{_id}}" data-item-name="{{feat.name}}">
+                <span class="flex5">{{feat.name}}</span>
+                <span>
+                    <a class="editItem">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a class="deleteItem">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </span>
+            </div>
+        {{/each}}
+    </section>
+    {{/if}}
+    {{#if tricks}}
+    <section>
+        <label><h4 class="box-title">{{localize "fantasycraft.tricks"}}</h4></label>
+        {{#each tricks as |trick id|}}
+            <div class="item ownedItem item-card flexrow" data-item-id="{{_id}}" data-item-name="{{trick.name}}">
+                <span class="flex5">{{trick.name}}</span>
+                <span>
+                    <a class="editItem">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a class="deleteItem">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </span>
+            </div>
+        {{/each}}
+    </section>
+    {{/if}}
+    <section>
+        <label><h4 class="box-title">{{localize "fantasycraft.qualities"}}</h4></label>
+        {{#each qualities as |quality id|}}
+            <div class="item ownedItem item-card flexrow" data-item-id="{{_id}}" data-item-name="{{quality.name}}">
+            <span class="flex5">{{quality.name}}
+                {{#compare quality.system.xpMultiplier "grades" operator="=="}}
+                    {{quality.system.grades.value}}
+                {{/compare}}
+                {{#compare quality.system.xpMultiplier "points" operator="=="}}
+                    {{quality.system.number}}
+                {{/compare}}
+                </span>
+                <span>
+                    <a class="editItem">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a class="deleteItem">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </span>
+            </div>
+        {{/each}}
+    </section>
+
+    <button class="submit" type="submit"><i class="far fa-save"></i> {{ localize "fantasycraft.traitSave"}}</button>
+</form>

@@ -1,0 +1,102 @@
+<form class="{{cssClass}}" autocomplete="off">
+    {{!-- Weapon Sheet Header --}}
+    <header class="sheet-header flexrow">
+        <img class="profile-small" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
+
+        <div class="header-details flexrow">
+            <h1 class="charname">
+                <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'fantasycraft.itemName' }}"/>
+            </h1>
+
+            <div class="item-subtitle">
+                <h4 class="item-type">{{itemType}}</h4>
+                <span class="item-status">{{localize itemStatus}}</span>
+            </div>
+
+            <div style="flex-basis: 100%; height: 0;"> </div>
+
+            <ul class="summary flexrow">
+                <li class="flex1">
+                    {{localize item.system.weaponProficiency }}
+                </li>
+                <li class="flex1">
+                    <select name="system.weaponCategory">
+                        {{#select item.system.weaponCategory}}
+                            {{#each (lookup config item.system.weaponProficiency) as |v k|}}
+                            <option value="{{k}}">{{localize v}}</option>
+                            {{/each}}
+                        {{/select}}
+                    </select>
+                </li>
+                <li class="flex2">
+                    <input type="text" name="system.description.source" value="{{item.system.description.source}}" placeholder="{{ localize 'fantasycraft.source' }}" />
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    {{!-- Weapon Navigation Bar --}}
+    <nav class="sheet-navigation sheet-tabs" data-group="primary">
+        <a class="item active" data-tab="weapon-sheet">{{ localize "fantasycraft.information" }}</a>
+        <a class="item" data-tab="weapon-customization">{{ localize "fantasycraft.customization" }}</a>
+        {{#if item.system.isMagic}}
+        <a class="item" data-tab="effects">{{ localize "fantasycraft.magic" }}</a>
+        {{/if}}
+    </nav>
+
+    <section class="sheet-body">
+
+        <div class="tab attributes flexcol" data-group="primary" data-tab="weapon-sheet">
+          {{!-- This is just a display sheet, all inputs are done on the weapon customization tab --}}
+          <table>
+              <tr>
+                  <th> {{ localize 'fantasycraft.damage'}} </th>
+                  <th> {{ localize 'fantasycraft.threatRange'}} </th>
+                  {{#if item.system.range}}
+                  <th> {{ localize 'fantasycraft.weaponRange'}} </th>
+                  {{/if}}
+                  <th> {{ localize 'fantasycraft.sizeHand'}} </th>
+                  <th> {{ localize 'fantasycraft.const'}} </th>
+                  <th> {{ localize 'fantasycraft.comp'}} </th>
+                  <th> {{ localize 'fantasycraft.weight'}} </th>
+                  <th> {{ localize 'fantasycraft.era'}} </th>
+                  <th> {{ localize 'fantasycraft.cost'}} </th>
+              </tr>
+              <tr>
+                  <td> <span>{{item.system.damage}} {{#compare item.system.damage "" operator="!="}} {{item.system.damageType}} {{/compare}}</span> </td>
+                  <td> <span>{{item.system.threatRange}} </span></td>
+                  {{#if item.system.range}}
+                  <td> <span>{{item.system.range}} </span></td>
+                  {{/if}}
+                  <td> <span>{{item.system.size.size}}/{{item.system.size.hands}} </span></td>
+                  <td> <span>{{item.system.construction.hardness}} {{item.system.construction.saveNumbers}} </span></td>
+                  <td> <span>{{item.system.complexity.number}}{{item.system.complexity.time}} </span></td>
+                  <td> <span>{{item.system.weight}} {{localize "fantasycraft.lbs"}} </span></td>
+                  <td> <span>{{item.system.era}} </span></td>
+                  <td> <span>{{item.system.cost}} {{item.system.currency}} </span></td>
+              </tr>
+              <tr>
+                  <th> {{ localize 'fantasycraft.qualities'}} </th>
+              </tr>
+              <tr>
+                {{#each config.numericWeaponProperties as |name id|}}
+                  {{#if  (lookup ../item.system.weaponProperties id)}}
+                    <td><span>{{localize name}} {{lookup ../item.system.weaponProperties id}}</span></td>
+                  {{/if}}
+                {{/each}}
+                {{#each config.weaponProperties as |name id|}}
+                  {{#if  (lookup ../item.system.weaponProperties id)}}
+                    <td><span>{{localize name}}</span></td>
+                  {{/if}}
+                {{/each}}
+              </tr>
+          </table>
+        </div>
+        <div class="tab attributes flexrow" data-group="primary" data-tab="weapon-customization">
+            {{> "systems/fantasycraft/templates/items/parts/weapon-customization.handlebars"}}
+        </div>
+        <div class="tab attributes flexrow" data-group="primary" data-tab="effects">
+            {{> "systems/fantasycraft/templates/items/parts/effects.handlebars"}}
+        </div>
+    </section>
+</form>

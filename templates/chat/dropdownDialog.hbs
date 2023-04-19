@@ -1,0 +1,10 @@
+<form>
+    <div class="form-group">
+        <label>{{ localize "fantasycraft.selection" }}</label>
+        <select name="choice">
+            {{#each options as |value key|}}
+            <option value="{{value}}">{{key}}</option>
+            {{/each}}
+        </select>
+    </div>
+</form>

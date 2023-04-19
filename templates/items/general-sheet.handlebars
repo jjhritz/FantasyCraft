@@ -1,0 +1,447 @@
+<form class="{{cssClass}} item-form flexcol" autocomplete="off">
+
+    {{!-- Item Sheet Header --}}
+    <header class="itemHeader">
+        <h1 class="itemName flexrow">
+            <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'fantasycraft.ItemName' }}"/>
+        </h1>
+        <section>
+            <input type="text" name="system.source" value="{{item.system.source}}" placeholder="{{ localize 'fantasycraft.source' }}"/>
+        </section>
+        {{!-- Item Sheet Navigation --}}
+        <nav class="sheet-navigation sheet-tabs" data-group="primary">
+            <a class="item active" data-tab="description">{{ localize "fantasycraft.description" }}</a>
+            <a class="item" data-tab="details">{{ localize "fantasycraft.details" }}</a>
+            {{#if item.system.isMagic}}
+                <a class="item" data-tab="effects">{{ localize "fantasycraft.magic" }}</a>
+            {{/if}}
+        </nav>
+    </header>
+
+    <section>
+        <section class="sheet-body">
+        {{!-- Description Tab --}}
+            <div class="tab attributes flexcol" data-group="primary" data-tab="description">
+                <h4 class="ability-name">{{localize "fantasycraft.itemProperties"}}</h4>
+                <table class="item-table">
+                    <tr>
+                        <th> {{ localize 'fantasycraft.effect'}} </th>
+
+
+                        {{! Consumables/Food/Drink have Effect, Uses, Sz/Hand, Const, Comp, Weight, Era, Cost}}
+                        {{#compare item.system.itemType "consumable" operator="=="}}
+                            <th> {{ localize 'fantasycraft.uses'}} </th>
+                        {{/compare}}
+                                                
+                        {{! Locks/Traps have Effect, Target, Challenges, Sz/Hand, Const, Comp, Weight, Era, Cost}}
+                        {{#compare item.system.itemType "lockTrap" operator="=="}}
+                            <th> {{ localize 'fantasycraft.target'}} </th>
+                            <th> {{ localize 'fantasycraft.challenges'}} </th>
+                        {{/compare}}
+
+                        {{! Poisons have Effect, incubation, Uses, Sz/Hand, Const, Comp, Weight, Era, Cost}}
+                        {{#compare item.system.itemType "poison" operator="=="}}
+                            <th> {{ localize 'fantasycraft.incubation'}} </th>
+                            <th> {{ localize 'fantasycraft.uses'}} </th>
+                        {{/compare}}
+
+                        {{! Scrolls have Effect, Spell Level, Sz/Hand, Const, Comp, Weight, Era, Cost}}
+                        {{#compare item.system.itemType "scroll" operator="=="}}
+                            <th> {{ localize 'fantasycraft.spellLevel'}} </th>
+                        {{/compare}}
+                        
+                        {{! Vehicles have Qualities/Effects, Speed, Travel, Sz/Def, Occ/Load, Cost, Comp, Era, Cost}}
+                        {{#compare item.system.itemType "vehicle" operator="=="}}
+                            <th> {{ localize 'fantasycraft.speed'}} </th>
+                            <th> {{ localize 'fantasycraft.travel'}} </th>
+                            <th> {{ localize 'fantasycraft.sizeDef'}} </th>
+                            <th> {{ localize 'fantasycraft.occLoad'}} </th>
+                        {{/compare}}
+                        
+                        {{! Services have Effect, Availability, Era, Cost}}
+                        {{#compare item.system.itemType "service" operator="=="}}
+                                <th> {{ localize 'fantasycraft.availability'}} </th> 
+                        {{/compare}}
+
+                        {{#compare item.system.itemType "service" operator="!="}}
+                            {{#compare item.system.itemType "poison" operator="!="}}
+                                {{#compare item.system.itemType "vehicle" operator="!="}}
+                                    <th> {{ localize 'fantasycraft.sizeTable'}} </th>
+                                {{/compare}}
+                                <th> {{ localize 'fantasycraft.constTable'}} </th>
+                            {{/compare}}
+                            <th> {{ localize 'fantasycraft.compTable'}} </th>
+                            {{#compare item.system.itemType "vehicle" operator="!="}}
+                                <th> {{ localize 'fantasycraft.weight'}} </th>
+                            {{/compare}}
+                        {{/compare}}
+
+                        <th> {{ localize 'fantasycraft.era'}} </th>
+                        <th> {{ localize 'fantasycraft.cost'}} </th>
+                    </tr>
+                    <tr class="table-item">
+                        {{! Consumables/Food/Drink have Effect, Uses, Sz/Hand, Const, Comp, Weight, Era, Cost}}
+                        <td> {{item.system.description.chat}} </td>
+                                                
+                        {{! Locks/Traps have Effect, Target, Challenges, Sz/Hand, Const, Comp, Weight, Era, Cost}}
+                        {{#compare item.system.itemType "lockTrap" operator="=="}}
+                            <td class="table-item"> 
+                                {{#compare item.system.target.targetType "object" operator="!="}}
+                                    <span>{{item.system.target.width}}x{{item.system.target.height}} </span>
+                                {{/compare}}
+                                {{#compare item.system.target.targetType "areaAndObject" operator="=="}}
+                                    {{localize "fantasycraft.or"}}
+                                {{/compare}}
+                                {{#compare item.system.itemType "area" operator="!="}}
+                                    <span> 1 {{localize "fantasycraft.object"}}</span>
+                                {{/compare}}
+                            </td>
+                            <td class="table-item"> <span>{{item.system.uses}} </span></td>
+                        {{/compare}}
+                        
+                        {{#compare item.system.itemType "consumable" operator="=="}}
+                            <td class="table-item"> <span>{{item.system.uses}} </span></td>
+                        {{/compare}}
+
+                        {{! Poisons have Effect, incubation, Uses, Sz/Hand, Const, Comp, Weight, Era, Cost}}
+                        {{#compare item.system.itemType "poison" operator="=="}}
+                            <td class="table-item"> <span>{{item.system.incubation.value}}{{item.system.incubation.duration}} </span></td>
+                            <td class="table-item"> <span>{{item.system.uses}} </span></td>
+
+                        {{/compare}}
+
+                        {{! Scrolls have Effect, Spell Level, Sz/Hand, Const, Comp, Weight, Era, Cost}}
+                        {{#compare item.system.itemType "scroll" operator="=="}}
+                            <td class="table-item"> <span>{{item.system.spellLevel}} </span></td>
+                        {{/compare}}
+                        
+                        {{! Vehicles have Qualities/Effects, Speed, Travel, Sz/Def, Occ/Load, Cost, Comp, Era, Cost}}
+                        {{#compare item.system.itemType "vehicle" operator="=="}}
+                            <td class="table-item"> <span>{{item.system.speed.value}}{{localize "fantasycraft.ft"}} ({{item.system.speed.run}} {{localize "fantasycraft.ft"}})</span></td>
+                            <td class="table-item"> <span>{{item.system.travel}} </span></td>
+                            <td class="table-item"> <span>{{item.system.size.size}}/{{item.system.size.hands}} </span></td>
+                            <td class="table-item"> <span>{{item.system.occLoad.value}}/{{item.system.occLoad.weight}} {{localize "fantasycraft.lbs"}}</span></td>
+                        {{/compare}}
+                        
+                        {{! Services have Effect, Availability, Era, Cost}}
+                        {{#compare item.system.itemType "service" operator="=="}}
+                            <td class="table-item"> <span>{{item.system.availability}} </span></td>
+                        {{/compare}}
+                    
+                        {{#compare item.system.itemType "service" operator="!="}}
+                            {{#compare item.system.itemType "poison" operator="!="}}
+                                {{#compare item.system.itemType "vehicle" operator="!="}}
+                                    <td class="table-item"> <span>{{item.system.size.size}}/{{item.system.size.hands}} </span></td>
+                                {{/compare}}
+                                <td class="table-item"> <span>{{item.system.construction.hardness}} {{item.system.construction.saveNumbers}} </span></td>
+                            {{/compare}}
+                            <td class="table-item"> <span>{{item.system.complexity.number}}{{localize item.system.complexity.time}} </span></td>
+                            {{#compare item.system.itemType "vehicle" operator="!="}}
+                                {{#if item.system.weight}}
+                                    <td class="table-item"> <span>{{item.system.weight}} {{localize "fantasycraft.lbs"}} </span></td>
+                                {{else}}
+                                    <td class="table-item"> <span>{{localize "fantasycraft.special"}} </span></td>
+                                {{/if}}
+                            {{/compare}}
+                        {{/compare}}
+
+
+                        <td class="table-item"> <span>{{localize item.system.era}} </span></td>
+                        <td class="table-item"> <span>{{item.system.cost}} {{item.system.currency}} </span></td>
+                    </tr>
+                    {{#if upgradable}}
+                    <tr>
+                        <th> {{ localize 'fantasycraft.upgrades'}} </th>
+                    </tr>
+                    <tr> 
+                        {{! Each loop needs to change config lookup based on type }}
+                        {{#each config.goodUpgrades as |name id|}}
+                        {{#if  (lookup ../item.system.itemUpgrades id)}}
+                            <td><span>{{localize name}}</span></td>
+                        {{/if}}
+                        {{/each}}
+                    </tr>
+                    {{/if}}
+                </table>
+                <br>
+                <h4 class="ability-name">{{localize "fantasycraft.itemDescription"}}</h4>
+                <span>{{item.system.description.value}}</span>
+
+                <h4 class="ability-name">{{localize "fantasycraft.itemUpgrades"}}</h4>
+                
+            </div>
+
+            {{! Customization sheet}}
+            <div class="tab attributes flexcol" data-group="primary" data-tab="details">
+                
+                <div class="item-customization-section">
+                    <div>
+                        {{localize "fantasycraft.itemType"}}
+                        <select name="system.itemType">
+                            {{#select item.system.itemType}}
+                                {{#each config.itemType as |name type|}}
+                                    <option value="{{type}}">{{localize name}}</option>
+                                {{/each}}
+                            {{/select}}
+                        </select>
+
+                        <label class="checkbox">
+                            <input type="checkbox" name="system.isMagic" {{checked item.system.isMagic}}/> {{localize "fantasycraft.isMagic"}}
+                        </label>
+                    </div>
+                </div>
+
+                <div class="item-customization-section">
+                    <div>
+                        <span>{{ localize 'fantasycraft.effect'}} </span> <input type="text" name="system.description.chat" value="{{item.system.description.chat}}">
+                    </div>
+                </div>
+
+                <div class="item-customization-section">
+                    <div>
+                        <span>{{ localize 'fantasycraft.description'}} </span> <input type="text" name="system.description.value" value="{{item.system.description.value}}">
+                    </div>
+                </div>
+
+                {{#compare item.system.itemType "lockTrap" operator="=="}}
+                <div class="item-customization-section">
+                    <div>
+                        <span>{{localize "fantasycraft.target"}}: </span> 
+                        {{!area, object or area and object}}
+                        <div>
+                            <select name="system.target.targetType">
+                                {{#select item.system.target.targetType}}
+                                {{#each config.trapTarget as |name type|}}
+                                    <option value="{{type}}">{{localize name}}</option>
+                                {{/each}}
+                                {{/select}}
+                            </select>
+                        {{#compare item.system.target.targetType "object" operator="!="}}
+                            <input class="narrowField" type="number" name="system.target.width" value="{{item.system.target.width}}" placeholder="1">
+                            x
+                            <input class="narrowField" type="number" name="system.target.height" value="{{item.system.target.height}}" placeholder="1">
+                        {{/compare}}
+                        </div>
+                    </div>
+                </div>
+                <div class="item-customization-section">
+                    <div>
+                        <span>{{ localize 'fantasycraft.challenges'}}: </span> <input class="narrowField" type="number" name="system.uses" value="{{item.system.uses}}" placeholder="1">
+                    </div>
+                </div>
+                {{/compare}}
+
+                {{#compare item.system.itemType "consumable" operator="=="}}
+                <div class="item-customization-section">
+                    <div>
+                        <span> {{ localize 'fantasycraft.uses'}} </span> <input class="mediumField" type="text" name="system.uses" value="{{item.system.uses}}" placeholder="1">
+                    </div>
+                </div>                    
+                {{/compare}}
+
+                {{! Poisons have Effect, incubation, Uses, Sz/Hand, Const, Comp, Weight, Era, Cost}}
+                {{#compare item.system.itemType "poison" operator="=="}}
+                <div class="item-customization-section">
+                    <div>
+                        <span> {{ localize 'fantasycraft.incubation'}} </span> 
+                        <input type="number" name="system.incubation.value" value="{{item.system.incubation.value}}" placeholder="1">
+                        <select name="system.incubation.duration">
+                            {{#select item.system.incubation.duration}}
+                            {{#each config.durationTimeIncrements as |name type|}}
+                                {{#unless @last}}
+                                <option value="{{type}}">{{localize name}}</option>
+                                {{/unless}}
+                            {{/each}}
+                            {{/select}}
+                        </select>
+                    </div>
+                    <div class="flexrow">
+                        <span> {{ localize 'fantasycraft.uses'}} </span> <input type="number" name="system.uses" value="{{item.system.uses}}" placeholder="1">
+                    </div>
+                </div>
+                {{/compare}}
+
+                {{! Scrolls have Effect, Spell Level, Sz/Hand, Const, Comp, Weight, Era, Cost}}
+                {{#compare item.system.itemType "scroll" operator="=="}}
+                <div class="item-customization-section">
+                    <div>
+                        <span> {{ localize 'fantasycraft.spellLevel'}} </span> <input type="number" name="system.spellLevel" value="{{item.system.spellLevel}}" placeholder="1">
+                    </div>
+                </div>
+                {{/compare}}
+                
+                {{! Vehicles have Qualities/Effects, Speed, Travel, Sz/Def, Occ/Load, Cost, Comp, Era, Cost}}
+                {{#compare item.system.itemType "vehicle" operator="=="}}
+                <div class="item-customization-section">
+                    <div>
+                        <span> {{ localize 'fantasycraft.speed'}} </span> 
+                        <div>
+                            <input class="mediumField" type="number" name="system.speed.value" value="{{item.system.speed.value}}" placeholder="1">
+                            <input class="mediumField" type="number" name="system.speed.run" value="{{item.system.speed.run}}" placeholder="1">
+                        </div>
+                    </div>
+                </div>
+                <div class="item-customization-section">
+                    <div>
+                        <span> {{ localize 'fantasycraft.travel'}} </span> <input class="narrowField" type="number" name="system.travel" value="{{item.system.travel}}" placeholder="1">
+                    </div>
+                </div>
+                <div class="item-customization-section">
+                    <div>
+                        <span> {{ localize 'fantasycraft.sizeDef'}} </span> 
+
+                        <select name="system.size.size"> 
+                        {{#select item.system.size.size}}
+                            {{#each config.sizeLetter as |v k|}}
+                                <option value="{{k}}">{{localize v}}</option>
+                            {{/each}}
+                        {{/select}}
+                        </select>
+                        <input type="number" class="mediumField" name="system.size.hands" value="{{item.system.size.hands}}" placeholder="7"/> 
+                    </div>
+                </div>
+                <div class="item-customization-section">
+                    <div>
+                        <span> {{ localize 'fantasycraft.occLoad'}} </span> 
+                        <div>
+                            <span>{{localize "fantasycraft.occupancy"}}: </span><input class="narrowField" type="number" name="system.occLoad.value" value="{{item.system.occLoad.value}}" placeholder="1"> 
+                            <span>{{localize "fantasycraft.load"}}: </span><input class="mediumField" type="number" name="system.occLoad.weight" value="{{item.system.occLoad.weight}}" placeholder="1">
+                        </div>
+                     </div>
+                </div>
+                {{/compare}}
+
+                {{! Services have Effect, Availability, Era, Cost}}
+                {{#compare item.system.itemType "service" operator="=="}}
+                <div class="item-customization-section">
+                    <div>
+                        <span class="categorylabel">  {{ localize 'fantasycraft.availability'}} </span>
+                        <input type="number" class="short mediumField" name="system.availability" value="{{item.system.availability}}" placeholder="5"/> 
+                    </div>   
+                </div>      
+                {{/compare}}
+
+                {{#compare item.system.itemType "service" operator="!="}}
+                    {{#compare item.system.itemType "poison" operator="!="}}
+                    {{#compare item.system.itemType "vehicle" operator="!="}}
+                    <div class="item-customization-section">
+                        <div>
+                            <span class="categorylabel">  {{ localize 'fantasycraft.sizeHand'}} </span>
+                            <select name="system.size.size"> 
+                            {{#select item.system.size.size}}
+                                {{#each config.sizeLetter as |v k|}}
+                                    <option value="{{k}}">{{localize v}}</option>
+                                {{/each}}
+                                <option value="Special">{{localize "fantasycraft.special"}}</option>
+                            {{/select}}
+                            </select>
+
+                            <select name="system.size.hands"> 
+                            {{#select item.system.size.hands}}
+                                <option value="-"> - </option>
+                                <option value="1h">{{localize "fantasycraft.1h"}}</option>
+                                <option value="2h">{{localize "fantasycraft.2h"}}</option>
+                            {{/select}}
+                            </select>
+                        </div>
+                    </div>
+                    {{/compare}}
+                    {{/compare}}
+                    
+                    {{! Construction }}
+                    {{#compare item.system.itemType "poison" operator="!="}}
+                    <div class="item-customization-section">
+                        <div>
+                            <label>{{ localize "fantasycraft.const" }}</label>
+                            <div>
+                                <input type="text" class="mediumField" name="system.construction.hardness" value="{{item.system.construction.hardness}}" placeholder="Hard"/>
+                                <input type="number" class="narrowField" name="system.construction.saveNumbers" value="{{item.system.construction.saveNumbers}}" placeholder="2"/>
+                            </div>
+                        </div>
+                    </div>
+                    {{/compare}}
+
+                    {{! Complexity }}
+                    <div class="item-customization-section">
+                        <div>
+                            <label>{{ localize "fantasycraft.comp" }}</label>
+                            <div>
+                                <input type="number" class="narrowField" name="system.complexity.number" value="{{item.system.complexity.number}}" placeholder="10"/> 
+                                <select name="system.complexity.time">
+                                    {{#select item.system.complexity.time}}
+                                        <option value="fantasycraft.d">{{localize "fantasycraft.d"}}</option>
+                                        <option value="fantasycraft.w">{{localize "fantasycraft.w"}}</option>
+                                        <option value="fantasycraft.m">{{localize "fantasycraft.m"}}</option>
+                                        <option value="fantasycraft.y">{{localize "fantasycraft.y"}}</option>
+                                    {{/select}}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                
+                    {{!-- Weight --}}
+                    {{#compare item.system.itemType "vehicle" operator="!="}}
+                    <div class="item-customization-section">
+                        <div>
+                            <label>{{ localize "fantasycraft.weight" }}</label>
+                            <input class="mediumField" type="number" name="system.weight" value="{{item.system.weight}}" data-dtype="number" placeholder="0" />
+                        </div>
+                    </div>
+                    {{/compare}}
+                {{/compare}}
+            
+                {{!-- Era --}}
+                <div class="item-customization-section">
+                    <div>
+                        <label>{{ localize "fantasycraft.era" }}</label>
+                        <div>
+                            <select style="width: 100px;" name="system.era">
+                                {{#select item.system.era}}
+                                    {{#each config.eras as |name type|}}
+                                        <option value="{{name}}">{{localize name}}</option>
+                                    {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            
+                {{!-- Cost --}}
+                <div class="item-customization-section">
+                    <div>
+                        <label>{{ localize "fantasycraft.cost" }}</label>
+                        <div>
+                            {{#compare item.system.itemType "service" operator="=="}}
+                            <input class="wideField" type="text" name="system.cost" value={{item.system.cost}} data-dtype="text" placeholder="0" />
+                            {{/compare}}
+                            {{#compare item.system.itemType "service" operator="!="}}
+                            <input class="wideField" type="number" name="system.cost" value={{item.system.cost}} data-dtype="number" placeholder="0" />
+                            {{/compare}}
+                            <select name="system.currency">
+                                {{#select item.system.currency}}
+                                <option value="Silver">{{localize "fantasycraft.silver"}}</option>
+                                <option value="Reputation">{{localize "fantasycraft.reputation"}}</option>
+                                {{/select}}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                {{!Each upgrade goes here}}
+                <section>
+                    <div class="form-group  item-upgrades">
+                    {{#each itemUpgrades as |value key|}}
+                        <label class="checkbox">
+                            <input type="checkbox" name="system.itemUpgrades.{{key}}" {{checked (lookup ../item.system.itemUpgrades key)}}/> {{localize value}} 
+                        </label>
+                    {{/each}}
+                    </div>
+                </section>
+            </div>
+
+            <div class="tab attributes flexrow" data-group="primary" data-tab="effects">
+                {{> "systems/fantasycraft/templates/items/parts/effects.handlebars"}}
+            </div>
+        </section>
+    </section>
+</form>

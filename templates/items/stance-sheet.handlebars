@@ -1,0 +1,163 @@
+<form class="{{cssClass}} item-form flexcol" autocomplete="off">
+
+    {{!-- Item Sheet Header --}}
+    <header class="itemHeader">
+        <h1 class="itemName flexrow">
+            <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'fantasycraft.ItemName' }}"/>
+        </h1>
+
+        <div class="flexrow">
+            <ul class="flexrow">
+                <li>
+                    <input type="text" name="system.requirement" value="{{item.system.requirement}}" placeholder="{{ localize 'fantasycraft.feat' }}"/>
+                </li>
+                <li>
+                    <input type="text" name="system.source" value="{{item.system.source}}" placeholder="{{ localize 'fantasycraft.source' }}"/>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    {{!-- Item Sheet Navigation --}}
+    <nav class="sheet-navigation sheet-tabs" data-group="primary">
+        <a class="item active" data-tab="description">{{ localize "fantasycraft.description" }}</a>
+        <a class="item active" data-tab="customization">{{ localize "fantasycraft.customization" }}</a>
+    </nav>
+
+    {{!-- Item Sheet Body --}}
+    <section class="sheet-body">
+        {{!-- Description Tab --}}
+        <div class="tab attributes flexrow" data-group="primary" data-tab="description">
+            {{> "systems/fantasycraft/templates/items/parts/item-description.handlebars"}}
+        </div>
+        <div class="tab attributes flexrow" data-group="primary" data-tab="customization">
+            <div>
+                <div class="form-group item-customization-section">
+                    <div>
+                        <label>{{ localize "fantasycraft.effect"}} 1</label>
+                        <select name="system.effect1.effect">
+                            {{#select item.system.effect1.effect}}
+                            <option value="none"> </option>
+                            {{#each config.stanceEffects as |name type|}}
+                                <option value="{{type}}">{{localize name}}</option>
+                            {{/each}}
+                            {{/select}}
+                        </select>
+
+                        {{#if effect1IsNumeric}}
+                            <input type="number" name="system.effect1.bonus" value="{{item.system.effect1.bonus}}">
+                        {{/if}}
+
+                        {{!attributes to adjust}}
+                        {{#compare item.system.effect1.effect "increasesAttributes" operator="=="}}
+                        <select name="system.effect1.bonusTarget">
+                            {{#select item.system.effect1.bonusTarget}}
+                            {{#each config.abilityScores as |name type|}}
+                                <option value="{{type}}">{{localize name}}</option>
+                            {{/each}}
+                            {{/select}}
+                        </select>
+
+                        {{/compare}}
+
+                        {{! target skill}}
+                        {{#compare item.system.effect1.effect "skillBonus" operator="=="}}
+                        <select name="system.effect1.bonusTarget">
+                            {{#select item.system.effect1.bonusTarget}}
+                            {{#each config.skills as |name type|}}
+                                <option value="{{type}}">{{localize name}}</option>
+                            {{/each}}
+                            <option value="anticipate"> {{localize "fantasycraft.anticipate"}}</option>
+                            <option value="bullRush"> {{localize "fantasycraft.bullRush"}}</option>
+                            <option value="disarm"> {{localize "fantasycraft.disarm"}}</option>
+                            <option value="distract"> {{localize "fantasycraft.distract"}}</option>
+                            <option value="feint"> {{localize "fantasycraft.feint"}}</option>
+                            <option value="grapple"> {{localize "fantasycraft.grapple"}}</option>
+                            <option value="pummle"> {{localize "fantasycraft.pummle"}}</option>
+                            <option value="taunt"> {{localize "fantasycraft.taunt"}}</option>
+                            <option value="trip"> {{localize "fantasycraft.trip"}}</option>
+                            <option value="threaten"> {{localize "fantasycraft.threaten"}}</option>
+                            <option value="tire"> {{localize "fantasycraft.tire"}}</option>
+                            {{/select}}
+                        </select>
+                        {{/compare}}
+
+                        {{! condition immunity}}
+                        {{#compare item.system.effect1.effect "conditionImmunity" operator="=="}}
+                        <select name="system.effect1.bonusTarget">
+                            {{#select item.system.effect1.bonusTarget}}
+                            {{#each config.negativeConditions as |name type|}}
+                                <option value="{{type}}">{{localize name}}</option>
+                            {{/each}}
+                            {{/select}}
+                        </select>
+                        {{/compare}}
+                    </div>
+                </div>
+
+                <div class="form-group item-customization-section">
+                    <div>
+                        <label>{{ localize "fantasycraft.effect"}} 2</label>
+                        <select name="system.effect2.effect">
+                            {{#select item.system.effect2.effect}}
+                            <option value="none"> </option>
+                            {{#each config.stanceEffects as |name type|}}
+                                <option value="{{type}}">{{localize name}}</option>
+                            {{/each}}
+                            {{/select}}
+                        </select>
+
+                        {{#if effect2IsNumeric}}
+                            <input type="number" name="system.effect2.bonus" value="{{item.system.effect2.bonus}}">
+                        {{/if}}
+
+                        {{!attributes to adjust}}
+                        {{#compare item.system.effect2.effect "increasesAttributes" operator="=="}}
+                        <select name="system.effect2.bonusTarget">
+                            {{#select item.system.effect2.bonusTarget}}
+                            {{#each config.abilityScores as |name type|}}
+                                <option value="{{type}}">{{localize name}}</option>
+                            {{/each}}
+                            {{/select}}
+                        </select>
+
+                        {{/compare}}
+
+                        {{! target skill}}
+                        {{#compare item.system.effect2.effect "skillBonus" operator="=="}}
+                        <select name="system.effect2.bonusTarget">
+                            {{#select item.system.effect2.bonusTarget}}
+                            {{#each config.skills as |name type|}}
+                                <option value="{{type}}">{{localize name}}</option>
+                            {{/each}}
+                            <option value="anticipate"> {{localize "fantasycraft.anticipate"}}</option>
+                            <option value="bullRush"> {{localize "fantasycraft.bullRush"}}</option>
+                            <option value="disarm"> {{localize "fantasycraft.disarm"}}</option>
+                            <option value="distract"> {{localize "fantasycraft.distract"}}</option>
+                            <option value="feint"> {{localize "fantasycraft.feint"}}</option>
+                            <option value="grapple"> {{localize "fantasycraft.grapple"}}</option>
+                            <option value="pummle"> {{localize "fantasycraft.pummle"}}</option>
+                            <option value="taunt"> {{localize "fantasycraft.taunt"}}</option>
+                            <option value="trip"> {{localize "fantasycraft.trip"}}</option>
+                            <option value="threaten"> {{localize "fantasycraft.threaten"}}</option>
+                            <option value="tire"> {{localize "fantasycraft.tire"}}</option>
+                            {{/select}}
+                        </select>
+                        {{/compare}}
+
+                        {{! condition immunity}}
+                        {{#compare item.system.effect2.effect "conditionImmunity" operator="=="}}
+                        <select name="system.effect2.bonusTarget">
+                            {{#select item.system.effect2.bonusTarget}}
+                            {{#each config.negativeConditions as |name type|}}
+                                <option value="{{type}}">{{localize name}}</option>
+                            {{/each}}
+                            {{/select}}
+                        </select>
+                        {{/compare}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</form>
