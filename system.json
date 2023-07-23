@@ -2,7 +2,7 @@
   "id": "fantasycraft",
   "title": "Fantasy Craft",
   "description": "A system for playing the Mastercraft system Fantasy Craft in the Foundry Virtual Tabletop environment.",
-  "version": 1.00,
+  "version": 1.01,
   "authors": [ 
       {
         "name": "Nuaurpy"
@@ -91,6 +91,15 @@
       "system": "fantasycraft",
       "path": "./packs/feats.db",
       "type": "Item"
+    },
+    { 
+      "name": "paths",
+      "label": "Paths",
+      "system": "fantasycraft",
+      "path": "packs/paths.db",
+      "type": "Item",
+      "private": false,
+      "flags": {}
     },
     {
       "name": "rules",

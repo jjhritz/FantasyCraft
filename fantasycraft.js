@@ -54,7 +54,7 @@ Hooks.once("init", function () {
 	CONFIG.Actor.documentClass = ActorFC;
 
 	CONFIG.Combat.initiative.formula = "1d20 + @initiative.class + @abilityScores.dexterity.mod + @initiative.featBonus";
-	Combat.prototype._getInitiativeFormula = _getInitiativeFormula;
+	Combatant.prototype._getInitiativeFormula = _getInitiativeFormula;
 
 	Items.unregisterSheet("core", ItemSheet);
 	Items.registerSheet("fantasycraft", FCItemSheet, { 

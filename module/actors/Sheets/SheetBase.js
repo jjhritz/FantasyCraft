@@ -966,9 +966,17 @@ export default class ActorSheetFC extends ActorSheet
       event.preventDefault();
       const element = event.currentTarget;
       const type = element.dataset.type;
+      let itemName = "attack";
+
+      if (type == "attack")
+        itemName = game.i18n.localize("fantasycraft.claw")
+      else if (type == "weapon")
+        itemName = game.i18n.localize("fantasycraft.newWeapon")
+      else if (type == "general")
+        itemName = game.i18n.localize("fantasycraft.newItem")
   
       const itemData = {
-        name: (type == "attack") ? game.i18n.localize("fantasycraft.claw") : game.i18n.localize("fantasycraft.newWeapon"),
+        name: itemName,
         type: type,
         system: foundry.utils.expandObject({ ...element.dataset })
       };
@@ -978,10 +986,11 @@ export default class ActorSheetFC extends ActorSheet
       {
         itemData.system.naturalAttack = "claw"
       }
+      else if (type == "general")
+        itemData.system.itemType = "good"
       
       return this.actor.createEmbeddedDocuments("Item", [itemData]);
-  
-    }
+      }
 
     _filterItem(event)
     {

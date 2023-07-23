@@ -163,26 +163,26 @@ export const ClassFeatures = {
         },
         "features": 
         {
-            "1": ["Compendium.fantasycraft.classfeatures.SzmA7kdZ4PGqduD7", "Compendium.fantasycraft.classfeatures.zImofQcH0PUllYGh"],
-            "2": ["Compendium.fantasycraft.classfeatures.FZtcqJXda2TwNekx"],
-            "3": ["Compendium.fantasycraft.classfeatures.6Whdz5IolOU4Jnoi"],
-            "4": ["Compendium.fantasycraft.classfeatures.FKF6mxfkkxVxUg4x"],
-            "5": ["Compendium.fantasycraft.classfeatures.6Whdz5IolOU4Jnoi"],
-            "6": ["Compendium.fantasycraft.classfeatures.OppLbXFyD4ToMY2K"],
-            "7": ["Compendium.fantasycraft.classfeatures.6Whdz5IolOU4Jnoi"],
-            "8": ["Compendium.fantasycraft.classfeatures.FKF6mxfkkxVxUg4x"],
-            "9": ["Compendium.fantasycraft.classfeatures.6Whdz5IolOU4Jnoi", "Compendium.fantasycraft.classfeatures.OppLbXFyD4ToMY2K"],
-            "10": ["Compendium.fantasycraft.classfeatures.vUyoLG85B1hTD1yN"],
-            "11": ["Compendium.fantasycraft.classfeatures.6Whdz5IolOU4Jnoi", "Compendium.fantasycraft.classfeatures.FZtcqJXda2TwNekx"],
-            "12": ["Compendium.fantasycraft.classfeatures.OppLbXFyD4ToMY2K", "Compendium.fantasycraft.classfeatures.FKF6mxfkkxVxUg4x"],
-            "13": ["Compendium.fantasycraft.classfeatures.6Whdz5IolOU4Jnoi"],
-            "14": ["Compendium.fantasycraft.classfeatures.oxE3sPEDsllcMLFF"],
-            "15": ["Compendium.fantasycraft.classfeatures.6Whdz5IolOU4Jnoi", "Compendium.fantasycraft.classfeatures.OppLbXFyD4ToMY2K"],
-            "16": ["Compendium.fantasycraft.classfeatures.FKF6mxfkkxVxUg4x"],
-            "17": ["Compendium.fantasycraft.classfeatures.6Whdz5IolOU4Jnoi"],
-            "18": ["Compendium.fantasycraft.classfeatures.OppLbXFyD4ToMY2K"],
-            "19": ["Compendium.fantasycraft.classfeatures.6Whdz5IolOU4Jnoi", "Compendium.fantasycraft.classfeatures.FZtcqJXda2TwNekx"],
-            "20": ["Compendium.fantasycraft.classfeatures.vUyoLG85B1hTD1yN", "Compendium.fantasycraft.classfeatures.FKF6mxfkkxVxUg4x"]
+            "1": ["Compendium.fantasycraft.classfeatures.", "Compendium.fantasycraft.classfeatures."],
+            "2": ["Compendium.fantasycraft.classfeatures."],
+            "3": ["Compendium.fantasycraft.classfeatures."],
+            "4": ["Compendium.fantasycraft.classfeatures."],
+            "5": ["Compendium.fantasycraft.classfeatures."],
+            "6": ["Compendium.fantasycraft.classfeatures."],
+            "7": ["Compendium.fantasycraft.classfeatures."],
+            "8": ["Compendium.fantasycraft.classfeatures."],
+            "9": ["Compendium.fantasycraft.classfeatures.", "Compendium.fantasycraft.classfeatures."],
+            "10": ["Compendium.fantasycraft.classfeatures."],
+            "11": ["Compendium.fantasycraft.classfeatures.", "Compendium.fantasycraft.classfeatures."],
+            "12": ["Compendium.fantasycraft.classfeatures.", "Compendium.fantasycraft.classfeatures."],
+            "13": ["Compendium.fantasycraft.classfeatures."],
+            "14": ["Compendium.fantasycraft.classfeatures."],
+            "15": ["Compendium.fantasycraft.classfeatures.", "Compendium.fantasycraft.classfeatures."],
+            "16": ["Compendium.fantasycraft.classfeatures."],
+            "17": ["Compendium.fantasycraft.classfeatures."],
+            "18": ["Compendium.fantasycraft.classfeatures."],
+            "19": ["Compendium.fantasycraft.classfeatures.", "Compendium.fantasycraft.classfeatures."],
+            "20": ["Compendium.fantasycraft.classfeatures.", "Compendium.fantasycraft.classfeatures."]
         }
     },
     "explorer": 
@@ -294,7 +294,7 @@ export const ClassFeatures = {
             "20": ["Compendium.fantasycraft.classfeatures.kQnidoPwhkTuYnvl", "Compendium.fantasycraft.classfeatures.rnHpu3PNch8oGCe7"]
         }
     },
-    "martialartist": 
+    "martial artist": 
     {
         "hasESlotChoice": true,
         "eSlot": 
@@ -303,26 +303,26 @@ export const ClassFeatures = {
         },
         "features": 
         {
-            "1": ["Compendium.fantasycraft.classfeatures.ijOgJH8hEvTWwnqV", "Compendium.fantasycraft.classfeatures.p1vrRqSDyIXwuDCo"],
-            "2": ["Compendium.fantasycraft.classfeatures.73B7pZJP1Q5KmpFb"],
-            "3": ["Compendium.fantasycraft.classfeatures.oW3IOr86vYoA1bBa"],
-            "4": ["Compendium.fantasycraft.classfeatures.pNxbIMY3YR0YoXAx"],
-            "5": ["Compendium.fantasycraft.classfeatures.vvoBipTstGg8glHn"],
-            "6": ["Compendium.fantasycraft.classfeatures.3jf9R9OL44MUMfBX"],
-            "7": ["Compendium.fantasycraft.classfeatures.oW3IOr86vYoA1bBa"],
-            "8": ["Compendium.fantasycraft.classfeatures.pNxbIMY3YR0YoXAx"],
-            "9": ["Compendium.fantasycraft.classfeatures.3jf9R9OL44MUMfBX", "Compendium.fantasycraft.classfeatures.vvoBipTstGg8glHn"],
-            "10": ["Compendium.fantasycraft.classfeatures.BTJxouZab496KJ5h"],
-            "11": ["Compendium.fantasycraft.classfeatures.73B7pZJP1Q5KmpFb", "Compendium.fantasycraft.classfeatures.oW3IOr86vYoA1bBa"],
-            "12": ["Compendium.fantasycraft.classfeatures.3jf9R9OL44MUMfBX", "Compendium.fantasycraft.classfeatures.pNxbIMY3YR0YoXAx"],
-            "13": ["Compendium.fantasycraft.classfeatures.vvoBipTstGg8glHn"],
-            "14": ["Compendium.fantasycraft.classfeatures.ilauJjfLBlF2zd8X"],
-            "15": ["Compendium.fantasycraft.classfeatures.3jf9R9OL44MUMfBX", "Compendium.fantasycraft.classfeatures.oW3IOr86vYoA1bBa"],
-            "16": ["Compendium.fantasycraft.classfeatures.pNxbIMY3YR0YoXAx"],
-            "17": ["Compendium.fantasycraft.classfeatures.vvoBipTstGg8glHn"],
-            "18": ["Compendium.fantasycraft.classfeatures.3jf9R9OL44MUMfBX"],
-            "19": ["Compendium.fantasycraft.classfeatures.73B7pZJP1Q5KmpFb", "Compendium.fantasycraft.classfeatures.oW3IOr86vYoA1bBa"],
-            "20": ["Compendium.fantasycraft.classfeatures.BTJxouZab496KJ5h", "Compendium.fantasycraft.classfeatures.pNxbIMY3YR0YoXAx"]
+            "1": ["Compendium.fantasycraft.classfeatures.", "Compendium.fantasycraft.classfeatures."],
+            "2": ["Compendium.fantasycraft.classfeatures."],
+            "3": ["Compendium.fantasycraft.classfeatures."],
+            "4": ["Compendium.fantasycraft.classfeatures."],
+            "5": ["Compendium.fantasycraft.classfeatures."],
+            "6": ["Compendium.fantasycraft.classfeatures."],
+            "7": ["Compendium.fantasycraft.classfeatures."],
+            "8": ["Compendium.fantasycraft.classfeatures."],
+            "9": ["Compendium.fantasycraft.classfeatures.", "Compendium.fantasycraft.classfeatures."],
+            "10": ["Compendium.fantasycraft.classfeatures."],
+            "11": ["Compendium.fantasycraft.classfeatures.", "Compendium.fantasycraft.classfeatures."],
+            "12": ["Compendium.fantasycraft.classfeatures.", "Compendium.fantasycraft.classfeatures."],
+            "13": ["Compendium.fantasycraft.classfeatures."],
+            "14": ["Compendium.fantasycraft.classfeatures."],
+            "15": ["Compendium.fantasycraft.classfeatures.", "Compendium.fantasycraft.classfeatures."],
+            "16": ["Compendium.fantasycraft.classfeatures."],
+            "17": ["Compendium.fantasycraft.classfeatures."],
+            "18": ["Compendium.fantasycraft.classfeatures."],
+            "19": ["Compendium.fantasycraft.classfeatures.", "Compendium.fantasycraft.classfeatures."],
+            "20": ["Compendium.fantasycraft.classfeatures.", "Compendium.fantasycraft.classfeatures."]
         }
     },
     "priest": 
@@ -605,7 +605,7 @@ export const OriginFeatures =
         "features": 
         {
             "breath weapon (fire)": "Compendium.fantasycraft.originfeatures.XeraeUwNBdfrjYKt",
-            "Cold-blooded": "Compendium.fantasycraft.originfeatures.43SS3MhrkHIn2dfR",
+            "cold-blooded": "Compendium.fantasycraft.originfeatures.43SS3MhrkHIn2dfR",
             "inquisitive mind": "Compendium.fantasycraft.originfeatures.gsGbDhuCTR1JlC6G",
             "natural attack (Bite I)": "Compendium.fantasycraft.originfeatures.6MYaFRpzvwtcLMBu",
             "natural attack (Claw I)": "Compendium.fantasycraft.originfeatures.gtnf0TPkF6ySLVi2",

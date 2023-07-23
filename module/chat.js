@@ -350,7 +350,7 @@ async function onDamage(event)
     let damageDice;
     let abilityMod = "strength";
     let itemInformation;
-    let damageType = "lethal";
+    let damageType = (event.currentTarget.parentElement.dataset.damageType != null) ? event.currentTarget.parentElement.dataset.damageType : "lethal";
     let sneakAttack = actor.system.sneakAttack;
 
     const damageFormula = event.currentTarget.parentElement.dataset.damageFormula;
@@ -448,7 +448,16 @@ async function onDamage(event)
     
     const rollInfo = await preRollDialog(itemInformation.name, "systems/fantasycraft/templates/chat/damageRoll-Dialog.hbs", rollFormula, null)
     if(rollInfo?.morale) rollFormula += Utils.returnPlusOrMinusString(rollInfo.morale);
-    if(rollInfo?.sneakAttack.checked) rollFormula += " + " + sneakAttack + "d6";
+    if(rollInfo?.sneakAttack.checked) 
+    {
+        if (actor.type != "character")    
+        {
+            let sneakAttackItem = actor.items.filter(item => item.name == game.i18n.localize("fantasycraft.sneakAttack"));
+            sneakAttack = Utils.numeralConverter(sneakAttackItem[0].system.grades.value)
+        }
+
+        rollFormula += " + " + sneakAttack + "d6";
+    }
 
     if ((trick1?.system.effect.additionalEffect == "bonusDamage" && Tricks.checkConditions(trick1, target)) || (trick2?.system.effect.additionalEffect == "bonusDamage" && Tricks.checkConditions(trick2, target)))
         rollFormula = rollFormula + " + " + li.dataset.bonusDamage;
