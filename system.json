@@ -2,97 +2,123 @@
   "id": "fantasycraft",
   "title": "Fantasy Craft",
   "description": "A system for playing the Mastercraft system Fantasy Craft in the Foundry Virtual Tabletop environment.",
-  "version": 1.01,
-  "authors": [ 
-      {
-        "name": "Nuaurpy"
-      }
-    ],
-  "scripts": [],
+  "version": "1.0.2",
+  "authors": [
+    {
+      "name": "Nuaurpy",
+      "flags": {}
+    }
+  ],
   "url": "https://github.com/nuaurpy/FantasyCraft",
   "manifest": "https://raw.githubusercontent.com/nuaurpy/FantasyCraft/main/system.json",
-  "download": "https://github.com/nuaurpy/FantasyCraft/archive/refs/tags/v1.0.0.zip",
-  "esmodules": ["fantasycraft.js"],
-  "styles": ["fantasycraft.css"],
+  "download": "https://github.com/nuaurpy/FantasyCraft/archive/refs/tags/release-1.0.2.zip",
+  "esmodules": [
+    "fantasycraft.js"
+  ],
+  "styles": [
+    "fantasycraft.css"
+  ],
   "packs": [
     {
       "name": "characters",
       "label": "Starter Characters",
       "system": "fantasycraft",
-      "path": "./packs/character.db",
-      "type": "Actor"
+      "path": "packs/character.db",
+      "type": "Actor",
+      "private": false,
+      "flags": {}
     },
     {
       "name": "monsters",
       "label": "Monsters",
       "system": "fantasycraft",
-      "path": "./packs/npcs.db",
-      "type": "Actor"
+      "path": "packs/npcs.db",
+      "type": "Actor",
+      "private": false,
+      "flags": {}
     },
     {
       "name": "rogues",
       "label": "Rogues",
       "system": "fantasycraft",
-      "path": "./packs/rogues.db",
-      "type": "Actor"
+      "path": "packs/rogues.db",
+      "type": "Actor",
+      "private": false,
+      "flags": {}
     },
     {
       "name": "items",
       "label": "Items",
       "system": "fantasycraft",
-      "path": "./packs/items.db",
-      "type": "Item"
+      "path": "packs/items.db",
+      "type": "Item",
+      "private": false,
+      "flags": {}
     },
     {
       "name": "spells",
       "label": "Spells",
       "system": "fantasycraft",
-      "path": "./packs/spells.db",
-      "type": "Item"
+      "path": "packs/spells.db",
+      "type": "Item",
+      "private": false,
+      "flags": {}
     },
     {
       "name": "classes",
       "label": "Classes",
       "system": "fantasycraft",
-      "path": "./packs/classes.db",
-      "type": "Item"
+      "path": "packs/classes.db",
+      "type": "Item",
+      "private": false,
+      "flags": {}
     },
     {
       "name": "classfeatures",
       "label": "Class Features",
       "system": "fantasycraft",
-      "path": "./packs/classfeatures.db",
-      "type": "Item"
+      "path": "packs/classfeatures.db",
+      "type": "Item",
+      "private": false,
+      "flags": {}
     },
     {
       "name": "origins",
       "label": "Origins",
       "system": "fantasycraft",
-      "path": "./packs/origins.db",
-      "type": "Item"
+      "path": "packs/origins.db",
+      "type": "Item",
+      "private": false,
+      "flags": {}
     },
     {
       "name": "originfeatures",
       "label": "Origin Features",
       "system": "fantasycraft",
-      "path": "./packs/originoptions.db",
-      "type": "Item"
+      "path": "packs/originoptions.db",
+      "type": "Item",
+      "private": false,
+      "flags": {}
     },
     {
       "name": "npcfeatures",
       "label": "NPC Features",
       "system": "fantasycraft",
-      "path": "./packs/npcfeatures.db",
-      "type": "Item"
+      "path": "packs/npcfeatures.db",
+      "type": "Item",
+      "private": false,
+      "flags": {}
     },
     {
       "name": "feats",
       "label": "Feats",
       "system": "fantasycraft",
-      "path": "./packs/feats.db",
-      "type": "Item"
+      "path": "packs/feats.db",
+      "type": "Item",
+      "private": false,
+      "flags": {}
     },
-    { 
+    {
       "name": "paths",
       "label": "Paths",
       "system": "fantasycraft",
@@ -105,57 +131,70 @@
       "name": "rules",
       "label": "Rules",
       "system": "fantasycraft",
-      "path": "./packs/rules.db",
-      "type": "JournalEntry"
+      "path": "packs/rules.db",
+      "type": "JournalEntry",
+      "private": false,
+      "flags": {}
     },
     {
       "name": "specialty",
       "label": "Specialty",
       "system": "fantasycraft",
-      "path": "./packs/specialty.db",
-      "type": "Item"
+      "path": "packs/specialty.db",
+      "type": "Item",
+      "private": false,
+      "flags": {}
     },
     {
       "name": "tricksandstances",
       "label": "Tricks and Stances",
       "system": "fantasycraft",
-      "path": "./packs/tricksStances.db",
-      "type": "Item"
+      "path": "packs/tricksStances.db",
+      "type": "Item",
+      "private": false,
+      "flags": {}
     },
     {
       "name": "vehicles",
       "label": "Vehicles",
       "system": "fantasycraft",
-      "path": "./packs/vehicles.db",
-      "type": "Item"
+      "path": "packs/vehicles.db",
+      "type": "Item",
+      "private": false,
+      "flags": {}
     },
     {
       "name": "weapons",
       "label": "Weapons",
       "system": "fantasycraft",
-      "path": "./packs/weapons.db",
-      "type": "Item"
+      "path": "packs/weapons.db",
+      "type": "Item",
+      "private": false,
+      "flags": {}
     },
     {
       "name": "armour",
       "label": "Armour",
       "system": "fantasycraft",
-      "path": "./packs/armour.db",
-      "type": "Item"
+      "path": "packs/armour.db",
+      "type": "Item",
+      "private": false,
+      "flags": {}
     }
   ],
   "languages": [
     {
       "lang": "en",
       "name": "English",
-      "path": "lang/en.json"
+      "path": "lang/en.json",
+      "flags": {}
     }
   ],
   "initiative": "1d20",
   "gridDistance": 5,
   "gridUnits": "ft",
-  "primaryTokenAttribute": null,
-  "secondaryTokenAttribute": null,
-  "minimumCoreVersion": "10.0",
-  "compatibleCoreVersion": "10.291"
+  "compatibility": {
+    "minimum": "10.0",
+    "verified": "10.291"
+  }
 }

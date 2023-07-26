@@ -74,7 +74,7 @@
                         {{#if stat.isChoice}}
                             <select class="selectStat" id="{{stat.label}}">
                                 {{#select stat.ability}}
-                                {{#each stat.choices as |v k|}}
+                                {{#each stat.choices.value as |v k|}}
                                     <option value="{{v}}">{{localize v}}</option>
                                 {{/each}}
                                 {{/select}}
