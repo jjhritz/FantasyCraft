@@ -1366,7 +1366,7 @@ export default class ActorFC extends Actor {
       return healingRoll.total;
     }
 
-    rollHealthSave()
+    rollHealthSave(saveDC)
     {
       const saveMod = 
       [
@@ -1382,6 +1382,8 @@ export default class ActorFC extends Actor {
 
       const damageSaveRoll = new Roll(rollFormula)
       damageSaveRoll.evaluate({async: false})
+
+      Chat.onSavingThrow(damageSaveRoll, this, game.i18n.localize("fantasycraft.damage"), saveDC)
     
       return damageSaveRoll.total;
     }
@@ -2030,6 +2032,7 @@ export default class ActorFC extends Actor {
           }
         }
       }
+      //if the character is an NPC instead just roll a damage roll. 
       else if (this.type == "npc" && !this.system.isSpecial)
       {
         if (!options.crit)
@@ -2048,7 +2051,7 @@ export default class ActorFC extends Actor {
       const saveDC = Math.floor((totalDamage/2) + 10);
 
       //roll 1d20 + con + health grade value, if that value is less than 10 + (total damage/2)
-      const saveRoll = this.rollHealthSave();
+      const saveRoll = this.rollHealthSave(saveDC);
 
       if (saveRoll < saveDC || autoKill)
       {

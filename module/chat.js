@@ -76,10 +76,11 @@ function setDicelessRenderTemplate(template, spell, chatData)
         });
 }
 
-export function onSavingThrow(diceRoll, actor, savingThrow)
+export function onSavingThrow(diceRoll, actor, savingThrow, dc=0)
 {
     const save = actor.system.saves[savingThrow]
     savingThrow = savingThrow + " save"
+    
     const rollInfo = 
     {
         actor: actor,
@@ -92,6 +93,8 @@ export function onSavingThrow(diceRoll, actor, savingThrow)
     d['roll'] = diceRoll.total;
     d['formula'] = diceRoll.formula
     d['diceRoll'] = diceRoll.terms[0].results[0].result
+    if (dc != 0) d['dc'] = dc;
+    d['success'] = (dc > 0 && dc < diceRoll.total) ? true : false;
 
     const chatData = getChatBaseData(actor);
 

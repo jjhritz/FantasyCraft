@@ -19,7 +19,7 @@
                         <header class="part-header flexrow">
                             <span class="part-formula">{{data.formula}}</span>
                             {{#if this.flavor}}<span class="part-flavor">{{data.flavor}}</span>{{/if}}
-                            <span class="part-total">{{data.diceRoll}}</span>
+                            <div class="part-total">{{data.diceRoll}}</div>
                         </header>
                         <ol class="dice-rolls">
                         {{#each data.rolls}}
@@ -30,7 +30,7 @@
                 </section>
             </div>
 
-            <div class="dice-total">
+            <div class="dice-total {{#if data.success}}threat{{/if}}">
                 {{data.roll}}
             </div>
             
@@ -38,6 +38,10 @@
             <div class="card-content">
                 <div><b>{{localize "fantasycraft.trick"}}: </b>{{data.trick.name}}</div>
             </div>
+            {{/if}}
+
+            {{#if data.dc}}
+                <div><b>{{localize "fantasycraft.dc"}}: </b>{{data.dc}}</div>
             {{/if}}
 
              {{#if data.hasDamage}}       

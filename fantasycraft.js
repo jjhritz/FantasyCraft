@@ -137,7 +137,7 @@ Hooks.once("init", function () {
 	Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
 
 		let operator = options.hash.operator || "==";
-		
+
 		let operators = 
 		{
 			'==':		function(l,r) { return l == r; },

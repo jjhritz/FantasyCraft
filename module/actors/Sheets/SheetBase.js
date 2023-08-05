@@ -515,14 +515,13 @@ export default class ActorSheetFC extends ActorSheet
       const clss = act.itemTypes.class.find(c => c.name == element.closest(".item").dataset.itemName);
       let priorLevel = clss.system.levels;
       let maxLevel = 20;
-
-      console.log("test");
+      let classCap;
 
       //if the class is a base class max level is 20, if it is exper it's 10 and if it's a master class the max level is 5
       if (clss.system.classType != "base")
-        maxLevel = (clss.system.classType == "expert") ? 10 : 5;
+        classCap = (clss.system.classType == "expert") ? 10 : 5;
 
-      const next = (act.system.careerLevel.value == maxLevel) ? 0 : priorLevel + 1;
+      const next = (act.system.careerLevel.value == maxLevel || clss.system.levels == classCap) ? 0 : priorLevel + 1;
       
       if (next > priorLevel)
       {
