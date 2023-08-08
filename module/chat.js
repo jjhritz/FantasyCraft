@@ -105,11 +105,21 @@ export function onSkillCheck(diceRoll, actor, skillName, flawless)
 {
     let skill = actor.type == "character" ? actor.system.skills[skillName] : actor.system.signatureSkills[skillName];
     
+    console.log("test");
+
     if (skillName == "competence")
         skill = { threat: 20, error: 1 };
 
     if (skillName == "spellcasting") 
+    {
         skill = actor.type == "character" ? actor.system.arcane[skillName] : actor.system[skillName];
+        if (actor.type == "npc") skill.threat = skill.threat -= 2;
+        skill.error = (game.settings.get('fantasycraft', 'wildMagic')) ? 3 : 1;
+        let mPouch = actor.items.filter(item => item.name == game.i18n.localize("fantasycraft.magesPouch"))
+        mPouch = mPouch[0];
+        if (!!mPouch && mPouch.system.itemUpgrades.masterwork)
+            skill.error --;
+    }
     
     if (actor.type == "npc" && skillName != "spellcasting" && skillName != "competence") 
         skillName = actor.system.signatureSkills[skillName].skillName;

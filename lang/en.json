@@ -886,6 +886,7 @@
 		"flawless": "Flawless",
 		"toughUsed": "Tough Used",
 		"expert": "Expert",
+		"magesPouch": "Mage's pouch",
 		"Dialog":
 		{
 			"requiresTargetWarningMessage": "You require a target for the selected Trick.",
@@ -926,6 +927,21 @@
 				{
 					"name": "Sorcery",
 					"label": "Magic is real and may be harnessed and controlled in the form of spells."
+				},
+				"wildMagic": 
+				{
+					"name": "Wild Magic",
+					"label": "Magic is unpredictable or difficult to control, leading to… exciting critical successes and failures."
+				},
+				"autoRoll":
+				{
+					"name": "Auto Roll for NPCs",
+					"label": "Automatically roll damage saves for NPC when damage is applied"
+				},
+				"fragileMonsters":
+				{
+					"name": "Fragile Monsters",
+					"label": "Special NPCs have half vitality"
 				}
 			}
 		}

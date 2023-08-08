@@ -30,7 +30,7 @@
                 </section>
             </div>
 
-            <div class="dice-total {{#if data.success}}threat{{/if}}">
+            <div class="dice-total {{#if data.success}}threat{{/if}} {{#if data.threat}}threat{{/if}} {{#if data.error}}error{{/if}}">
                 {{data.roll}}
             </div>
             

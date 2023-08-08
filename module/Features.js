@@ -561,6 +561,38 @@ export const ClassFeatures = {
             "10": ["Compendium.fantasycraft.classfeatures.gA66uhN7C22EXqTK"]   
         }
     },
+    "force of nature":
+    {
+        "features":
+        {
+            "1": ["Compendium.fantasycraft.classfeatures.p9r3hPdXG6IXF7ZE", "Compendium.fantasycraft.classfeatures.9MVXH7gejqWuqGuQ"],
+            "2": ["Compendium.fantasycraft.classfeatures.sXGhzb3E7orc1Zk4"],
+            "3": ["Compendium.fantasycraft.classfeatures.p9r3hPdXG6IXF7ZE"],
+            "4": ["Compendium.fantasycraft.classfeatures.OGumqDqZejPeVmOA", "Compendium.fantasycraft.classfeatures.Uuoa9qqTK8FMO6lo"],
+            "5": ["Compendium.fantasycraft.classfeatures.p9r3hPdXG6IXF7ZE"],
+            "6": ["Compendium.fantasycraft.classfeatures.JHcuFldrHcSE92rZ"],
+            "7": ["Compendium.fantasycraft.classfeatures.p9r3hPdXG6IXF7ZE", "Compendium.fantasycraft.classfeatures.sXGhzb3E7orc1Zk4"],
+            "8": ["Compendium.fantasycraft.classfeatures.RkdIOCyWkQyKARlT", "Compendium.fantasycraft.classfeatures.dwY8s0Vfluad14Jm"],
+            "9": ["Compendium.fantasycraft.classfeatures.p9r3hPdXG6IXF7ZE"],
+            "10": ["Compendium.fantasycraft.classfeatures.d7n5qvaoaP5BtajD"]   
+        }
+    },
+    "gallant":
+    {
+        "features":
+        {
+            "1": ["Compendium.fantasycraft.classfeatures.6wzI8YWPCVvDldvy", "Compendium.fantasycraft.classfeatures.r6UnlZHXAgeNR6NR"],
+            "2": ["Compendium.fantasycraft.classfeatures.ymjuxtZ1QTnekQJu"],
+            "3": ["Compendium.fantasycraft.classfeatures.VfQey0Wr6myMzvXj"],
+            "4": ["Compendium.fantasycraft.classfeatures.nKHBZUKCVxUT9ShL", "Compendium.fantasycraft.classfeatures.EcLsPnlbSrkKHNzt"],
+            "5": ["Compendium.fantasycraft.classfeatures.VfQey0Wr6myMzvXj"],
+            "6": ["Compendium.fantasycraft.classfeatures.3gVHSDQ7XQ92HwBd"],
+            "7": ["Compendium.fantasycraft.classfeatures.VfQey0Wr6myMzvXj", "Compendium.fantasycraft.classfeatures.ymjuxtZ1QTnekQJu"],
+            "8": ["Compendium.fantasycraft.classfeatures.EcLsPnlbSrkKHNzt", "Compendium.fantasycraft.classfeatures.fQWsOLNwLhrPYOWq"],
+            "9": ["Compendium.fantasycraft.classfeatures.VfQey0Wr6myMzvXj"],
+            "10": ["Compendium.fantasycraft.classfeatures.nKHBZUKCVxUT9ShL"]   
+        }
+    },
     "mist dancer":
     {
         "features":
@@ -575,6 +607,38 @@ export const ClassFeatures = {
             "8": ["Compendium.fantasycraft.classfeatures.cDP9rc3RYvkOLaAt", "Compendium.fantasycraft.classfeatures.3SSnJvd82bdQRcHI"],
             "9": ["Compendium.fantasycraft.classfeatures.wytwmbcKQucbhf69"],
             "10": ["Compendium.fantasycraft.classfeatures.GYwUsIgcsjDlurz1"]
+        }
+    },
+    "monk":
+    {
+        "features":
+        {
+            "1": ["Compendium.fantasycraft.classfeatures.Uipsi731jbR0yie2", "Compendium.fantasycraft.classfeatures.8EHWYMdiiA3Hv9sW"],
+            "2": ["Compendium.fantasycraft.classfeatures.Enzh9A0rLrNdF1CH"],
+            "3": ["Compendium.fantasycraft.classfeatures.26VT7W2KNSUqMlJj"],
+            "4": ["Compendium.fantasycraft.classfeatures.Uipsi731jbR0yie2", "Compendium.fantasycraft.classfeatures.usttbfv0KABe1KDt"],
+            "5": ["Compendium.fantasycraft.classfeatures.26VT7W2KNSUqMlJj"],
+            "6": ["Compendium.fantasycraft.classfeatures.YpxLjUyduF4HDVsl"],
+            "7": ["Compendium.fantasycraft.classfeatures.26VT7W2KNSUqMlJj", "Compendium.fantasycraft.classfeatures.BwrlgT36P4XIjyvv"],
+            "8": ["Compendium.fantasycraft.classfeatures.Uipsi731jbR0yie2", "Compendium.fantasycraft.classfeatures.uN2DiFIwGFiuMGMd"],
+            "9": ["Compendium.fantasycraft.classfeatures.26VT7W2KNSUqMlJj"],
+            "10": ["Compendium.fantasycraft.classfeatures.9G3X66tHSDLOen4s"]
+        }
+    },
+    "monster slayer":
+    {
+        "features":
+        {
+            "1": ["Compendium.fantasycraft.classfeatures.K96VwiQfhTrRaUDo", "Compendium.fantasycraft.classfeatures.38rQOiXWpbyUJDPu"],
+            "2": ["Compendium.fantasycraft.classfeatures.1fsNUib1sYD5eJuH"],
+            "3": ["Compendium.fantasycraft.classfeatures.ZsXL7iLAB096ohtA"],
+            "4": ["Compendium.fantasycraft.classfeatures.5WKUXI6SC9roscIe", "Compendium.fantasycraft.classfeatures.HFAz1cIIu0WwGfzk"],
+            "5": ["Compendium.fantasycraft.classfeatures.ZsXL7iLAB096ohtA"],
+            "6": ["Compendium.fantasycraft.classfeatures.mCf41BvuJ2TTiUz7"],
+            "7": ["Compendium.fantasycraft.classfeatures.1fsNUib1sYD5eJuH", "Compendium.fantasycraft.classfeatures.ZsXL7iLAB096ohtA"],
+            "8": ["Compendium.fantasycraft.classfeatures.5WKUXI6SC9roscIe", "Compendium.fantasycraft.classfeatures.HFAz1cIIu0WwGfzk"],
+            "9": ["Compendium.fantasycraft.classfeatures.ZsXL7iLAB096ohtA"],
+            "10": ["Compendium.fantasycraft.classfeatures.Btri1D6nWoZigm7c"]
         }
     },
     "paladin":
