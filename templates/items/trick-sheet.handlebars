@@ -77,6 +77,9 @@
                             {{#each config.attackTrickKeywords as |v k|}}
                                 <option value="{{k}}"> {{localize v}}</option>
                             {{/each}}
+                            {{#each config.combatActions as |v k|}}
+                                <option value="{{k}}"> {{localize v}}</option>
+                            {{/each}}
                         {{/select}}
                     </select>
                 {{/if}}
@@ -175,6 +178,17 @@
                 <select name="system.effect.secondaryCheck">
                     {{#select item.system.effect.secondaryCheck}}
                         {{#each config.skills as |v k|}}
+                            <option value="{{k}}"> {{localize v}}</option>
+                        {{/each}}
+                    {{/select}}
+                </select>
+                {{/compare}}
+
+                
+                {{#compare item.system.effect.additionalEffect "replaceAttribute" operator="=="}}
+                <select name="system.effect.secondaryCheck">
+                    {{#select item.system.effect.secondaryCheck}}
+                        {{#each config.abilityScores as |v k|}}
                             <option value="{{k}}"> {{localize v}}</option>
                         {{/each}}
                     {{/select}}

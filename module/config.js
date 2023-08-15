@@ -1181,6 +1181,7 @@ fantasycraft.attackTrickKeywords =
 fantasycraft.attackTrickEffects =
 {
 	replaceAttackRoll: "fantasycraft.replaceAttackRoll",
+	replaceAttribute: "fantasycraft.replaceAttribute",
 	failDamageSave: "fantasycraft.failDamageSave",
 	twoGradesOfCondition: "fantasycraft.twoGradesOfCondition",
 	impareAttribute: "fantasycraft.impareAttribute",
@@ -1198,6 +1199,7 @@ fantasycraft.trickConditions =
 {
 	hitBy4: "If you hit by 4 or more",
 	hitBy10: "If you hit by 4/10 or more",
+	drIsGreater: "If your DR is greater than your Targets",
 	targetHasCondition: "Target has a specific condition",
 	targetIsSpecial: "Target is Special",
 	targetIsStandard: "Target is Standard"
@@ -1244,7 +1246,7 @@ fantasycraft.stanceEffects =
 	maxDamage: "fantasycraft.maxWeaponDamage",
 	dr: "fantasycraft.dr",
 	reduceHandRequirement: "fantasycraft.reduceHandRequirement",
-	increasesAttributes: "fantasycraft.increasesAttributes",
+	increaseAttributes: "fantasycraft.increasesAttribute",
 	skillBonus: "fantasycraft.skillBonus",
 	reduceThreat: "fantasycraft.reduceThreat",
 	conditionImmunity: "fantasycraft.conditionImmunity"

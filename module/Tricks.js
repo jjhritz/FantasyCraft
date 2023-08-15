@@ -8,8 +8,10 @@ export function determinePreRollTrickEffect(trick, actor, rollInfo, rollFormula,
     //if attack trick
     if (checkTargets(trick, target)) return "Error"; 
 
-    //Tricks that affect the attack roll by either a flat roll modifier or replacing the roll with a different kind.
-    if (trick.system.effect.rollModifier) rollFormula += Utils.returnPlusOrMinusString(rollInfo.trick1.system.effect.rollModifier);
+    //If the roll has an attack roll bonus and a condition, add the attack roll bonus only if the condition is met.
+    if (trick.system.effect.rollModifier && (checkConditions(trick, target[0]?.document._actor, 0, actor) || trick.system.effect.condition == ""))
+        //Tricks that affect the attack roll by either a flat roll modifier or replacing the roll with a different kind.
+        rollFormula += Utils.returnPlusOrMinusString(rollInfo.trick1.system.effect.rollModifier);
 
     //This is essentially only for called shot
     if (trick.system.effect.additionalEffect == "ignoreAP")
@@ -26,6 +28,13 @@ export function determinePreRollTrickEffect(trick, actor, rollInfo, rollFormula,
       return rollFormula
     }
 
+    //replace the attribute used in the roll if required
+    if (trick.system.effect.additionalEffect == "replaceAttribute")
+    {
+      rollFormula = "1d20 + " + actor.abilityScores[trick.system.effect.secondaryCheck].mod + rollFormula.slice(8)
+      return rollFormula
+    }
+
     return rollFormula;
     
     //if combat action trick
@@ -39,14 +48,14 @@ export function determinePostRollTrickEffect(trick, actor, item, target, attackR
     //If the attack is using a trick that instantly causes a failed damage save, see if the target auto-fails a save.
     if (target != null)
     {
-        if (!checkConditions(trick, target[0]?.document._actor, attackRoll))
+        if (!checkConditions(trick, target[0]?.document._actor, attackRoll, actor))
             return null;
 
         if (trick.system.effect.additionalEffect == "failDamageSave") autoFailSaveCheck(attackRoll, target, trick.system, item);
     }
 }
 
-export function checkConditions(trick, target, attackRoll = 0)
+export function checkConditions(trick, target, attackRoll = 0, actor)
 {
     const condition = trick.system.effect.condition;
 
@@ -56,6 +65,7 @@ export function checkConditions(trick, target, attackRoll = 0)
         return true;
     if (condition == "targetIsSpecial" && target.isSpecial) return true; 
     if (condition == "targetIsStandard" && !target.isSpecial) return true;
+    if (condition == "drIsGreater" && target.system.dr < actor.dr) return true;
         
     return false;
 }

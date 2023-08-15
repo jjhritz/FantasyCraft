@@ -714,6 +714,7 @@
 		"pathSpellcasting": "Path Spellcasting",
 		"trickType": "Trick Type",
 		"replaceAttackRoll": "Replace attack roll",
+		"replaceAttribute": "Replace attribute",
 		"failDamageSave": "Fail Damage Save",
 		"twoGradesOfCondition": "Two grades on failed save",
 		"stopMovement": "Opponents save or stop movement",
