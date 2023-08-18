@@ -135,7 +135,7 @@
                 {{! Templates}}
                 <div class="flex3">
                     <label>{{localize "fantasycraft.templates"}}</label>
-                    <a class="trait-selector" data-options="templates" data-target="npcTemplates">
+                    <a class="npc-templates" data-options="templates" data-target="npcTemplates">
                         <i class="fas fa-edit"></i>
                     </a>
                 </div>
@@ -301,10 +301,12 @@
                                 {{localize "fantasycraft.damageType"}}: {{localize attack.system.damageType}})
                             {{/compare}}
                             {{#compare attack.system.attackType "extraSave" operator="=="}}
-                                [{{localize "fantasycraft.dc"}} {{attack.system.saveDC}}] ({{localize attack.system.attackDescription}} {{attack.system.attackGrade}}: 
-                                {{localize attack.system.area.shape}} 
-                                {{#compare attack.system.area.shape "gaze" operator="!="}}
-                                {{attack.system.area.totalRange}} {{localize "fantasycraft.ft"}} {{localize "fantasycraft.range"}}
+                                [{{localize "fantasycraft.dc"}} {{attack.system.saveDC}}] ({{localize attack.system.attackDescription}} {{attack.system.attackGrade}}
+                                {{~#compare attack.system.saveUpgrade "none" operator="!=" ~}}: 
+                                    {{localize attack.system.area.shape}} 
+                                    {{#compare attack.system.area.shape "gaze" operator="!="}}
+                                        {{attack.system.area.totalRange}} {{localize "fantasycraft.ft"}} {{localize "fantasycraft.range" ~}}
+                                    {{/compare}}
                                 {{/compare}})
                             {{/compare}}
                             </span>

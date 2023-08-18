@@ -47,6 +47,7 @@ export default class SkillSelector extends FormApplication   {
       
       for ( let [k, v] of Object.entries(formData.signatureSkills) ) 
       {
+        //The form data doesn't differentiate between dropdowns, so only look at even numbered dropdowns to skip unrequired dropdowns.
         if (k % 2 == 0)
         {
             if (v != 'none')

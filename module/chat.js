@@ -200,7 +200,7 @@ export function onCombatAction(actionRoll, actor, combatAction, trick=null)
     d['roll'] = actionRoll.total;
     d['formula'] = actionRoll.formula;
     d['diceRoll'] = actionRoll.terms[0].results[0].result;
-    d['threat'] = threat;
+    d['threat'] = (actionRoll.total >= threat) ? true: false;
     if (trick != null) d['trick'] = trick
 
     if (damage.value != "") 

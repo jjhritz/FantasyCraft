@@ -5,6 +5,7 @@ import SkillSelector from "../../apps/npc-apps/npc-skill-selection.js";
 import GearDialog from "../../apps/npc-apps/gear-selection.js";
 import AttackDialog from "../../apps/npc-apps/attack-selection.js";
 import Spellcasting from "../../apps/npc-apps/spellcasting-selection.js";
+import TemplateSelector from "../../apps/npc-apps/npc-templates.js";
 import Qualities from "../../apps/npc-apps/quality-selection.js";
 import Treasure from "../../apps/npc-apps/treasure-selection.js";
 import TextField from "../../apps/text-field.js";
@@ -100,6 +101,7 @@ export default class ActorSheetFC extends ActorSheet
         html.find('.resistance').click(this._onResistances.bind(this));
 
         html.find('.movement-selector').click(this._onMovementSelector.bind(this));
+        html.find('.npc-templates').click(this._onTemplateSelector.bind(this));
         html.find('.npc-skill-selection').click(this._onSkillSelection.bind(this));
         html.find('.gear').click(this._onGearSelection.bind(this));
         html.find('.attacks').click(this._onAttackSelection.bind(this));
@@ -327,6 +329,12 @@ export default class ActorSheetFC extends ActorSheet
       const choices = CONFIG.fantasycraft[element.dataset.options];
       const options = { name: element.dataset.target, title: label.innerText, choices };
       new MoveSelector(this.actor, options).render(true);
+    }
+
+    _onTemplateSelector(event)
+    {
+      let options = this._handleEvents(event);
+      new TemplateSelector(this.actor, options).render(true);
     }
 
     _onSkillSelection(event)
@@ -1020,19 +1028,22 @@ export default class ActorSheetFC extends ActorSheet
     {
       const li = event.currentTarget.closest(".item");
       const item = this.actor.items.get(li.dataset.itemId);
-      this.actor.rollWeaponAttack(item)
+      const skipInputs = event?.shiftKey;
+      this.actor.rollWeaponAttack(item, skipInputs)
     }
 
     _rollNatural(event)
     {
       const li = event.currentTarget.closest(".item");
       const item = this.actor.items.get(li.dataset.itemId);
-      this.actor.rollNaturalAttack(item)
+      const skipInputs = event?.shiftKey;
+      this.actor.rollNaturalAttack(item, skipInputs)
     }
 
     _rollUnarmed(event)
     {
-      this.actor.rollUnarmedAttack()
+      const skipInputs = event?.shiftKey;
+      this.actor.rollUnarmedAttack(null, skipInputs)
     }
 
     _rollCombatAction(event)

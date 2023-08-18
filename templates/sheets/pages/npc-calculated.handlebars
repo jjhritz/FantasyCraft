@@ -56,7 +56,7 @@
             {{actor.system.spellcasting.total}} = 
             {{actor.system.spellcasting.value}} + {{actor.system.abilityScores.intelligence.mod}};
             
-            {{localize "fantasycraft.spells"}}: {{#each spells as |spell id|}} <a class="spellCard" data-spell={{spell._id}}>{{spell.name}}</a>{{#unless @last}},{{/unless}}{{#if @last}};{{/if}}{{/each}}
+            {{localize "fantasycraft.spells"}}: {{#each spells as |spell id|}} <a class="spellCard" data-spell={{spell._id}}><b>{{spell.name}}</b></a>{{#unless @last}},{{/unless}}{{#if @last}};{{/if}}{{/each}}
         {{/if}}
         <br>
         <i>{{localize "fantasycraft.qualities"}}:</i> {{#each featuresList as |quality id|}} <span> {{quality}}{{#unless @last}}, {{/unless}} </span> {{/each}}
@@ -65,7 +65,7 @@
         <i>{{localize "fantasycraft.attacks"}}:</i> 
         {{#each weapons as |weapon id|}}
         {{#compare weapon.system.weaponCategory "arrowsAndBolts" operator="!="}}
-            <label class="item" data-item-id="{{weapon._id}}"><a class="roll-weapon">{{weapon.name}}</a></label> 
+            <label class="item" data-item-id="{{weapon._id}}"><a class="roll-weapon"><b>{{weapon.name}}</b></a></label> 
             <span>({{weapon.system.damage}},
                 {{localize "fantasycraft.threatRange"}}: {{weapon.system.threatRange}}
                 {{~#compare "none" weapon.system.upgrades.customization operator="!="}}, {{localize weapon.system.upgrades.customization~}} {{/compare}}
@@ -86,7 +86,7 @@
             {{/compare}}
         {{/each}}
         {{#each attacks as |attack id|}}
-                <label class="item" data-item-id="{{attack._id}}"><a class="roll-natural-attack">{{attack.name}}</a></label> 
+                <label class="item" data-item-id="{{attack._id}}"><a class="roll-natural-attack"><b>{{attack.name}}</b></a></label> 
                 <span>(
                 {{#compare attack.system.attackType "naturalAttack" operator="=="}}
                     {{! Bite V (2d8 Fire Damage Threat 18-20) Trip }}
@@ -100,10 +100,12 @@
                     {{localize "fantasycraft.damageType"}}: {{localize attack.system.damageType}})
                 {{/compare}}
                 {{#compare attack.system.attackType "extraSave" operator="=="}}
-                    [{{localize "fantasycraft.dc"}} {{attack.system.saveDC}}] ({{localize attack.system.attackDescription}} {{attack.system.attackGrade}}: 
-                    {{localize attack.system.area.shape}} 
-                    {{#compare attack.system.area.shape "gaze" operator="!="}}
-                    {{attack.system.area.totalRange}} {{localize "fantasycraft.ft"}} {{localize "fantasycraft.range"}}
+                    [{{localize "fantasycraft.dc"}} {{attack.system.saveDC}}] ({{localize attack.system.attackDescription}} {{attack.system.attackGrade}}
+                    {{~#compare attack.system.saveUpgrade "none" operator="!="}}: 
+                        {{localize attack.system.area.shape}} 
+                        {{#compare attack.system.area.shape "gaze" operator="!="}}
+                        {{attack.system.area.totalRange}} {{localize "fantasycraft.ft"}} {{localize "fantasycraft.range"}}
+                        {{/compare}}
                     {{/compare}})
                 {{/compare}}
                 ){{#unless @last}}, {{/unless}}</span>

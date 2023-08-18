@@ -56,4 +56,16 @@
         </select>
     </div>
 
+    {{#if mastersTouch}}
+    <div class="form-group">
+        <label>{{ localize "fantasycraft.trickSelection" }}</label>
+        <select name="trick2">
+            <option name=""></option>
+            {{#each tricks}}
+                <option value={{_id}}>{{name}}</option>
+            {{/each}}
+        </select>
+    </div>
+    {{/if}}
+
 </form>

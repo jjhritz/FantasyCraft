@@ -290,17 +290,17 @@ fantasycraft.currency =
 }
 fantasycraft.customizations = 
 {
-	drake: "Drake",
-	dwarf: "Dwarf",
-	elf: "Elf",
-	giant: "Giant",
-	goblin: "Goblin",
-	ogre: "Ogre",
-	orc: "Orc",
-	pech: "Pech",
-	rootwalker: "Rootwalker",
-	saurian: "Saurian",
-	unborn: "Unborn"
+	drake: "fantasycraft.drake",
+	dwarf: "fantasycraft.dwarf",
+	elf: "fantasycraft.elf",
+	giant: "fantasycraft.giant",
+	goblin: "fantasycraft.goblin",
+	ogre: "fantasycraft.ogre",
+	orc: "fantasycraft.orc",
+	pech: "fantasycraft.pech",
+	rootwalker: "fantasycraft.rootwalker",
+	saurian: "fantasycraft.saurian",
+	unborn: "fantasycraft.unborn"
 }
 fantasycraft.materials = 
 {

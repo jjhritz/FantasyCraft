@@ -1423,8 +1423,29 @@ export default class ActorFC extends Actor {
       tricks = tricks.filter(function(item) {return (item.system.trickType.keyword == action)});
 
       let weapons = this.items.filter(function(item) {return (item.type == "weapon" && item.system.readied)});
-      
+
+      let newTricks = [];
+
       //TODO add check for readied weapon if the trick has a secondary weapon keyword. 
+      for (let trick of Object.entries(tricks))
+      {
+        if (trick[1].system.trickType.keyword2 == "")
+        {
+          newTricks.push(trick[1]);
+        }
+
+        for (let weapon of Object.entries(weapons))
+        {
+          if ((trick[1].system.trickType.keyword2 == weapon[1].system.attackType || trick[1].system.trickType.keyword2 == weapon[1].system.weaponProficiency || 
+            trick[1].system.trickType.keyword2 == weapon[1].system.weaponCategory || (trick[1].system.trickType.keyword2 == "bowHurled" && (weapon[1].system.weaponCategory == "bow" 
+            || weapon[1].system.weaponCategory == "hurled"))))
+            {
+              newTricks.push(trick[1]);
+            }
+        }
+      }
+
+      tricks = newTricks
 
       return tricks;
     }
@@ -1461,7 +1482,7 @@ export default class ActorFC extends Actor {
       return attackModifiers;
     }
 
-    async rollWeaponAttack(item)
+    async rollWeaponAttack(item, skipInputs)
     {
       const actor = this.system;
 
@@ -1530,16 +1551,63 @@ export default class ActorFC extends Actor {
         return;
       }
       
-      const rollInfo = await this.preRollDialog(item.name, "systems/fantasycraft/templates/chat/attackRoll-Dialog.hbs", rollFormula, tricks, powerAttack, multiAttack, stance, ammo)
-
-      if (rollInfo == null) return;
-
-      //Alter qualities based on class features, or ammunition
-      let pod = this.itemTypes.path.find(i => i.name == game.i18n.localize("fantasycraft.pathOfDestruction"));
-      item.system.weaponProperties.ap += (!!pod) ? pod.system.pathStep : 0;
-      if (rollInfo.ammo != null)
+      if (!skipInputs)
       {
-        let ammoProperties = rollInfo.ammo.system.weaponProperties;
+        const rollInfo = await this.preRollDialog(item.name, "systems/fantasycraft/templates/chat/attackRoll-Dialog.hbs", rollFormula, tricks, powerAttack, multiAttack, stance, ammo)
+
+        if (rollInfo == null) return;
+
+        //Alter qualities based on class features, or ammunition
+        let pod = this.itemTypes.path.find(i => i.name == game.i18n.localize("fantasycraft.pathOfDestruction"));
+        item.system.weaponProperties.ap += (!!pod) ? pod.system.pathStep : 0;
+        
+        if (rollInfo.ammo != null)
+          this.handleAmmo(rollInfo.ammo, item);
+        
+
+        rollFormula = determinePreRollTrickEffect(rollInfo?.trick1, actor, rollInfo, rollFormula, target);
+        if (rollFormula == "Error") return;
+
+        //subtract the effect of power attack or multiattack feats
+        if(rollInfo?.powerAttack) rollFormula += " - " + rollInfo.powerAttack;
+        if(rollInfo?.multiAttack) rollFormula += " - " + rollInfo.multiAttack;
+        if(rollInfo?.morale) rollFormula += Utils.returnPlusOrMinusString(rollInfo.morale);
+
+        //roll the dice
+        const attackRoll = new Roll(rollFormula)
+        attackRoll.evaluate({async: false})
+
+        let additionalInfo = determinePostRollTrickEffect(rollInfo?.trick1, actor, item, target, attackRoll);
+
+        if (rollInfo == null)
+          return;
+
+        Chat.onAttack(attackRoll, this, item, rollInfo.trick1, rollInfo.trick2, additionalInfo, rollInfo.ammo);
+      }
+      else
+      {
+        let pod = this.itemTypes.path.find(i => i.name == game.i18n.localize("fantasycraft.pathOfDestruction"));
+        item.system.weaponProperties.ap += (!!pod) ? pod.system.pathStep : 0;
+        
+        if (!!ammo)
+        {
+          this.handleAmmo(ammo[0], item)
+        }
+
+        const attackRoll = new Roll(rollFormula)
+        attackRoll.evaluate({async: false})
+
+        if (!!ammo)
+          Chat.onAttack(attackRoll, this, item, null, null, null, ammo[0]);
+        else 
+          Chat.onAttack(attackRoll, this, item, null, null, null, null);
+      }
+
+    }
+
+    async handleAmmo(ammo, item)
+    {
+        let ammoProperties = ammo.system.weaponProperties;
         for (let prop of Object.entries(item.system.weaponProperties))
         {
           let numeric = ["ap","blast", "guard", "keen", "load", "reach"]
@@ -1554,30 +1622,10 @@ export default class ActorFC extends Actor {
             item.system.weaponProperties[prop[0]] = ammoProperties[prop[0]];
           }
         }
-      }
-
-      rollFormula = determinePreRollTrickEffect(rollInfo?.trick1, actor, rollInfo, rollFormula, target);
-      if (rollFormula == "Error") return;
-
-      //subtract the effect of power attack or multiattack feats
-      if(rollInfo?.powerAttack) rollFormula += " - " + rollInfo.powerAttack;
-      if(rollInfo?.multiAttack) rollFormula += " - " + rollInfo.multiAttack;
-      if(rollInfo?.morale) rollFormula += Utils.returnPlusOrMinusString(rollInfo.morale);
-
-      //roll the dice
-      const attackRoll = new Roll(rollFormula)
-      attackRoll.evaluate({async: false})
-
-      let additionalInfo = determinePostRollTrickEffect(rollInfo?.trick1, actor, item, target, attackRoll);
-
-      if (rollInfo == null)
-        return;
-
-      Chat.onAttack(attackRoll, this, item, rollInfo.trick1, rollInfo.trick2, additionalInfo, rollInfo.ammo);
     }
 
     //natural attack/save attack/damage attack
-    async rollNaturalAttack(item)
+    async rollNaturalAttack(item, skipInputs)
     {
       const actor = this.system;
 
@@ -1623,29 +1671,40 @@ export default class ActorFC extends Actor {
       {
         rollFormula += Utils.returnPlusOrMinusString(bonus);
       }
-      const rollInfo = await this.preRollDialog(item.name, "systems/fantasycraft/templates/chat/attackRoll-Dialog.hbs", rollFormula, tricks);
-      rollFormula = determinePreRollTrickEffect(rollInfo?.trick1, actor, rollInfo, rollFormula, null);
-      if (rollFormula == "Error") return;
+      if (!skipInputs)
+      {
+        const rollInfo = await this.preRollDialog(item.name, "systems/fantasycraft/templates/chat/attackRoll-Dialog.hbs", rollFormula, tricks);
+        rollFormula = determinePreRollTrickEffect(rollInfo?.trick1, actor, rollInfo, rollFormula, null);
+        if (rollFormula == "Error") return;
 
-      //subtract the effect of power attack or multiattack feats
-      if(rollInfo?.powerAttack) rollFormula += " - " + rollInfo.powerAttack;
-      if(rollInfo?.multiAttack) rollFormula += " - " + rollInfo.multiAttack;
-      if(rollInfo?.morale) rollFormula += Utils.returnPlusOrMinusString(rollInfo.morale);
+        //subtract the effect of power attack or multiattack feats
+        if(rollInfo?.powerAttack) rollFormula += " - " + rollInfo.powerAttack;
+        if(rollInfo?.multiAttack) rollFormula += " - " + rollInfo.multiAttack;
+        if(rollInfo?.morale) rollFormula += Utils.returnPlusOrMinusString(rollInfo.morale);
+        
+        //roll the dice
+        const attackRoll = new Roll(rollFormula)
+        attackRoll.evaluate({async: false})
+  
+        //let additionalInfo = determinePostRollTrickEffect(rollInfo?.trick1, actor, item, null, attackRoll);
+  
+        if (rollInfo == null)
+          return;
+  
+        Chat.onNaturalAttack(attackRoll, this, item, rollInfo.trick1, rollInfo.trick2, supernaturalAttack);
+      }
+      else 
+      {
+        const attackRoll = new Roll(rollFormula)
+        attackRoll.evaluate({async: false})
 
-      //roll the dice
-      const attackRoll = new Roll(rollFormula)
-      attackRoll.evaluate({async: false})
+        Chat.onNaturalAttack(attackRoll, this, item, null, null, supernaturalAttack);
+      }
 
-      let additionalInfo = determinePostRollTrickEffect(rollInfo?.trick1, actor, item, null, attackRoll);
-
-      if (rollInfo == null)
-        return;
-
-      Chat.onNaturalAttack(attackRoll, this, item, rollInfo.trick1, rollInfo.trick2, supernaturalAttack);
     }
 
     //unarmed attack
-    async rollUnarmedAttack(item)
+    async rollUnarmedAttack(item, skipInputs)
     {
       const actor = this.system;
 
@@ -1676,11 +1735,15 @@ export default class ActorFC extends Actor {
       //Magic Bonuses, Conditions bonuses and penalties
       attackModifiers = this.genericAttackModifiers(attackModifiers, item);
 
-      const rollInfo = await this.preRollDialog(game.i18n.localize("fantasycraft.unarmedStrike"), "systems/fantasycraft/templates/chat/attackRoll-Dialog.hbs", rollFormula, tricks, powerAttack, multiAttack)
-      if(rollInfo?.powerAttack) rollFormula += " - " + rollInfo.powerAttack;
-      if(rollInfo?.multiAttack) rollFormula += " - " + rollInfo.multiAttack;
-      if(rollInfo?.stance) rollFormula += " - " + rollInfo.stance;
-      if(rollInfo?.morale) rollFormula += Utils.returnPlusOrMinusString(rollInfo.morale);
+      
+      if (!skipInputs)
+      {
+        const rollInfo = await this.preRollDialog(game.i18n.localize("fantasycraft.unarmedStrike"), "systems/fantasycraft/templates/chat/attackRoll-Dialog.hbs", rollFormula, tricks, powerAttack, multiAttack)
+        if(rollInfo?.powerAttack) rollFormula += " - " + rollInfo.powerAttack;
+        if(rollInfo?.multiAttack) rollFormula += " - " + rollInfo.multiAttack;
+        if(rollInfo?.stance) rollFormula += " - " + rollInfo.stance;
+        if(rollInfo?.morale) rollFormula += Utils.returnPlusOrMinusString(rollInfo.morale);
+      }
 
       const attackRoll = new Roll(rollFormula)
       attackRoll.evaluate({async: false})
