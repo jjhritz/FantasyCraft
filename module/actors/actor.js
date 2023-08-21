@@ -1426,7 +1426,7 @@ export default class ActorFC extends Actor {
 
       let newTricks = [];
 
-      //TODO add check for readied weapon if the trick has a secondary weapon keyword. 
+      //check potential tricks to see if they have a secondary keyword requirement and check that keyword against the weapons that the character has readied.
       for (let trick of Object.entries(tricks))
       {
         if (trick[1].system.trickType.keyword2 == "")
@@ -1492,12 +1492,23 @@ export default class ActorFC extends Actor {
       let powerAttack = false;
       let multiAttack = false;
       let target = Utils.getTargets();
+      let mastersTouch = false;
+      let mastersTouchII = false;
 
       if (item.system.attackType == "melee" && (this.getFlag("fantasycraft", "Two-Weapon Fighting") || this.getFlag("fantasycraft", "Darting Weapon"))) multiAttack = true;
       else if (item.system.attackType == "ranged" && (this.getFlag("fantasycraft", "Angry Hornet"))) multiAttack = true;
       
       if (item.system.attackType == "melee" && this.getFlag("fantasycraft", "All-Out Attack")) powerAttack = true;
       else if (item.system.attackType == "ranged" && this.getFlag("fantasycraft", "Bullseye")) powerAttack = true;
+
+      let mastersCheck = this.items.find(item => item.name == game.i18n.localize("fantasycraft.mastersTouch"))
+      if (mastersCheck)
+      {
+        mastersTouch = true;
+  
+        if (mastersCheck.system.grades.value == "II")
+          mastersTouchII = true
+      }
 
         //if a character has heartseeker then there attack bonus is equal to their career level
       if ((target[0]?.document._actor.system?.type == "special" || target[0]?.document._actor.type == "character") && this.items.find(item => item.type == "feature" && item.name == game.i18n.localize("fantasycraft.heartseeker")))
@@ -1553,7 +1564,7 @@ export default class ActorFC extends Actor {
       
       if (!skipInputs)
       {
-        const rollInfo = await this.preRollDialog(item.name, "systems/fantasycraft/templates/chat/attackRoll-Dialog.hbs", rollFormula, tricks, powerAttack, multiAttack, stance, ammo)
+        const rollInfo = await this.preRollDialog(item.name, "systems/fantasycraft/templates/chat/attackRoll-Dialog.hbs", rollFormula, tricks, powerAttack, multiAttack, mastersTouch, mastersTouchII, stance, ammo)
 
         if (rollInfo == null) return;
 
@@ -1565,7 +1576,7 @@ export default class ActorFC extends Actor {
           this.handleAmmo(rollInfo.ammo, item);
         
 
-        rollFormula = determinePreRollTrickEffect(rollInfo?.trick1, actor, rollInfo, rollFormula, target);
+        rollFormula = determinePreRollTrickEffect(rollInfo?.trick1, actor, rollInfo, rollFormula, target, rollInfo?.trick2);
         if (rollFormula == "Error") return;
 
         //subtract the effect of power attack or multiattack feats
@@ -1632,10 +1643,37 @@ export default class ActorFC extends Actor {
       const attackType = item.system.attackType;
       let supernaturalAttack;
       let attackModifiers;
+      let target = Utils.getTargets();
       let tricks = await this.getUnarmedAttackTricks();
       let abilityMod = "strength";
       let attackBonus = (this.type == "character") ? actor.baseAttack : actor.traits.attack.value;
+      let mastersTouch = false;
+      let mastersTouchII = false;
+      let multiAttack = false;
+      let powerAttack = false;
+
+      if (this.getFlag("fantasycraft", "Two-Hit combo")) multiAttack = true;
       
+      if (this.getFlag("fantasycraft", "All-Out Attack")) powerAttack = true;
+      
+      //check to see if the player has the masters touch ability
+      let mastersCheck = this.items.find(item => item.name == game.i18n.localize("fantasycraft.mastersTouch"))
+      if (mastersCheck)
+      {
+        mastersTouch = true;
+  
+        if (mastersCheck.system.grades.value == "II")
+          mastersTouchII = true
+      }
+
+      let stances = this.items.filter(item => item.type == "stance" && item.system.inStance);
+      let stance = false
+      if (stances.length > 0)
+      {
+        if (stances[0].system.effect1.effect == "variableBonus") stance = true
+        if (stances[0].system.effect2.effect == "variableBonus") stance = true
+      }
+
       //needs to determine if the attack is natural attack, if it is treat it essentially like a weapon attack
       if (attackType == "naturalAttack" || !!supernaturalAttack)
       {
@@ -1673,8 +1711,8 @@ export default class ActorFC extends Actor {
       }
       if (!skipInputs)
       {
-        const rollInfo = await this.preRollDialog(item.name, "systems/fantasycraft/templates/chat/attackRoll-Dialog.hbs", rollFormula, tricks);
-        rollFormula = determinePreRollTrickEffect(rollInfo?.trick1, actor, rollInfo, rollFormula, null);
+        const rollInfo = await this.preRollDialog(item.name, "systems/fantasycraft/templates/chat/attackRoll-Dialog.hbs", rollFormula, tricks, powerAttack, multiAttack, mastersTouch, mastersTouchII, stance);
+        rollFormula = determinePreRollTrickEffect(rollInfo?.trick1, actor, rollInfo, rollFormula, target, rollInfo?.trick2);
         if (rollFormula == "Error") return;
 
         //subtract the effect of power attack or multiattack feats
@@ -1713,11 +1751,25 @@ export default class ActorFC extends Actor {
       let threatRange = 20;
       let errorRange = 1;
       let ap = 0; 
+      let target = Utils.getTargets();
       let tricks = await this.getUnarmedAttackTricks();
       let multiAttack = (this.getFlag("fantasycraft", game.i18n.localize("fantasycraft.twoHitCombo"))) ? true : false;
       let powerAttack = (this.getFlag("fantasycraft", game.i18n.localize("fantasycraft.allOutAttack"))) ? true : false;
+      let mastersTouch = false;
+      let mastersTouchII = false;
+
       ap = (this.items.find(item => item.name == game.i18n.localize("fantasycraft.kickingMastery"))) ? 2 : 0;
       ap += this.items.find(item => item.name == game.i18n.localize("fantasycraft.pathOfDestruction"))?.system.pathStep;
+
+      //check to see if the player has the masters touch ability
+      let mastersCheck = this.items.find(item => item.name == game.i18n.localize("fantasycraft.mastersTouch"))
+      if (mastersCheck)
+      {
+        mastersTouch = true;
+  
+        if (mastersCheck.system.grades.value == "II")
+          mastersTouchII = true
+      }
 
       if (actor.martialArts) 
       {
@@ -1738,7 +1790,8 @@ export default class ActorFC extends Actor {
       
       if (!skipInputs)
       {
-        const rollInfo = await this.preRollDialog(game.i18n.localize("fantasycraft.unarmedStrike"), "systems/fantasycraft/templates/chat/attackRoll-Dialog.hbs", rollFormula, tricks, powerAttack, multiAttack)
+        const rollInfo = await this.preRollDialog(game.i18n.localize("fantasycraft.unarmedStrike"), "systems/fantasycraft/templates/chat/attackRoll-Dialog.hbs", rollFormula, tricks, powerAttack, multiAttack, mastersTouch, mastersTouchII)
+        rollFormula = determinePreRollTrickEffect(rollInfo?.trick1, actor, rollInfo, rollFormula, target, rollInfo?.trick2);
         if(rollInfo?.powerAttack) rollFormula += " - " + rollInfo.powerAttack;
         if(rollInfo?.multiAttack) rollFormula += " - " + rollInfo.multiAttack;
         if(rollInfo?.stance) rollFormula += " - " + rollInfo.stance;
@@ -1832,13 +1885,15 @@ export default class ActorFC extends Actor {
         return attackModifiers;
     }
 
-    async preRollDialog(attackName, template, formula, tricks, powerAttack = false, multiAttack = false, stance = false, ammo=false)
+    async preRollDialog(attackName, template, formula, tricks, powerAttack = false, multiAttack = false, mastersTouch = false, mastersTouchII = false, stance = false, ammo=false)
     {
       const content = await renderTemplate(template, {
         formula: formula,
         tricks: tricks,
         powerAttack: powerAttack,
         multiAttack: multiAttack,
+        mastersTouch: mastersTouch,
+        mastersTouchII: mastersTouchII,
         stance: stance,
         ammo: ammo
       });
@@ -1897,6 +1952,7 @@ export default class ActorFC extends Actor {
       if (form.trick.value)
       {
         dialogOptions.trick1 = this.items.get(form.trick.value);
+        if (form?.trick2) dialogOptions.trick2 = this.items.get(form.trick2.value);
       }
 
       return dialogOptions;

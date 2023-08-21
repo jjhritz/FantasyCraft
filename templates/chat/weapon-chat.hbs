@@ -39,6 +39,9 @@
     <div class="card-content">
         <div><b>{{localize "fantasycraft.trick"}}: </b></div>
         <div>{{data.trick1.name}}</div>
+        {{#compare data.trick2 "" operator="!="}}
+            <div>{{data.trick2.name}}</div>
+        {{/compare}}
     </div>
     {{/compare}}
 

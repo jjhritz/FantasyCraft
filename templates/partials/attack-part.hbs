@@ -2,28 +2,24 @@
     <div class="flex6">
         <a class="roll-natural-attack" data-roll-info='{{id}}'>
             <i class="fas fa-dice-d20"></i>
+            <span>{{name}} </span>
         </a>
-        <div class="flex5">
-            <div>
-                <span>{{name}} </span>
-                {{#if inSheet}} 
-                    {{system.damage.value}} {{localize system.damageType}} {{localize "fantasycraft.threat"}} {{system.threat}} 
-                    {{else}} 
-                    <br> 
-                {{/if}} 
-            </div>
-            <div>
-                {{localize "fantasycraft.qualities"}}: 
-                {{#each system.naturalUpgrades as |prop id|}}
-                    {{#if prop}}
-                    {{#compare prop "" operator="!="}}
-                    {{#compare prop "0" operator="!="}}
-                        {{id}}{{#if (isBool prop)}}{{else}} {{prop}}{{/if}}
-                        {{/compare}}
-                        {{/compare}}
-                    {{/if}}
-                {{/each}}
-            </div>
+            {{#if inSheet}} 
+                {{system.damage.value}} {{localize system.damageType}} {{localize "fantasycraft.threat"}} {{system.threat}} 
+                {{else}} 
+                <br> 
+            {{/if}} 
+        <div>
+            {{localize "fantasycraft.qualities"}}: 
+            {{#each system.naturalUpgrades as |prop id|}}
+                {{#if prop}}
+                {{#compare prop "" operator="!="}}
+                {{#compare prop "0" operator="!="}}
+                    {{id}}{{#if (isBool prop)}}{{else}} {{prop}}{{/if}}
+                    {{/compare}}
+                    {{/compare}}
+                {{/if}}
+            {{/each}}
         </div>
     </div>
     <div class="flex1">

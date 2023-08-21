@@ -473,6 +473,8 @@
 		"misc": "Misc",
 		"footprint": "Footprint",
 		"total": "Total",
+		"rank": "Rank",
+		"c/o": "C/O",
 		"maxRanks": "Max Ranks",
 		"savedEarned": "Saved/Earned",
 		"income": "Income",
@@ -919,6 +921,7 @@
 		"shadowOfDeath": "Shadow of Death",
 		"lichsTouch": "Lich's Touch",
 		"drainBlood": "Drain Blood",
+		"mastersTouch": "Master's Touch",
 		"Dialog":
 		{
 			"requiresTargetWarningMessage": "You require a target for the selected Trick.",

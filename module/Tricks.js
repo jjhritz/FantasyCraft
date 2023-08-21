@@ -1,8 +1,11 @@
 import * as Utils from './Utils.js';
 
 //Function to handle trick effects pre-roll adding bonuses or penalties to the roll formula or replacing it with a skill roll
-export function determinePreRollTrickEffect(trick, actor, rollInfo, rollFormula, target)
+export function determinePreRollTrickEffect(trick, actor, rollInfo, rollFormula, target, trick2 = null)
 {
+    if (!trick && trick2 != null)
+        trick = trick2
+        
     if (!trick) return rollFormula;
 
     //if attack trick
@@ -11,12 +14,13 @@ export function determinePreRollTrickEffect(trick, actor, rollInfo, rollFormula,
     //If the roll has an attack roll bonus and a condition, add the attack roll bonus only if the condition is met.
     if (trick.system.effect.rollModifier && (checkConditions(trick, target[0]?.document._actor, 0, actor) || trick.system.effect.condition == ""))
         //Tricks that affect the attack roll by either a flat roll modifier or replacing the roll with a different kind.
-        rollFormula += Utils.returnPlusOrMinusString(rollInfo.trick1.system.effect.rollModifier);
+        rollFormula += Utils.returnPlusOrMinusString(trick.system.effect.rollModifier);
 
     //This is essentially only for called shot
     if (trick.system.effect.additionalEffect == "ignoreAP")
     {
         rollFormula += ignoreArmour(target);
+        if (trick2 != null) rollFormula = determinePreRollTrickEffect(trick2, actor, rollInfo, rollFormula, target)
         return rollFormula
     }
 
@@ -25,6 +29,7 @@ export function determinePreRollTrickEffect(trick, actor, rollInfo, rollFormula,
     {
       let skill = actor.skills[rollInfo.trick1.system.effect.secondaryCheck]
       rollFormula = "1d20" + " + " + skill.ranks + " + " + skill.misc + " + " + actor.abilityScores[skill.ability].mod;
+      if (trick2 != null) rollFormula = determinePreRollTrickEffect(trick2, actor, rollInfo, rollFormula, target)
       return rollFormula
     }
 
@@ -32,8 +37,11 @@ export function determinePreRollTrickEffect(trick, actor, rollInfo, rollFormula,
     if (trick.system.effect.additionalEffect == "replaceAttribute")
     {
       rollFormula = "1d20 + " + actor.abilityScores[trick.system.effect.secondaryCheck].mod + rollFormula.slice(8)
+      if (trick2 != null) rollFormula = determinePreRollTrickEffect(trick2, actor, rollInfo, rollFormula, target)
       return rollFormula
     }
+
+    if (trick2 != null) rollFormula = determinePreRollTrickEffect(trick2, actor, rollInfo, rollFormula, target)
 
     return rollFormula;
     
@@ -59,6 +67,7 @@ export function checkConditions(trick, target, attackRoll = 0, actor)
 {
     const condition = trick.system.effect.condition;
 
+    if (condition == "none") return true;
     if ((condition == "hitBy4" || condition == "hitBy10") && attackRoll.total >= target.system.defense.value + 4)
         return true;
     if (condition == "targetHasCondition" && target.getEmbeddedCollection('ActiveEffect').filter(effect => effect.label.toLowerCase() == trick.system.effect.conditionTarget).length > 0 ) 

@@ -94,7 +94,7 @@ export function onSavingThrow(diceRoll, actor, savingThrow, dc=0)
     d['formula'] = diceRoll.formula
     d['diceRoll'] = diceRoll.terms[0].results[0].result
     if (dc != 0) d['dc'] = dc;
-    d['success'] = (dc > 0 && dc < diceRoll.total) ? true : false;
+    d['success'] = (dc != 0 && dc < diceRoll.total) ? true : false;
 
     const chatData = getChatBaseData(actor);
 
@@ -385,7 +385,7 @@ async function onDamage(event)
                 abilityMod = ""
 
             damageDice = (!!ammo) ? ammo.system.damage : item.system.damage;
-            let superior = (weaponProperties.materials == "Superior") ? 1 : 0
+            let superior = (item.system.upgrades.materials == "Superior") ? 1 : 0
 
             damageModifiers = [];
 

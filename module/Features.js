@@ -329,7 +329,7 @@ export const ClassFeatures = {
             "7": ["Compendium.fantasycraft.classfeatures.uBmr04FR8QV7mFbG"],
             "8": ["Compendium.fantasycraft.classfeatures.YpxLjUyduF4HDVsl"],
             "9": ["Compendium.fantasycraft.classfeatures.uBmr04FR8QV7mFbG"],
-            "10": ["Compendium.fantasycraft.classfeatures.OJRa0jdqETHcXrhm"],
+            "10": ["Compendium.fantasycraft.classfeatures.fParMRlQoULyOLX6"],
             "11": ["Compendium.fantasycraft.classfeatures.7p9HGTe24cqOo8KD", "Compendium.fantasycraft.classfeatures.uBmr04FR8QV7mFbG"],
             "12": ["Compendium.fantasycraft.classfeatures.jTmYhbOeC2kfyzHu"],
             "13": ["Compendium.fantasycraft.classfeatures.uBmr04FR8QV7mFbG"],
@@ -337,7 +337,7 @@ export const ClassFeatures = {
             "16": ["Compendium.fantasycraft.classfeatures.UdiZknSh3ZiS7eh0"],
             "17": ["Compendium.fantasycraft.classfeatures.uBmr04FR8QV7mFbG"],
             "19": ["Compendium.fantasycraft.classfeatures.7p9HGTe24cqOo8KD", "Compendium.fantasycraft.classfeatures.uBmr04FR8QV7mFbG"],
-            "20": ["Compendium.fantasycraft.classfeatures.jTmYhbOeC2kfyzHu", "Compendium.fantasycraft.classfeatures.dRzXSgzWVD1SNCh3"]
+            "20": ["Compendium.fantasycraft.classfeatures.jTmYhbOeC2kfyzHu", "Compendium.fantasycraft.classfeatures.fParMRlQoULyOLX6"]
         }
     },
     "priest": 
@@ -692,6 +692,51 @@ export const ClassFeatures = {
     //////////////////////////////
     ////////MASTER CLASSES////////
     //////////////////////////////
+    
+    "dragon lord":
+    {
+        "features":
+        {
+            "1": ["Compendium.fantasycraft.classfeatures.GF4c2vFA7ZuzKdRY", "Compendium.fantasycraft.classfeatures.yXKnEhAd91oDZSCm"],
+            "2": ["Compendium.fantasycraft.classfeatures.lz3VrdJrjjACkcQS"],
+            "3": ["Compendium.fantasycraft.classfeatures.m1oSChkNXJZ3u3RF"],
+            "4": ["Compendium.fantasycraft.classfeatures.lz3VrdJrjjACkcQS", "Compendium.fantasycraft.classfeatures.yXKnEhAd91oDZSCm"],
+            "5": ["Compendium.fantasycraft.classfeatures.HcMgPWW6tSQFgJTY"] 
+        }
+    },
+    "regent":
+    {
+        "features":
+        {
+            "1": ["Compendium.fantasycraft.classfeatures.vcnyPVsYzNURGDDp", "Compendium.fantasycraft.classfeatures.SlM1aiKfX9RS4Pfk"],
+            "2": ["Compendium.fantasycraft.classfeatures.CwzjAtAnlgJD82yt"],
+            "3": ["Compendium.fantasycraft.classfeatures.oY0ronZdY9HPG0bb"],
+            "4": ["Compendium.fantasycraft.classfeatures.SlM1aiKfX9RS4Pfk", "Compendium.fantasycraft.classfeatures.CwzjAtAnlgJD82yt"],
+            "5": ["Compendium.fantasycraft.classfeatures.QGNP3WdjxH5DFAN2"] 
+        }
+    },
+    "spirit singer":
+    {
+        "features":
+        {
+            "1": ["Compendium.fantasycraft.classfeatures.XDJlsFFGcR1oekKA", "Compendium.fantasycraft.classfeatures.eNQBYcyjuSR9nS99"],
+            "2": ["Compendium.fantasycraft.classfeatures.lBcm3rhtxnlp2wcD"],
+            "3": ["Compendium.fantasycraft.classfeatures.AN4uqtzLwOSzXAcP"],
+            "4": ["Compendium.fantasycraft.classfeatures.lBcm3rhtxnlp2wcD", "Compendium.fantasycraft.classfeatures.nAP9WNIbBa89cnjS"],
+            "5": ["Compendium.fantasycraft.classfeatures.hVMuFUqU1Z05W1Es"] 
+        }
+    },
+    "wind knight":
+    {
+        "features":
+        {
+            "1": ["Compendium.fantasycraft.classfeatures.Nen10jhB2YdPCXeR", "Compendium.fantasycraft.classfeatures.PF4cLOdHmPA3Atlz"],
+            "2": ["Compendium.fantasycraft.classfeatures.ocqo3BCl3vsO7EMl"],
+            "3": ["Compendium.fantasycraft.classfeatures.URvIfqmKYVAd7kA2"],
+            "4": ["Compendium.fantasycraft.classfeatures.Nen10jhB2YdPCXeR", "Compendium.fantasycraft.classfeatures.ocqo3BCl3vsO7EMl"],
+            "5": ["Compendium.fantasycraft.classfeatures.9OYOFgMUwUTlZt6o"] 
+        }
+    }
 }
 
 export const OriginFeatures = 
