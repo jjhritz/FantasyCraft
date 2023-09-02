@@ -228,8 +228,6 @@ export default class FCCharacterSheet extends ActorSheetFC {
 							features.pop();
 					}
 				}
-
-				console.log("test");
 				
 				if (features.length > 0){
 					await act.createEmbeddedDocuments("Item", [features[0]]);

@@ -3,9 +3,14 @@
     {{!-- Sheet Header --}}
     <header class="sheet-header" style="flex: 0 0 60px">
         <div class="flexcol">
+            <section>
+                <div class="flex1">
+                    <a class="open-gm-screen" style="float: center">GM</a>
+                </div>
+            </section>
             <section class="flexrow" style="text-align: center;">
                 <h1 class="charname">
-                    <input name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'fantasycraft.name' }}"/>
+                    <input style="padding: 0px; margin-top: 0px" name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'fantasycraft.name' }}"/>
                 </h1>
             </section>
             {{!-- If Standard - Damage Taken / If Special - Vitality and Wounds - Subdual and Stress --}}

@@ -78,3 +78,19 @@ export function getMagicItems(actor)
 
   return magicItems;
 }
+
+
+//Reset abilities that have uses 'per X'
+export function resetAbilityUsage(combatant, duration)
+{
+  let tricks = combatant.items.filter(item => item.type =="trick")
+  let updateString = "system.uses.usesRemaining"
+  for (let trick of Object.entries(tricks))
+  {
+    trick = trick[1];
+    if (trick.system.uses.timeFrame == duration)
+    {
+      trick.update({[updateString]: trick.system.uses.maxUses});
+    }
+  }
+}

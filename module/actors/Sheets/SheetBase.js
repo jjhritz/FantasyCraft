@@ -140,6 +140,7 @@ export default class ActorSheetFC extends ActorSheet
       html.find('.pathChange').change(this._pathChange.bind(this));
       html.find('.item-create').click(this._createItem.bind(this));
       html.find('.roll-treasure').click(this._rollTreasure.bind(this));
+      html.find('.open-gm-screen').click(this.openGMScreen.bind(this));
       
       
       const filterLists = html.find(".filter-list");
@@ -149,7 +150,7 @@ export default class ActorSheetFC extends ActorSheet
       
       html.find('.selectStat').change(this._onStatChange.bind(this));
       
-      new ContextMenu(html, '.skill-name', this._skillEntry);
+      new ContextMenu(html, '.skill-name', this.skillEntry);
       new ContextMenu(html, ".item-card", this.itemContextMenu);
       
       html.find('.fatigueShaken').change(this._fatigueShaken.bind(this));
@@ -217,17 +218,19 @@ export default class ActorSheetFC extends ActorSheet
       }
     ];
 
-    _skillEntry = 
+    //open the journal page for a skill
+    skillEntry = 
     [
       {
         name: game.i18n.localize("fantasycraft.journal"),
         icon: '<i class="fas fa-edit"></i>',
-        callback: element =>
+        callback: async element =>
         {
-          const skill = element.innerText;
-          test = CompendiumCollection
-          item.sheet.render(true);
-          //"compendium.fantasycraft.Rules.Chapter2:Lore"
+          const skill = element[0].innerText.substring(0, element[0].innerText.indexOf('J')-1);
+
+          let journalID = (skill == "Spellcasting") ? "Compendium.fantasycraft.rules.A41GzaLNJEIo8o5H" : "Compendium.fantasycraft.rules.7pCAJJG6pugfqZE4"
+          let journal = await fromUuid(journalID);
+          journal.sheet.render(true, {pageId: journal.pages.getName(skill).id})
         }
       }
 
@@ -871,9 +874,12 @@ export default class ActorSheetFC extends ActorSheet
     ////Dice functions////
     _rollSave(event) 
     {
-      if (this.actor.type == "character")
-        this.actor.rollSavingThrow(event.currentTarget.dataset.rollInfo);
-      if (this.actor.type == "npc")        
+      let text = event.currentTarget.outerText;
+      if(text == "Shield Block" || text == "Arrow Cutting" || text == "Parry")
+      {
+        this.actor.rollSavingThrow(event.currentTarget.dataset.rollInfo, text.toLowerCase());  
+      }
+      else 
         this.actor.rollSavingThrow(event.currentTarget.dataset.rollInfo);
     }
 
@@ -909,7 +915,8 @@ export default class ActorSheetFC extends ActorSheet
           speaker: ChatMessage.getSpeaker()
       }
   
-      new Roll(rollFormula, rollData).toMessage(messageData);    }
+      new Roll(rollFormula, rollData).toMessage(messageData);    
+    }
 
     _rollKnowledge(event)
     {
@@ -1062,5 +1069,13 @@ export default class ActorSheetFC extends ActorSheet
     _rollCompetence(event)
     {      
       this.actor.rollCompetence();
+    }
+
+    async openGMScreen(event)
+    {
+      (await import(
+        '../../../module/apps/gm-screen.js'
+        )
+      ).default();
     }
 }

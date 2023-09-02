@@ -1,3 +1,5 @@
+import {resetAbilityUsage} from './Utils.js';
+
 const _createCondition = (name, icon, changes = []) => ({
     id: name,
     label: game.i18n.localize("fantasycraft." + name),
@@ -16,6 +18,32 @@ const _addEffect = (key, value) => ({
     value: value,
     mode: CONST.ACTIVE_EFFECT_MODES.ADD
   })
+
+export function onCombatEnd(combatant)
+{
+    clearStances(combatant)
+    resetAbilityUsage(combatant, "combat");
+}
+
+//go through all stances on the character and disable any that the character is still in.
+function clearStances(combatant)
+{
+    let stances = combatant.items.filter(item => item.type == "stance" && item.system.inStance);
+
+    if (stances.length > 0)
+    {
+        combatant.removeCondition("stance")
+        stances[0].update({'system.inStance': false});
+
+        stances[0].system.inStance = false;
+    }
+}
+
+//clear short term status conditions
+function clearStatusAilments(combatant)
+{
+
+}
 
 export class Conditions {
 

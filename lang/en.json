@@ -1,6 +1,8 @@
 {
 	"fantasycraft":
 	{
+		"fantasycraft": "Fantasy Craft",
+		"gmControls": "GM Controls",
 		"and": "and",
 		"the": "the",
 		"d3": "d3",
@@ -922,6 +924,11 @@
 		"lichsTouch": "Lich's Touch",
 		"drainBlood": "Drain Blood",
 		"mastersTouch": "Master's Touch",
+		"newScene": "New Scene",
+		"newSession": "New Session",
+		"newAdventure": "New Adventure",
+		"awardActionDie": "Award Action Dice",
+		"journal": "Journal Entry",
 		"Dialog":
 		{
 			"requiresTargetWarningMessage": "You require a target for the selected Trick.",
@@ -947,7 +954,8 @@
 			"xpForNonLethal": "xp for non-lethal damage selection",
 			"entriesDialog": "Enter the types of damage/skills/condition/etc. affected, separate with a comma for multiple types",
 			"actionDiceUses": "ACTION DIE USES",
-			"noReadiedWeapon": "You do not have a weapon readied"
+			"noReadiedWeapon": "You do not have a weapon readied",
+			"noUsesRemainingForChosenTrick": "You have no uses remaining for the chosen Trick."
 		},
 				
 		"SETTINGS":

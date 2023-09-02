@@ -72,6 +72,7 @@ export default class ActorFC extends Actor {
         this._prepareCasting(actorData);
 
       this._compileResistances(actorData);
+      this._getTrickUses(actorData);
 
     }
 
@@ -1084,6 +1085,31 @@ export default class ActorFC extends Actor {
         }
       }
     }
+      
+    _getTrickUses(actor)
+    {
+      let tricks = actor.items.filter(item => item.type == "trick");
+
+      for (let trick of Object.entries(tricks))
+      {
+        trick = trick[1];
+        if (trick.system.uses.timeFrame != "unlimited")
+        {
+          if (trick.system.uses.counter == "feat")
+          {
+            let featNumber = actor.items.filter(item => (item.type == "feat" && game.i18n.localize(item.system.featType) == game.i18n.localize(CONFIG.fantasycraft.featType[trick.system.uses.featType]))).length;
+            trick.system.uses.maxUses = featNumber;
+          }
+          else if (trick.system.uses.counter == "actionDie")
+          {
+            trick.system.uses.maxUses = actor.system.startingActionDice;
+          }
+
+          if (trick.system.uses.usesRemaining == null || trick.system.uses.usesRemaining == undefined)
+            trick.system.uses.usesRemaining = trick.system.uses.maxUses;
+        }
+      }
+    }
 
     pathImmunityCheck(path, step, damageType)
     {
@@ -1173,12 +1199,19 @@ export default class ActorFC extends Actor {
         this.update({[updateString]: target});
     }
 
+    reduceRemainingAbilityUses(ability)
+    {
+      let newValue = ability.system.uses.usesRemaining - 1
+      let updateString = "system.uses.usesRemaining"
+      ability.update({[updateString]: newValue});
+    }
+
     ///////////////////////////////////////////////
     ///////////////////////////////////////////////
     ///////////////// DICE ROLLS //////////////////
     ///////////////////////////////////////////////
     ///////////////////////////////////////////////
-    rollSavingThrow(saveName)
+    rollSavingThrow(saveName, iaction = null)
     {
       saveName = this.type == "character" ? saveName.toLowerCase() : saveName;
       let save = this.system.saves[saveName];
@@ -1210,6 +1243,22 @@ export default class ActorFC extends Actor {
       }    
       const saveRoll = new Roll(rollFormula)
       saveRoll.evaluate({async: false})
+
+      let trick;
+      if (iaction == "parry")
+        trick = this.items.filter(item => item.name == game.i18n.localize("fantasycraft.parry"));
+      if (iaction == "shield block")
+        trick = this.items.filter(item => item.name == game.i18n.localize("fantasycraft.shieldBlock"));
+      if (iaction == "arrow cutting")
+        trick = this.items.filter(item => item.name == game.i18n.localize("fantasycraft.arrowCutting"));
+
+      if (trick != null && trick[0].system.uses.usesRemaining <= 0)
+      {
+        ui.notifications.error(game.i18n.localize('fantasycraft.Dialog.noUsesRemainingForChosenTrick'))
+        return;
+      }
+      if (trick != null)
+        this.reduceRemainingAbilityUses(trick[0]);
 
       Chat.onSavingThrow(saveRoll, this, saveName);
 
@@ -1401,6 +1450,7 @@ export default class ActorFC extends Actor {
         || (item.system.trickType.keyword2 == "bowHurled" && (weapon.system.weaponCategory == "bow" || weapon.system.weaponCategory == "hurled"))) 
       )});
       
+      tricks = tricks.filter(item => item.system.uses.usesRemaining > 0);
 
       return tricks
     }
@@ -1413,6 +1463,8 @@ export default class ActorFC extends Actor {
       tricks = tricks.filter(function(item) {return (
         item.system.trickType.keyword == "unarmed" || item.system.trickType.keyword2 == "unarmed" || item.system.trickType.keyword == "any" || item.system.trickType.keyword2 == "any"
       )});
+
+      tricks = tricks.filter(item => item.system.uses.usesRemaining > 0);
   
       return tricks
     }
@@ -1421,6 +1473,7 @@ export default class ActorFC extends Actor {
     {
       let tricks = this.items.filter(function(item) {return (item.type == "trick")});
       tricks = tricks.filter(function(item) {return (item.system.trickType.keyword == action)});
+      tricks = tricks.filter(item => item.system.uses.usesRemaining > 0);
 
       let weapons = this.items.filter(function(item) {return (item.type == "weapon" && item.system.readied)});
 
@@ -1858,6 +1911,9 @@ export default class ActorFC extends Actor {
 
       if (rollInfo == null)
         return;
+
+      if (rollInfo?.trick1) this.reduceRemainingAbilityUses(rollInfo.trick1);
+  
 
       Chat.onCombatAction(actionRoll, this, actionShort, rollInfo.trick1)
     }

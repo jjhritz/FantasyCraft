@@ -7,6 +7,7 @@ import { preloadHandlebarsTemplates } from "./module/templates.js";
 import { registerSystemSettings } from "./module/SystemSettings.js";
 import {  _getInitiativeFormula } from "./module/InitRules.js";
 
+import { resetAbilityUsage } from "./module/Utils.js";
 import FCItemSheet from "./module/items/Sheets/FCItemSheet.js";
 import FCCharacterSheet from "./module/actors/Sheets/FCCharacterSheet.js";
 import FCNPCSheet from "./module/actors/Sheets/FCNPCSheet.js";
@@ -14,7 +15,8 @@ import TraitSelector from "./module/apps/trait-selector.js";
 import Resistances from "./module/apps/resistances.js";
 
 import * as Chat from "./module/chat.js";
-import { Conditions } from "./module/statusEffectsManager.js";
+import { Conditions, onCombatEnd } from "./module/StatusEffectsManager.js";
+
 
 Hooks.once("init", function () {
 	console.log("Fantasy Craft | Initialising the Fantasy Craft rule system");
@@ -79,6 +81,14 @@ Hooks.once("init", function () {
 	
 	preloadHandlebarsTemplates();
 	registerSystemSettings();
+
+	Hooks.once("ready", async function() {
+		if (game.user.isGM)
+		(await import(
+			'./module/apps/gm-screen.js'
+			)
+		).default();
+	});
 
 	/////////////////////////////////////
 	//////// Handlebars Helpers /////////
@@ -218,6 +228,32 @@ Hooks.on('deleteActiveEffect', async activeEffect => {
 		}
 	}
 })
+
+Hooks.on('deleteCombat', async combat => 
+{
+	for (let combatEntry of Object.entries(combat.turns))
+	{
+		let combatant = game.actors.get(combatEntry[1].actorId);
+
+		onCombatEnd(combatant);
+	}
+})
   
+Hooks.on('combatTurn', async (combat) => 
+{
+	//combatTurn normally triggers on end turn, using combat.turn+1 to trigger on turn start instead
+	let combatant = game.actors.get(combat.turns[combat.turn+1].actorId);
+	
+	resetAbilityUsage(combatant, "round");
+})
+
+//on round start
+Hooks.on('combatRound', async (combat) => 
+{
+	//trigger the same code for the first person in initiative order as other start of turn scripts. 
+	let combatant = game.actors.get(combat.turns[0].actorId);
+	
+	resetAbilityUsage(combatant, "round");
+})
 
 Hooks.on("renderChatLog", (app, html, data) => Chat.addChatListeners(html));

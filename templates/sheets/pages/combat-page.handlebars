@@ -113,7 +113,7 @@
             <h3 class="category-label">
                 {{localize "fantasycraft.defense"}}
             </h3>
-            <div class="category-body">
+            <div class="category-body" style="min-height: 158px;">
                 {{!-- total = class + dexterity + (Clockwork) + misc --}}
                 <ul class="flexrow" style="margin: 0%; padding: 0px"> 
                     <li class="centreItems flex3">
@@ -257,7 +257,7 @@
             <h3 class="category-label">
                 {{localize "fantasycraft.combatActions"}}
             </h3>
-            <div class="flexrow">
+            <div class="flexrow category-body">
                 <div class="flexcol">
                     <div class="flexrow">
                         <a class="flex2 roll-combat-action">{{localize "fantasycraft.anticipate"}}</a>
@@ -266,13 +266,13 @@
                     </div>
                     {{#if hasCutting}}
                     <div class="flexrow">
-                        <a class="flex2 roll-save" data-roll-info='reflex'>{{localize "fantasycraft.arrowCutting"}}</a>
+                        <a class="flex4 roll-save" data-roll-info='reflex'>{{localize "fantasycraft.arrowCutting"}}</a>
                         <label class="flex4">{{localize "fantasycraft.initiative"}} </label>
                     </div>
                     {{/if}}
                     <div class="flexrow">
                         <a class="flex2 roll-combat-action">{{localize "fantasycraft.bullRush"}}</a>
-                        <input class="smallBox flex1" type="number" name="system.combatActions.bullRush" value="{{actor.system.combatActions.bullRush}}">
+                        <input class="smallBox flex2" type="number" name="system.combatActions.bullRush" value="{{actor.system.combatActions.bullRush}}">
                         <label class="flex4">{{localize "fantasycraft.full"}} </label>
                     </div>
                     <div class="flexrow">
@@ -299,7 +299,7 @@
                 <div class="flexcol">
                     {{#if hasParry}}
                     <div class="flexrow">
-                        <a class="flex2 roll-save" data-roll-info='reflex'>{{localize "fantasycraft.parry"}}</a>
+                        <a class="flex4 roll-save" data-roll-info='reflex'>{{localize "fantasycraft.parry"}}</a>
                         <label class="flex4">{{localize "fantasycraft.initiative"}} </label>
                     </div>
                     {{/if}}
@@ -310,7 +310,7 @@
                     </div>
                     {{#if hasBlock}}
                     <div class="flexrow">
-                        <a class="flex2 roll-save" data-roll-info='fortitude'>{{localize "fantasycraft.shieldBlock"}}</a>
+                        <a class="flex4 roll-save" data-roll-info='fortitude'>{{localize "fantasycraft.shieldBlock"}}</a>
                         <label class="flex4">{{localize "fantasycraft.initiative"}} </label>
                     </div>
                     {{/if}}
@@ -341,7 +341,7 @@
             <h3 class="category-label">
                 {{localize "fantasycraft.stances"}}
             </h3>
-            <div>
+            <div class="category-body" style="min-height: 110px;">
                 {{#each stances as |stance id|}}
                 <div class="item ownnedItem flexrow" data-item-id="{{_id}}" data-item-name="{{stance.name}}">
                     <label class="flex5">{{stance.name}}</label>
@@ -363,7 +363,7 @@
             <h3 class="category-label">
                 {{localize "fantasycraft.sneakAttack"}}
             </h3>
-            <div>
+            <div class="category-body" style="min-height: 30px;">
                 <label>{{localize "fantasycraft.totalSneakDice"}}</label>
                 <input class="smallBox" type="number" name="system.sneakAttack" value="{{actor.system.sneakAttack}}" placeholder="0">
             </div>
@@ -373,16 +373,22 @@
         <h3 class="category-label">
             {{localize "fantasycraft.tricks"}}
         </h3>
-        <div>
+        <div class="category-body" style="min-height: 158px;">
             {{#each tricks as |trick id|}}
             <div class="item ownnedItem flexrow" data-item-id="{{_id}}" data-item-name="{{armour.name}}">
                 <label class="flex4">{{trick.name}}</label>
-                <a class="editItem">
-                    <i class="fas fa-edit"></i>
-                </a>
-                <a class="deleteItem">
-                    <i class="fas fa-trash"></i>
-                </a>
+                <span>
+                    {{#compare trick.system.uses.timeFrame "unlimited" operator="=="}}-{{/compare}}
+                    {{#compare trick.system.uses.timeFrame "unlimited" operator="!="}}{{trick.system.uses.usesRemaining}}/{{trick.system.uses.maxUses}}{{/compare}}
+                </span>
+                <div>
+                    <a class="editItem">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a class="deleteItem">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </div>
             </div>
             {{/each}}
         </div>

@@ -9,7 +9,14 @@ export function determinePreRollTrickEffect(trick, actor, rollInfo, rollFormula,
     if (!trick) return rollFormula;
 
     //if attack trick
-    if (checkTargets(trick, target)) return "Error"; 
+    if (checkTargets(trick, target)) return "Error";
+
+    if (trick.system.uses.timeFrame != "unlimited")
+    {
+        let updateString = "system.uses.usesRemaining";
+        let newValue = trick.system.uses.usesRemaining-1;
+        trick.update({[updateString]: newValue });
+    }
 
     //If the roll has an attack roll bonus and a condition, add the attack roll bonus only if the condition is met.
     if (trick.system.effect.rollModifier && (checkConditions(trick, target[0]?.document._actor, 0, actor) || trick.system.effect.condition == ""))
@@ -59,7 +66,7 @@ export function determinePostRollTrickEffect(trick, actor, item, target, attackR
         if (!checkConditions(trick, target[0]?.document._actor, attackRoll, actor))
             return null;
 
-        if (trick.system.effect.additionalEffect == "failDamageSave") autoFailSaveCheck(attackRoll, target, trick.system, item);
+        if (trick.system.effect.additionalEffect == "failDamageSave") autoFailSaveCheck(attackRoll, target, trick.system, item, actor);
     }
 }
 
@@ -110,7 +117,7 @@ function ignoreArmour(target)
         return -9
 }
 
-export function autoFailSaveCheck(attackRoll, targets, trick, item)
+export function autoFailSaveCheck(attackRoll, targets, trick, item, actor)
 {
   for (let [k, v] of Object.entries(targets))
   {
@@ -121,7 +128,7 @@ export function autoFailSaveCheck(attackRoll, targets, trick, item)
     let lethal = (item.system.damageType == "subdual" || item.system.damageType == "cold" || item.system.damageType == "heat" || item.system.damageType == "stress") ? false : true;
     if (autoFailCheck != "beatsDefense")
     {
-        if (attackRoll.total >= t.system.traits.defense.total && this.system.abilityScores[autoFailCheck].value > t.system.abilityScores[autoFailCheck].value)
+        if (attackRoll.total >= t.system.traits.defense.total && actor.abilityScores[autoFailCheck].value > t.system.abilityScores[autoFailCheck].value)
             t.npcDamageSave(0, lethal, true);
     } else if (autoFailCheck != "dr4")
     {

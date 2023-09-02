@@ -1,0 +1,145 @@
+<style>
+    .gm-screen .window-content {
+        color: black;
+    }
+
+    .gm-screen .window-content>* {
+        flex: 0;
+    }
+
+    .gm-screen h1 {
+        margin: 0 !important;
+    }
+
+    .gm-screen a.btn {
+        background-size: 100% 100%;
+        border: none;
+        color: black;
+        line-height: 32px;
+        padding: 0;
+        border-radius: 0;
+        height: 24px;
+        text-align: center;
+        margin: 0 0.7rem;
+        max-height: 32px;
+        text-decoration: none;
+    }
+
+    .welcome-content h2.news {
+        font-family: "Nodesto", sans-serif;
+        text-align: center;
+        border: none;
+        flex: 0;
+        font-size: 28px;
+        text-shadow: 0px 0px 10px rgba(255, 100, 0, 0.76);
+    }
+
+    .tooltip
+    {
+        border:1px solid black;    
+        height: 17px;
+        width: 17px;
+        background-color: lightgray;
+        border-radius: 50%;
+        font-family: signika; 
+        font-size: 14px; 
+        font-weight: normal;
+        display: inline-block;
+    }
+
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 300px;
+        background-color: lightgray;
+        color: black;
+        text-align: center;
+        padding: 5px 0;
+        border-radius: 6px;
+        
+        /* Position the tooltip text - see examples below! */
+        position: absolute;
+        z-index: 1;
+    }
+    .tooltip:hover .tooltiptext {
+       visibility: visible;
+    }
+</style>
+
+<h1 style="text-align: center">
+    <span style="font-size: 20px">{{localize "fantasycraft.fantasycraft"}}</span>
+        <div class="tooltip">?
+            <div class="tooltiptext">
+                This window be re-opened from the top left corner of any NPC page. However this window will not retain any information if closed (Number of players, Menace level and GM AD will be reset).
+            </div>
+        </div>
+    <br><span style="font-size: 14px">{{localize "fantasycraft.gmControls"}}</span>
+</h1>
+<section class="welcome-content" style="text-align: center">
+    <div data-tab="welcome">
+        <a class="newScene btn" style="float: center">{{localize "fantasycraft.newScene"}}</a>
+        <div class="tooltip">?
+            <div class="tooltiptext">
+                New Scene: Resets spell points on arcane casters and resets tricks that are used per scene. non-trick abilities do not currently track usage but will be implimented in the future.
+            </div>
+        </div>
+    </div>
+    <div data-tab="welcome">
+        <a class="newSession" style="float: center">{{localize "fantasycraft.newSession"}}</a>
+        <div class="tooltip">?
+            <div class="tooltiptext">
+                New Session: Resets Action Dice and resets tricks that are used per session. non-trick abilities do not currently track usage but will be implimented in the future.
+            </div>
+        </div>
+    </div>
+    <div data-tab="welcome">
+        <a class="newAdventure" style="float: center">{{localize "fantasycraft.newAdventure"}}</a>
+        <div class="tooltip">?
+            <div class="tooltiptext">
+                New Adventure: Converts coin in hand to stake and resets tricks that are used per Adventure. non-trick abilities do not currently track usage but will be implimented in the future.
+            </div>
+        </div>
+    </div>
+    <div data-tab="welcome">
+        <a class="awardAD" style="float: center">{{localize "fantasycraft.awardActionDie"}}</a>
+        <div class="tooltip">?
+            <div class="tooltiptext">
+                Award an Action Dice: Requires one or more tokens to be targeted. increases the AD of the targeted player(s) by 1.
+            </div>
+        </div>
+    </div>
+
+    <div class="flexrow">
+        <span class="flex4">Number of Players:</span>
+        <input class="numberOfPlayers gmAD flex1" name="numberOfPlayers" type="number">
+        <span class="flex3">Menace Level</span>
+        <select class="menaceLevel gmAD flex1" name="menaceLevel">
+            <option value="1">I</option>
+            <option value="2">II</option>
+            <option value="3">III</option>
+            <option value="4">IV</option>
+            <option value="5">V</option>
+        </select>
+    </div>
+    <div class="flexrow">
+        <span class="flex4">current AD</span>
+        <input name="currentActionDice flex2" value="0" type="number">
+        <span class="flex4">starting AD</span>
+        <input name="maxAD flex2" value="{{gmActionDice}}" type="number">
+    </div>
+    <div>
+        <span>Roll Action Dice</span>
+        <div class="tooltip">?
+            <div class="tooltiptext">
+                Action Dice: If a token is selected when an AD is rolled from this window it will check to see if that token has any AD modifiers. 
+            </div>
+        </div>
+        <div class="flexrow">
+            <a class="rollAD btn" style="float: center">{{localize "fantasycraft.d4"}}</a>
+            <a class="rollAD btn" style="float: center">{{localize "fantasycraft.d6"}}</a>
+            <a class="rollAD btn" style="float: center">{{localize "fantasycraft.d8"}}</a>
+            <a class="rollAD btn" style="float: center">{{localize "fantasycraft.d10"}}</a>
+            <a class="rollAD btn" style="float: center">{{localize "fantasycraft.d12"}}</a>
+            <a class="rollAD btn" style="float: center">{{localize "fantasycraft.d20"}}</a>
+        </div>
+    </div>
+</section>
