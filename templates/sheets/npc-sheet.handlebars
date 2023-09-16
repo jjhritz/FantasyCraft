@@ -1,12 +1,14 @@
 <form class="{{cssClass}} item-form flexcol" autocomplete="off">
 
     {{!-- Sheet Header --}}
-    <header class="sheet-header" style="flex: 0 0 60px">
+    <header class="sheet-header" style="flex: 0 0 60px; border-bottom: none;">
         <div class="flexcol">
             <section>
+                {{#if isGM}}
                 <div class="flex1">
                     <a class="open-gm-screen" style="float: center">GM</a>
                 </div>
+                {{/if}}
             </section>
             <section class="flexrow" style="text-align: center;">
                 <h1 class="charname">
@@ -206,7 +208,7 @@
                 {{localize actor.system.traits.health.label}}: {{actor.system.traits.health.grade}}; {{localize actor.system.traits.competence.label}}: {{actor.system.traits.competence.grade}}; 
                 {{localize "fantasycraft.skills"}}: 
                 {{#each actor.system.signatureSkills as |skill name|}}
-                    {{localize skill.skillName}}: {{skill.skillGrade}}{{#unless @last}},{{/unless}}
+                    {{localize (lookup ../config.skills skill.skillName)}}: {{skill.skillGrade}}{{#unless @last}},{{/unless}}
                 {{/each}}
                 {{! if spells then spells}}
                 {{#if actor.system.spellcasting.grade}}

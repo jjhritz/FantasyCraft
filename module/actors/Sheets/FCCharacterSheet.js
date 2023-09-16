@@ -33,6 +33,7 @@ export default class FCCharacterSheet extends ActorSheetFC {
 		const data = super.getData();
 		data.config = CONFIG.fantasycraft;
 
+
 		data.ancestries = data.actor.items.filter(function(item) {return item.type == "ancestry"});
 		data.ancestryFeatures = data.actor.items.filter(function(item) {return (item.type == "feature" && (item.system.source == data.ancestries[0]?.name || item.system.source == data.ancestries[1]?.name))});
 		data.armour = data.actor.items.filter(function(item) {return item.type == "armour"});
@@ -49,6 +50,7 @@ export default class FCCharacterSheet extends ActorSheetFC {
 		data.attacks = data.actor.items.filter(function(item) {return item.type == "attack"});
 		data.effects = data.actor.getEmbeddedCollection("ActiveEffect").contents;
 		data.tricks = data.actor.items.filter(item => item.type == "trick" && (item.system.trickType.keyword != "pathSpellCasting" && item.system.trickType.keyword != "spellcasting"));
+		data.spellTricks = data.actor.items.filter(item => item.type == "trick" && (item.system.trickType.keyword == "pathSpellCasting" || item.system.trickType.keyword == "spellcasting"));
 		data.stances = data.actor.items.filter(item => item.type == "stance");
 
 		data.hasCutting = data.actor.items.filter(item => item.name == game.i18n.localize("fantasycraft.arrowCutting"));
@@ -71,8 +73,9 @@ export default class FCCharacterSheet extends ActorSheetFC {
 			name.label = n;
 		}
 
-		data.spells = this._filterItems(data.spells, this._filters.spellList);
-		
+		data.spells = this._filterItems(data.spells, this._filters.spellList, "school");
+		data.spells = this._filterItems(data.spells, this._filters.spellLevels, "level");
+
 		data["classNames"] = this.actor.itemTypes.class.map(c => c.name).join(", ");
 		
 		return data;
@@ -449,13 +452,15 @@ export default class FCCharacterSheet extends ActorSheetFC {
 		{
 			if (itemData.system["trick-stance1"] != "")
 			{
-				let id = act.items.find(item => item.name == itemData.system["trick-stance1"])._id;
-				act.deleteEmbeddedDocuments("Item", [id])
+				let id = act.items.find(item => item.name == itemData.system["trick-stance1"])?._id;
+				if (!!id)
+					act.deleteEmbeddedDocuments("Item", [id])
 			}
 			if (itemData.system["trick-stance2"] != "")
 			{
-				let id = act.items.find(item => item.name == itemData.system["trick-stance1"])._id;
-				act.deleteEmbeddedDocuments("Item", [id])
+				let id = act.items.find(item => item.name == itemData.system["trick-stance2"])?._id;
+				if (!!id)
+					act.deleteEmbeddedDocuments("Item", [id])
 			}
 		}
 	
@@ -552,16 +557,31 @@ export default class FCCharacterSheet extends ActorSheetFC {
 		}
 	}
 
-	_filterItems(items, filters)
+	_filterItems(items, filters, filterType)
 	{
-		return items.filter(item => {
+		if (filterType == "school")
+		{
+			return items.filter(item => {
 
-			let school = item.system.school;
-			school = school.charAt(0).toUpperCase() + school.slice(1);
+				let school = item.system.school;
+				school = school.charAt(0).toUpperCase() + school.slice(1);
 
-			if (filters.has(school)) return false;
-		
-			return true;
-		});
+				if (filters.has(school)) return false;
+			
+				return true;
+			});
+		}
+		else if (filterType == "level")
+		{
+			return items.filter(item => {
+
+				let level = item.system.level;
+				//level = level.charAt(0).toUpperCase() + school.slice(1);
+
+				if (filters.has("level" + level)) return false;
+			
+				return true;
+			});
+		}
 	}
 }

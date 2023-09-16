@@ -17,6 +17,7 @@ export default class FCNPCSheet extends ActorSheetFC
 	{
 		const data = super.getData();
 		data.config = CONFIG.fantasycraft;
+		data.isGM = game.user.isGM;
 
 		this._getSkillInformation(data)
 		data.spells = data.actor.items.filter(function(item) {return item.type == "spell"});

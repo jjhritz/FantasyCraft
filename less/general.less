@@ -112,6 +112,29 @@
       text-shadow: 0 0 10px red;
       cursor: pointer;
     }
+
+    //buttons
+    .button
+    {
+        width: 100%;
+        text-align: center;
+        a 
+        {
+            display: inline-block;
+            border: 1px solid #b5b3a4;
+            border-radius: 2px;
+            margin: 3px;
+            padding: 0 2px;
+            width: 90px;
+            height: 22px;
+            background-color: lightgray;
+
+            &:hover {
+              
+              background-color: white;
+            }
+        }
+    }
   
     // Separators
     span.sep {
@@ -287,7 +310,6 @@
       margin: 0;
       padding: 0;
       line-height: 16px;
-      max-width: 70%;
   
       .filter-icon {
         flex: none;
@@ -296,6 +318,26 @@
       }
   
       .filter-item {
+        text-align: center;
+        font-size: 12px;
+        margin: 0 6px 0 0;
+        border-bottom: 3px solid beige;
+        white-space: nowrap;
+  
+        &:last-child {
+          margin: 0;
+        }
+  
+        &:hover {
+          text-shadow: 0 0 4px red;
+          border-bottom: 3px solid tan;
+        }
+  
+        &.active {
+          border-bottom: 3px solid crimson;
+        }
+      }
+      .filter-level {
         text-align: center;
         font-size: 12px;
         margin: 0 6px 0 0;

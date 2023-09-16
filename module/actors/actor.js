@@ -63,7 +63,7 @@ export default class ActorFC extends Actor {
       
       this._prepareInitiative(actorData);   
       this._prepareDefense(actorData);
-      this._prepareAttack(actorData);       // Determine Attack Bonus
+      this._prepareAttack(actorData);       // Determine Attack Bonus, includes checking for martial and masters are
       this._prepareSaves(actorData);
       this._calculateWounds(actorData);
       this._linkAttacks(actorData);
@@ -514,6 +514,15 @@ export default class ActorFC extends Actor {
           item.value = item.ability.value + actorData.system.baseAttack + item.misc + magic;
           
         });
+
+        if (this.items.find(item => item.name == game.i18n.localize("fantasycraft.martialArts")))
+        {
+          this.system.martialArts = true;
+          
+          if (this.items.find(item => item.name == game.i18n.localize("fantasycraft.mastersArt"))){
+            this.update({"system.mastersArt": true});
+          }
+        }
     }
 
     _prepareSaves(actorData)

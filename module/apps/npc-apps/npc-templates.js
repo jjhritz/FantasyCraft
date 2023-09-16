@@ -298,7 +298,7 @@ export default class TemplateSelector extends Application   {
         {
             let reach = "system.reach"
             let newReach = npc.system.reach + parseInt(tReach);
-            if (newReach < 1) reach = 1
+            if (newReach < 1) newReach = 1
             await npc.update({[reach]: newReach});
         }
         if (npc.system.footprint.width < footprint[0]) 

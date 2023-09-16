@@ -19,7 +19,8 @@ export default class ActorSheetFC extends ActorSheet
     }
   
     _filters = {
-      spellList: new Set()
+      spellList: new Set(),
+      spellLevels: new Set()
     };
     /* -------------------------------------------- */
   
@@ -146,6 +147,7 @@ export default class ActorSheetFC extends ActorSheet
       const filterLists = html.find(".filter-list");
       filterLists.each(this._initializeFilterItemList.bind(this));
       html.find('.filter-item').click(this._filterItem.bind(this));
+      html.find('.filter-level').click(this._filterItem.bind(this));
       
       
       html.find('.selectStat').change(this._onStatChange.bind(this));
@@ -164,7 +166,11 @@ export default class ActorSheetFC extends ActorSheet
     _initializeFilterItemList(i, ul) {
       const set = this._filters[ul.dataset.filter];
       const filters = ul.querySelectorAll(".filter-item");
+      const levelFilters = ul.querySelectorAll(".filter-level");
       for ( let li of filters ) {
+        if ( set.has(li.dataset.filter) ) li.classList.add("active");
+      }
+      for ( let li of levelFilters ) {
         if ( set.has(li.dataset.filter) ) li.classList.add("active");
       }
     }
@@ -179,7 +185,6 @@ export default class ActorSheetFC extends ActorSheet
         
         if (!!hasSpell)
           return;
-
       }
 
       super._onDropItemCreate(itemData);
@@ -1025,6 +1030,13 @@ export default class ActorSheetFC extends ActorSheet
 
         mass.forEach(item => set.add(item))
         return this.render();
+      }
+      else if(filter != "all" && set.size == 0)
+      {
+        let allFilters = Array.from(li.parentElement.children);
+        let mass = allFilters.map(i => i.dataset.filter);
+
+        mass.forEach(item => set.add(item))
       }
       if ( set.has(filter) ) set.delete(filter);
       else set.add(filter);

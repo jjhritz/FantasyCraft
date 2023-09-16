@@ -65,7 +65,10 @@
   padding: 0 2px;
   width: 90px;
   height: 22px;
-  background-color: #ffffff;
+  background-color: lightgray;
+}
+.fantasycraft.sheet.actor ul.attributes li.attribute .button a:hover {
+  background-color: white;
 }
 .fantasycraft.sheet.actor ul.attributes li.attribute .roll {
   text-align: center;
@@ -436,6 +439,23 @@
   text-shadow: 0 0 10px red;
   cursor: pointer;
 }
+.sheet .button {
+  width: 100%;
+  text-align: center;
+}
+.sheet .button a {
+  display: inline-block;
+  border: 1px solid #b5b3a4;
+  border-radius: 2px;
+  margin: 3px;
+  padding: 0 2px;
+  width: 90px;
+  height: 22px;
+  background-color: lightgray;
+}
+.sheet .button a:hover {
+  background-color: white;
+}
 .sheet span.sep {
   flex: none;
   margin: 0 1px;
@@ -564,7 +584,6 @@
   margin: 0;
   padding: 0;
   line-height: 16px;
-  max-width: 70%;
 }
 .sheet .filter-list .filter-icon {
   flex: none;
@@ -586,6 +605,23 @@
   border-bottom: 3px solid tan;
 }
 .sheet .filter-list .filter-item.active {
+  border-bottom: 3px solid crimson;
+}
+.sheet .filter-list .filter-level {
+  text-align: center;
+  font-size: 12px;
+  margin: 0 6px 0 0;
+  border-bottom: 3px solid beige;
+  white-space: nowrap;
+}
+.sheet .filter-list .filter-level:last-child {
+  margin: 0;
+}
+.sheet .filter-list .filter-level:hover {
+  text-shadow: 0 0 4px red;
+  border-bottom: 3px solid tan;
+}
+.sheet .filter-list .filter-level.active {
   border-bottom: 3px solid crimson;
 }
 .sheet .traits {
@@ -774,7 +810,10 @@ textarea.text-area {
   padding: 0 2px;
   width: 90px;
   height: 22px;
-  background-color: #ffffff;
+  background-color: lightgray;
+}
+.fantasycraft.sheet.item ul.attributes li.attribute .button a:hover {
+  background-color: white;
 }
 .fantasycraft.sheet.item .itemName {
   text-align: center;
