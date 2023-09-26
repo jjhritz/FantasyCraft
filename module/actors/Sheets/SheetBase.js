@@ -397,7 +397,6 @@ export default class ActorSheetFC extends ActorSheet
       const element = event.currentTarget;
       const label = element.parentElement.querySelector("label");
       const options = { name: element.dataset.target, title: label.innerText}
-      console.log("tewst")
       new TextField(this.actor, options).render(true)
     }
 
@@ -671,11 +670,16 @@ export default class ActorSheetFC extends ActorSheet
       const li = event.currentTarget.closest(".item");
       const item = this.actor.items.get(li.dataset.itemId);
       
-
       if (item.system.readied)
       {
         item.update({'system.readied': false});
         this.render(true)
+        return;
+      }
+      if (this.actor.type == "npc")
+      {
+        await item.update({'system.readied': true});
+        this.render(true);
         return;
       }
 

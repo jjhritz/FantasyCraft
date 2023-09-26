@@ -21,17 +21,48 @@
         <p></p>
         <div class="flexrow">
             <div class="flexcol">
-                <span>{{localize actor.system.traits.initiative.label}}: {{actor.system.traits.initiative.total}} = {{actor.system.traits.initiative.value}} + {{actor.system.abilityScores.dexterity.mod}} ({{localize "fantasycraft.dex"}})</span>
+                <span>
+                    <span><b>{{localize actor.system.traits.initiative.label}}: </b></span>
+                    <span>{{actor.system.traits.initiative.total}} =</span> 
+                    <span class="tooltip" style="text-align: center;"> <div>{{actor.system.traits.initiative.value}}</div><div class="tooltiptext">{{localize "fantasycraft.grade"}}</div></span>
+                    {{#if actor.system.mastersArt}}
+                        <span style="text-align:center;">{{#if actor.system.defense.attributePositive}}+{{else}}-{{/if}}</span>
+                        <span class="tooltip" style="text-align: center;"> 
+                            <div>{{actor.system.defense.attributeNormalized}}</div>
+                            <div class="tooltiptext">{{localize (lookup config.abilityScores actor.system.defense.defenseAttribute)}}</div>
+                        {{else}}
+                        <span style="text-align:center;">{{#if actor.system.defense.dexPositive}}+{{else}}-{{/if}}</span>
+                        <span class="tooltip" style="text-align: center;"> 
+                            <div>{{actor.system.defense.dexNormalized}}</div>
+                            <div class="tooltiptext">{{localize "fantasycraft.dexterity"}}</div>
+                    {{/if}}
+                    </span>
+                </span>
                 {{#if actor.system.isSpecial}}
-                    <span>{{localize actor.system.traits.health.label}}: {{actor.system.vitality.max}}/{{actor.system.wounds.max}}</span>
+                    <span><b>{{localize actor.system.traits.health.label}}:</b> {{actor.system.vitality.max}}/{{actor.system.wounds.max}}</span>
                 {{else}}
-                    <span>{{localize actor.system.traits.health.label}}: {{actor.system.traits.health.total}} = {{actor.system.traits.health.value}} + {{actor.system.abilityScores.constitution.mod}}({{localize "fantasycraft.con"}})</span>
+                    <span><b>{{localize actor.system.traits.health.label}}:</b> {{actor.system.traits.health.total}} = {{actor.system.traits.health.value}} + {{actor.system.abilityScores.constitution.mod}}({{localize "fantasycraft.con"}})</span>
                 {{/if}}
-                <span>{{localize "fantasycraft.defense"}}: {{actor.system.traits.defense.total}} = 10 + {{actor.system.traits.defense.value}} + {{actor.system.abilityScores.dexterity.mod}} ({{localize "fantasycraft.dex"}}) + {{actor.system.defense.size}} ({{localize "fantasycraft.size"}}) </span>
+                <span class="flexrow">
+                    <span><b>{{localize "fantasycraft.defense"}}:</b> </span>
+                    <span class="flex2">{{actor.system.traits.defense.total}} = </span>
+                    <span>10</span>
+                    <span>+</span>
+                    <div class="tooltip" style="text-align:center;"> <div>{{actor.system.traits.defense.value}}</div><div class="tooltiptext">{{localize "fantasycraft.grade"}}</div></div>
+                    <div style="text-align:center;">{{#if actor.system.defense.attributePositive}}+{{else}}-{{/if}}</div>
+                    <div class="tooltip" style="text-align:center;"> {{actor.system.defense.attributeNormalized}}</span> <div class="tooltiptext">{{localize (lookup config.abilityScores actor.system.defense.defenseAttribute)}}</div></div>
+                    <div style="text-align:center;">+</div>
+                    <div class="tooltip" style="text-align:center;"> {{actor.system.defense.size}}</span> <div class="tooltiptext">{{localize "fantasycraft.size"}}</div></div>
+                    <div style="text-align:center;">+</div>
+                    <div class="tooltip" style="text-align:center;"> {{actor.system.defense.guard}}</span><div class="tooltiptext">{{localize "fantasycraft.guard"}}</div></div>
+                    <div style="text-align:center;">-</div>
+                    <div class="tooltip" style="text-align:center;"> {{actor.system.defense.penalty}}</span><div class="tooltiptext">{{localize "fantasycraft.defensePenalty"}}</div></div>
+                    <span> </span>
+                </span>
             </div>
             <div class="flexcol">
-                <span>{{localize "fantasycraft.melee"}}: {{actor.system.traits.attack.meleeTotal}} = {{actor.system.traits.attack.value}} + {{actor.system.abilityScores.strength.mod}} ({{localize "fantasycraft.str"}})</span>
-                <span>{{localize "fantasycraft.ranged"}}: {{actor.system.traits.attack.rangedTotal}} = {{actor.system.traits.attack.value}} + {{actor.system.abilityScores.dexterity.mod}} ({{localize "fantasycraft.dex"}})    </span>
+                <span><b>{{localize "fantasycraft.melee"}}:</b> {{actor.system.traits.attack.meleeTotal}} = {{actor.system.traits.attack.value}} + {{actor.system.abilityScores.strength.mod}} ({{localize "fantasycraft.str"}})</span>
+                <span><b>{{localize "fantasycraft.ranged"}}:</b> {{actor.system.traits.attack.rangedTotal}} = {{actor.system.traits.attack.value}} + {{actor.system.abilityScores.dexterity.mod}} ({{localize "fantasycraft.dex"}})    </span>
                 <span><button class="roll-competence smallButton" data-roll-info="competence">{{localize actor.system.traits.competence.label}}</button> {{actor.system.traits.competence.value}}</span>
             </div>
             <div class="flexcol">
@@ -65,25 +96,34 @@
         <i>{{localize "fantasycraft.attacks"}}:</i> 
         {{#each weapons as |weapon id|}}
         {{#compare weapon.system.weaponCategory "arrowsAndBolts" operator="!="}}
-            <label class="item" data-item-id="{{weapon._id}}"><a class="roll-weapon"><b>{{weapon.name}}</b></a></label> 
-            <span>({{weapon.system.damage}},
-                {{localize "fantasycraft.threatRange"}}: {{weapon.system.threatRange}}
-                {{~#compare "none" weapon.system.upgrades.customization operator="!="}}, {{localize weapon.system.upgrades.customization~}} {{/compare}}
-                {{~#compare "none" weapon.system.upgrades.materials operator="!="}}, {{localize weapon.system.upgrades.materials~}} {{/compare}}
+            <span class="item" data-item-id="{{_id}}" data-name="{{weapon.name}}" data-item-name="{{weapon.name}}">
+                <label class="item" {{#if weapon.system.readied}}{{else}}style="color: grey"{{/if}} data-item-id="{{weapon._id}}">{{#if weapon.system.readied}}<a class="roll-weapon">{{/if}}<b>{{weapon.name}}</b>{{#if weapon.system.readied}}</a>{{/if}}</label> 
+                <a class="readyWeapon">
+                    {{#if weapon.system.readied}}
+                    <i class="fa fa-swords"></i>
+                    {{else}}
+                    <i class="fa-light fa-swords"></i>
+                    {{/if}}
+                </a>
+                <span>({{weapon.system.damage}},
+                    {{localize "fantasycraft.threatRange"}}: {{weapon.system.threatRange}}
+                    {{~#compare "none" weapon.system.upgrades.customization operator="!="}}, {{localize weapon.system.upgrades.customization~}} {{/compare}}
+                    {{~#compare "none" weapon.system.upgrades.materials operator="!="}}, {{localize weapon.system.upgrades.materials~}} {{/compare}}
 
-                {{~#each ../config.numericWeaponProperties as |prop id|~}}
-                    {{~#if (lookup weapon.system.weaponProperties id)~}}
-                        , {{localize prop}} {{lookup weapon.system.weaponProperties id~}}
-                    {{/if}}
-                {{/each}}
-                {{~#each ../config.weaponProperties as |prop id|~}}
-                    {{~#if (lookup weapon.system.weaponProperties id)~}}
-                        , {{localize prop~}}
-                    {{/if}}
-                {{/each}}
-            ),
+                    {{~#each ../config.numericWeaponProperties as |prop id|~}}
+                        {{~#if (lookup weapon.system.weaponProperties id)~}}
+                            , {{localize prop}} {{lookup weapon.system.weaponProperties id~}}
+                        {{/if}}
+                    {{/each}}
+                    {{~#each ../config.weaponProperties as |prop id|~}}
+                        {{~#if (lookup weapon.system.weaponProperties id)~}}
+                            , {{localize prop~}}
+                        {{/if}}
+                    {{/each}}
+                ),
+                </span>
             </span>
-            {{/compare}}
+        {{/compare}}
         {{/each}}
         {{#each attacks as |attack id|}}
                 <label class="item" data-item-id="{{attack._id}}"><a class="roll-natural-attack"><b>{{attack.name}}</b></a></label> 
@@ -100,7 +140,7 @@
                     {{localize "fantasycraft.damageType"}}: {{localize attack.system.damageType}})
                 {{/compare}}
                 {{#compare attack.system.attackType "extraSave" operator="=="}}
-                    [{{localize "fantasycraft.dc"}} {{attack.system.saveDC}}] ({{localize attack.system.attackDescription}} {{attack.system.attackGrade}}
+                    [{{localize "fantasycraft.dc"}} {{attack.system.saveDC}}] ({{localize (lookup ../config.extraordinarySaveDescription attack.system.attackDescription)}} {{attack.system.attackGrade}}
                     {{~#compare attack.system.saveUpgrade "none" operator="!="}}: 
                         {{localize attack.system.area.shape}} 
                         {{#compare attack.system.area.shape "gaze" operator="!="}}
@@ -110,6 +150,22 @@
                 {{/compare}}
                 ){{#unless @last}}, {{/unless}}</span>
         {{/each}}
+        {{#if stances}}
+        <br>
+        <span><i>{{localize "fantasycraft.stances"}}:</i></span>
+            {{#each stances as |stance id|}}
+            <span class="item ownnedItem" data-item-id="{{_id}}" data-item-name="{{stance.name}}">
+                <label class="flex5"> {{#if system.inStance}}<b>{{/if}} {{stance.name}}{{#if system.inStance}}</b>{{/if}}</label>
+                <a class="adoptStance">
+                    {{#if system.inStance}}
+                    <i class="fas fa-chess"></i>
+                    {{else}}
+                    <i class="fa-light fa-chess"></i>
+                    {{/if}}                    
+                </a>
+            </span>
+            {{/each}}
+        {{/if}}
         {{!gear}}
         {{#if mounts}} 
         <br>

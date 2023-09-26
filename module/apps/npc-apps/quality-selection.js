@@ -24,11 +24,13 @@ export default class Qualities extends Application   {
 		let qualities = this.actor.items.filter(function(item) {return (item.type == "feature" && item.system.featureType == "npcQuality")});
 		let classFeatures = this.actor.items.filter(function(item) {return (item.type == "feature" && item.system.featureType == "class")});
 		let feats = this.actor.items.filter(function(item) {return (item.type == "feat")});
+        let paths = this.actor.items.filter(function(item) {return (item.type == "path")});
         let tricks = this.actor.items.filter(function(item) {return (item.type == "trick")});
 
         qualities.sort( Utils.alphabatize )
         classFeatures.sort( Utils.alphabatize )
         feats.sort( Utils.alphabatize )
+        paths.sort( Utils.alphabatize )
         tricks.sort( Utils.alphabatize )
 
         // Populate choices
@@ -42,12 +44,21 @@ export default class Qualities extends Application   {
             qualities: qualities,
             classFeatures: classFeatures,
             feats: feats,
+            paths: paths,
             tricks: tricks
         }
     }
   
     activateListeners(html) {
         super.activateListeners(html);
+
+        html.find('.changeGrade').change( async ev => {
+            let event = ev.currentTarget;
+            let itemId = ev.currentTarget.closest(".item").dataset.itemId;
+            let item = this.actor.items.get(itemId);
+            let updateString = "system." + event.name;
+            await item.update({[updateString]: parseInt(event.value)});
+        })
 
         html.find('.editItem').click( async ev => {
             let itemId = ev.currentTarget.closest(".item").dataset.itemId;

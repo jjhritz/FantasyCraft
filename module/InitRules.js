@@ -4,6 +4,7 @@ export function _getInitiativeFormula(formula = "1d20")
     if (!actor) return formula;
 
     const init = (actor.type == "npc") ? actor.system.traits.initiative : actor.system.initiative;
+    const initAbility = (actor.system.mastersArt) ? actor.system.defense.defenseAttribute : "dexterity";
 
     let dice = 1;
     let mods = "";
@@ -14,7 +15,7 @@ export function _getInitiativeFormula(formula = "1d20")
         mods = "kh";
     }
 
-    const roll = (actor.type == "npc") ? [`${dice}d20${mods}`, init.value, actor.system.abilityScores.dexterity.mod, 0] : [`${dice}d20${mods}`, init.class, init.ability.value, init.featBonus];
+    const roll = (actor.type == "npc") ? [`${dice}d20${mods}`, init.value, actor.system.abilityScores[initAbility].mod, 0] : [`${dice}d20${mods}`, init.class, init.ability.value, init.featBonus];
 
     return roll.filter(p => p !== null).join(" + ");
 }

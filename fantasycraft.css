@@ -380,6 +380,31 @@
   border-radius: 3px;
   background: rgba(0, 0, 0, 0.05);
 }
+.fantasycraft .tooltip {
+  border: 1px solid black;
+  height: 17px;
+  width: 17px;
+  background-color: lightgray;
+  font-family: signika;
+  font-size: 13px;
+  font-weight: normal;
+  display: inline-block;
+}
+.fantasycraft .tooltip .tooltiptext {
+  visibility: hidden;
+  width: 100px;
+  background-color: white;
+  color: black;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+.fantasycraft .tooltip:hover .tooltiptext {
+  visibility: visible;
+}
 .sheet {
   /* ----------------------------------------- */
   /*  Element Styles                           */

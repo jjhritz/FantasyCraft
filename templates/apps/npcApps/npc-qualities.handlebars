@@ -43,6 +43,34 @@
         {{/each}}
     </section>
     {{/if}}
+    {{#if paths}}
+    <section>
+        <label><h4 class="box-title">{{localize "fantasycraft.paths"}}</h4></label>
+        {{#each paths as |path id|}}
+            <div class="item ownedItem item-card flexrow" data-item-id="{{_id}}" data-item-name="{{path.name}}">
+                <span class="flex5">{{path.name}}</span>
+                <select class="changeGrade" name="pathStep">
+                    {{#select system.pathStep}}
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    {{/select}}
+                </select>
+
+                <span>
+                    <a class="editItem">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a class="deleteItem">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </span>
+            </div>
+        {{/each}}
+    </section>
+    {{/if}}
     {{#if tricks}}
     <section>
         <label><h4 class="box-title">{{localize "fantasycraft.tricks"}}</h4></label>

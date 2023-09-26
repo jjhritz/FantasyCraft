@@ -657,6 +657,14 @@
 				"value": []
 			},
 			"threat": 1,
+			"defense":
+			{
+				"guard": 0,
+				"penalty": 0,
+				"defenseAttribute": "dexterity",
+				"attributePositive": true,
+				"attributeNormalized": 0
+			},
 			"damageTaken": 0,
 			"failedSaves": 0,
 			"primaryMovement": "walker",

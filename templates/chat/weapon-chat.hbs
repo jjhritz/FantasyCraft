@@ -50,7 +50,7 @@
         <div>
             {{#each data.qualities as |quality id|}}
                 {{#if quality}}
-                {{#compare quality "none" operator="!="}}
+                    {{#compare quality "none" operator="!="}}
                     {{id}}{{#if (isBool quality)}}{{else}} {{quality}}{{/if}}
                     {{/compare}}
                 {{/if}}

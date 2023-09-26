@@ -29,9 +29,11 @@ export default class FCNPCSheet extends ActorSheetFC
 		data.qualities = data.actor.items.filter(function(item) {return (item.type == "feature" && item.system.featureType == "npcQuality")});
 		data.classFeatures = data.actor.items.filter(function(item) {return (item.type == "feature" && item.system.featureType == "class")});
 		data.feats = data.actor.items.filter(function(item) {return (item.type == "feat")});
+		data.paths = data.actor.items.filter(function(item) {return (item.type == "path")});
 		data.tricks = data.actor.items.filter(function(item) {return (item.type == "trick")});
+		data.stances = data.actor.items.filter(function(item) {return (item.type == "stance")});
 
-		data.featuresList = this._createAlphbatizedNPCQualities(data.actor.items.filter(function(item) {return (item.type == "feature")}), data.feats, data.tricks);
+		data.featuresList = this._createAlphbatizedNPCQualities(data.actor.items.filter(function(item) {return (item.type == "feature")}), data.feats, data.tricks, data.paths);
 
 		data.spells.sort(Utils.alphabatize)
 		data.qualities.sort(Utils.alphabatize)
@@ -68,17 +70,49 @@ export default class FCNPCSheet extends ActorSheetFC
 			{
 				return;
 			}
+		} 
+		else if (itemData.type == "feat")
+		{
+			if (itemData.system["trick-stance1"] != "")
+			{
+				const pack = game.packs.get("fantasycraft.tricksandstances");
+				let id = pack.index.getName(itemData.system["trick-stance1"])?._id;
+				if (!id)
+					ui.notifications.warn("fantasycraft.noTrickOrStanceWarning");
+				else
+				{
+					let trick = await pack.getDocument(id);
+					await act.createEmbeddedDocuments("Item", [trick]);
+				}
+			}
+			if (itemData.system["trick-stance2"] != "")
+			{
+				const pack = game.packs.get("fantasycraft.tricksandstances");
+				let id = pack.index.getName(itemData.system["trick-stance2"])?._id;
+				if (!id)
+					ui.notifications.warn("fantasycraft.noTrickOrStanceWarning");
+				else
+				{
+					let trick = await pack.getDocument(id);
+					await act.createEmbeddedDocuments("Item", [trick]);
+				}
+			}
+
+			if (itemData.system.containsFlag)
+				act.setFlag("fantasycraft", itemData.name, itemData.name);
 		}
 
 		super._onDropItemCreate(itemData);
 	}
 
-	_createAlphbatizedNPCQualities(features, feats, tricks)
+	_createAlphbatizedNPCQualities(features, feats, tricks, paths)
 	{
 		let newArray = [];
 		let classAbilities = [];
 		let featArray = [];
 		let trickArray = [];
+		let pathArray = [];
+		let pathSteps = [];
 
 		for (let [k,v] of Object.entries(features))
 		{
@@ -109,6 +143,11 @@ export default class FCNPCSheet extends ActorSheetFC
 		{
 			trickArray.push(v.name);
 		}
+		for (let [k,v] of Object.entries(paths))
+		{
+			let name = v.name.replace('Path of ','');
+			pathArray.push([name, v.system.pathStep]);
+		}
 		
 		if (featArray.length > 0)
 		{
@@ -127,21 +166,26 @@ export default class FCNPCSheet extends ActorSheetFC
 			let trickString = "Tricky(" + this._arrayToString(trickArray.sort()) + ")";
 			newArray.push(trickString);
 		}
+		if (pathArray.length > 0)
+		{
+			let pathString = "Devoted(" + this._arrayToString(pathArray.sort(), true) + ")";
+			newArray.push(pathString);
+		}
 
 		newArray.sort();
 
 		return newArray;
 	}
 
-	_arrayToString(array)
+	_arrayToString(array, step = false)
 	{
 		let string = ""
 		for (let i = 0; i < array.length; i++) 
 		{
 			if (i == array.length - 1)
-				string = string + array[i]			
+				string = (step) ? string + array[i][0] + " " + array[i][1] : string + array[i];
 			else
-				string = string + array[i] + ", "
+			string = (step) ? string + array[i][0] + " " + array[i][1] + ", ": string + array[i] + ", ";
 		}
 
 		return string;

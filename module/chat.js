@@ -105,8 +105,6 @@ export function onSkillCheck(diceRoll, actor, skillName, flawless)
 {
     let skill = actor.type == "character" ? actor.system.skills[skillName] : actor.system.signatureSkills[skillName];
     
-    console.log("test");
-
     if (skillName == "competence")
         skill = { threat: 20, error: 1 };
 
@@ -378,7 +376,7 @@ async function onDamage(event)
         {
             let weaponProperties = item.system.weaponProperties;
 
-            if (weaponProperties.finesse && actor.system.abilityScores.dexterity.mod > actor.system.abilityScores.strength.mod)
+            if (weaponProperties.finesse && token.system.abilityScores.dexterity.mod > token.system.abilityScores.strength.mod)
                 abilityMod = "dexterity"
 
             if (item.system.attackType == "ranged")
@@ -390,21 +388,32 @@ async function onDamage(event)
             damageModifiers = [];
 
             //ability mod, tricks, class bonus, all out attack/bullseye, magic, moral bonuses, misc, sneak attack dice
-            if (abilityMod != "") damageModifiers.push(actor.system.abilityScores[abilityMod].mod)
+            if (abilityMod != "") damageModifiers.push(token.system.abilityScores[abilityMod].mod)
             if (superior != 0) damageModifiers.push(superior)
-            if (actor.system?.powerAttack && (item.system.attackType == "melee" || item.system.attackType == "unarmed")) damageModifiers.push(actor.system.powerAttack * 2);
-            if (actor.system?.powerAttack && (item.system.attackType == "ranged")) damageModifiers.push(actor.system.powerAttack);
+            if (token.system?.powerAttack && (item.system.attackType == "melee" || item.system.attackType == "unarmed")) damageModifiers.push(actor.system.powerAttack * 2);
+            if (token.system?.powerAttack && (item.system.attackType == "ranged")) damageModifiers.push(actor.system.powerAttack);
         }
 
         if (item.type =="attack")
         {
+            let featBonus = 0
             damageDice = item.system.damage.value;
+      
+            if (token.system.martialArts) featBonus += 2
+            if (token.system.mastersArt)
+            { 
+                abilityMod = (token.type == "character") ? token.system.defense.ability.name : token.system.defense.defenseAttribute;
+                featBonus += 2
+            }
+
             if (item.system.attackType == "naturalAttack")
             {
                 damageModifiers = 
                 [
-                    actor.system.abilityScores[abilityMod].mod,
+                    token.system.abilityScores[abilityMod].mod,
                 ];
+
+                if (featBonus > 0) damageModifiers.push(featBonus)
             }
         }
         itemInformation = {id: item.id, data: item, name: item.name};
@@ -418,7 +427,7 @@ async function onDamage(event)
         if (actor.system.martialArts) featBonus += 2
         if (actor.system.mastersArt)
         { 
-            abilityMod = actor.system.defense.ability.name
+            abilityMod = (this.type == "character") ? actor.defense.ability.name : actor.defense.defenseAttribute;
             featBonus += 2
         }
 
@@ -460,6 +469,8 @@ async function onDamage(event)
     let rollFormula = [damageDice].concat(damageModifiers).join(" + ");
     
     const rollInfo = await preRollDialog(itemInformation.name, "systems/fantasycraft/templates/chat/damageRoll-Dialog.hbs", rollFormula, null)
+    if (rollInfo == null) return;
+    
     if(rollInfo?.morale) rollFormula += Utils.returnPlusOrMinusString(rollInfo.morale);
     if(rollInfo?.sneakAttack.checked) 
     {

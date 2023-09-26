@@ -23,6 +23,7 @@ export default class ActorFC extends Actor {
 
     _prepareNPCData(actorData)
     {
+      this.system.defense.defenseAttribute = (this.system.defense.defenseAttribute != undefined) ? this.system.defense.defenseAttribute : "dexterity";
       this._npcThreatLevel(actorData);
       this._prepareNPCTraits(actorData);
     }
@@ -63,7 +64,7 @@ export default class ActorFC extends Actor {
       
       this._prepareInitiative(actorData);   
       this._prepareDefense(actorData);
-      this._prepareAttack(actorData);       // Determine Attack Bonus, includes checking for martial and masters are
+      this._prepareAttack(actorData);       // Determine Attack Bonus, includes checking for martial and masters art
       this._prepareSaves(actorData);
       this._calculateWounds(actorData);
       this._linkAttacks(actorData);
@@ -154,15 +155,14 @@ export default class ActorFC extends Actor {
       //Qualities XP
       totalXP += this._calculateQualityXP(data);
       
+      totalXP += this._pathXPCalculate(data)
+
       //Attacks XP
       totalXP += this._attackXPCalculate(data);
 
       //Gear XP
       if (npc.playerControlled)
       totalXP += this._gearXPCalculator(data);
-
-      //Templates XP
-
 
       let npcFeats = data.items.filter(function(item) {return item.type == "feat"});
       totalXP += (npcFeats.length *2);
@@ -248,6 +248,19 @@ export default class ActorFC extends Actor {
       if (type == "fly") return "flyer";
       if (type == "burrow") return "burrower";
       if (type == "swim") return "swimmer";
+    }
+
+    _pathXPCalculate(data)
+    {
+      let npcPaths = data.items.filter(function(item) {return item.type == "path"});
+      let pathXP = 0;
+
+      for (let [k,v] of Object.entries(npcPaths))
+      {
+        pathXP += (v.system.pathStep * 2)
+      }
+
+      return pathXP;
     }
 
     _attackXPCalculate(data)
@@ -425,9 +438,8 @@ export default class ActorFC extends Actor {
     {
         //Total = class, ability, size, guard, misc, penalty
         const def = actorData.system.defense;
-        let guard = 0 
         let misc = def.misc;
-        let penalty = 0, size = 0, magic = 0;
+        let guard = 0, penalty = 0, size = 0, magic = 0;
         def.ability.name = (actorData.system.martialArts) ? def.ability.name : "dexterity";
         def.ability.value = actorData.system.abilityScores[def.ability.name].mod;
 
@@ -439,28 +451,10 @@ export default class ActorFC extends Actor {
             def.class += CONFIG.fantasycraft.classDefense[item.system.defense][item.system.levels-1];
           // if armour is equipped get the defense penalty
           if (item.type == "armour")
-          {
-            if(item.system.equipped)
-            {
-              penalty = item.system.defensePenalty;
-
-              //reduce penalty for armour basics or the armour being fitted
-              penalty = this.items.filter(item => item.type == "feat" && item.name == game.i18n.localize("fantasycraft.armourBasics")).length > 0 ? penalty - 1 : penalty;
-              if (item.system.upgrades.fitted)
-                penalty --;
-
-              if (penalty < 0)
-                penalty = 0;
-            }
-          }
+            penalty = this._getArmourPenalty(item);
           //get guard bonus
           if(item.type == "weapon")
-          {
-            if (item.system.readied && item.system.weaponProperties.guard > 0 && item.system.weaponProperties.guard > guard)
-              guard = item.system.weaponProperties.guard;
-
-            this.system.defense.guard = guard;
-          }
+            this.system.defense.guard = this._getGuardBonus(item, guard);
         }
 
         //if get any size modifier
@@ -481,6 +475,35 @@ export default class ActorFC extends Actor {
         
         actorData.system.flatFootedDefense = (def.ability.value > 0) ? 10 + def.class + size - penalty : 10 + def.ability.value + def.class + size - penalty ;
         def.value = 10 + def.ability.value + def.class + size + guard + misc + magic - penalty;
+    }
+
+    _getArmourPenalty(item)
+    {
+      let penalty = 0;
+
+      if(item.system.equipped)
+      {
+        penalty = item.system.defensePenalty;
+
+        //reduce penalty for armour basics or the armour being fitted
+        penalty = this.items.filter(item => item.type == "feat" && item.name == game.i18n.localize("fantasycraft.armourBasics")).length > 0 ? penalty - 1 : penalty;
+        if (item.system.upgrades.fitted)
+          penalty --;
+
+        if (penalty < 0)
+          penalty = 0;
+      }
+
+      return penalty;
+    }
+
+    _getGuardBonus(item, guard)
+    {
+      if (item.system.readied && item.system.weaponProperties.guard > 0 && item.system.weaponProperties.guard > guard)
+      guard = item.system.weaponProperties.guard;
+
+
+      return guard
     }
 
     _prepareAttack(actorData)
@@ -903,6 +926,8 @@ export default class ActorFC extends Actor {
 
     _prepareNPCTraits(actorData)
     {
+      this.system.martialArts = (this.items.find(item => item.name == game.i18n.localize("fantasycraft.martialArts"))) ? true : false;
+      this.system.mastersArt = (this.items.find(item => item.name == game.i18n.localize("fantasycraft.mastersArt"))) ? true : false;
       const traits = actorData.traits;
       const level = actorData.threat-1; //set level to the npcs threat level -1 to get the index
 
@@ -934,7 +959,31 @@ export default class ActorFC extends Actor {
     {
       const traits = actorData.traits;
       const sizeNumber = CONFIG.fantasycraft.sizeNumber[actorData.size];
+      let initMod = (actorData.mastersArt) ? actorData.defense.defenseAttribute : "dexterity"
+
+      this._calculateDefense(actorData, traits, sizeNumber);
+
+      actorData.defense.dexPositive = (actorData.abilityScores.dexterity.mod >= 0) ? true : false;
+      actorData.defense.dexNormalized = (actorData.defense.dexNormalized) ? actorData.abilityScores.dexterity.mod : actorData.abilityScores.dexterity.mod * -1;
+
+      traits.initiative.total = traits.initiative.value + actorData.abilityScores[initMod].mod;
+      traits.attack.meleeTotal = traits.attack.value + actorData.abilityScores.strength.mod;
+      traits.attack.rangedTotal = traits.attack.value + actorData.abilityScores.dexterity.mod;this
+      actorData.saves.fortitude.total = traits.resilience.value + actorData.abilityScores.constitution.mod;
+      actorData.saves.reflex.total = traits.resilience.value + actorData.abilityScores.dexterity.mod;
+      actorData.saves.will.total = traits.resilience.value + actorData.abilityScores.wisdom.mod;
+      traits.health.total = traits.health.value + actorData.abilityScores.constitution.mod + (sizeNumber*2);
+
+      actorData.spellcasting.total = actorData.spellcasting.value + actorData.abilityScores.intelligence.mod;
+    }
+
+    _calculateDefense(actorData, traits, sizeNumber)
+    {
       let sizeDefense = sizeNumber;
+      let penalty = 0;
+      let guard = 0;
+      let defenseMod = (actorData.martialArts) ? this.system.defense.defenseAttribute : "dexterity";
+
       if (sizeNumber != 0)
       {
         sizeDefense = (sizeDefense < 0) ? sizeDefense*-1 : sizeDefense;
@@ -943,16 +992,23 @@ export default class ActorFC extends Actor {
           sizeDefense = sizeDefense * -1;
       }
 
-      traits.initiative.total = traits.initiative.value + actorData.abilityScores.dexterity.mod;
-      traits.attack.meleeTotal = traits.attack.value + actorData.abilityScores.strength.mod;
-      traits.attack.rangedTotal = traits.attack.value + actorData.abilityScores.dexterity.mod;
-      traits.defense.total = 10 + traits.defense.value + actorData.abilityScores.dexterity.mod + sizeDefense;
-      actorData.saves.fortitude.total = traits.resilience.value + actorData.abilityScores.constitution.mod;
-      actorData.saves.reflex.total = traits.resilience.value + actorData.abilityScores.dexterity.mod;
-      actorData.saves.will.total = traits.resilience.value + actorData.abilityScores.wisdom.mod;
-      traits.health.total = traits.health.value + actorData.abilityScores.constitution.mod + (sizeNumber*2);
-      ;
-      actorData.spellcasting.total = actorData.spellcasting.value + actorData.abilityScores.intelligence.mod;
+      for ( let item of this.items) 
+      {
+        // if armour is equipped get the defense penalty
+        if (item.type == "armour")
+          penalty = this._getArmourPenalty(item);
+        //get guard bonus
+        if (item.type == "weapon")
+          guard = this._getGuardBonus(item, guard)
+      }
+      
+      actorData.defense.guard = guard;
+      actorData.defense.penalty = penalty;
+      actorData.defense.attributePositive = (actorData.abilityScores[defenseMod].mod >= 0) ? true : false;
+      actorData.defense.attributeNormalized = (actorData.defense.attributePositive) ? actorData.abilityScores[defenseMod].mod : actorData.abilityScores[defenseMod].mod * -1;
+
+      traits.defense.total = 10 + traits.defense.value + actorData.abilityScores[defenseMod].mod + sizeDefense + actorData.defense.guard - actorData.defense.penalty;
+
     }
 
     _equipmentWeight()
@@ -1459,7 +1515,7 @@ export default class ActorFC extends Actor {
         || (item.system.trickType.keyword2 == "bowHurled" && (weapon.system.weaponCategory == "bow" || weapon.system.weaponCategory == "hurled"))) 
       )});
       
-      tricks = tricks.filter(item => item.system.uses.usesRemaining > 0);
+      tricks = tricks.filter(item => item.system.uses.usesRemaining > 0 || item.system.uses.timeFrame == "unlimited");
 
       return tricks
     }
@@ -1473,7 +1529,7 @@ export default class ActorFC extends Actor {
         item.system.trickType.keyword == "unarmed" || item.system.trickType.keyword2 == "unarmed" || item.system.trickType.keyword == "any" || item.system.trickType.keyword2 == "any"
       )});
 
-      tricks = tricks.filter(item => item.system.uses.usesRemaining > 0);
+      tricks = tricks.filter(item => item.system.uses.usesRemaining > 0 || item.system.uses.timeFrame == "unlimited");
   
       return tricks
     }
@@ -1482,7 +1538,7 @@ export default class ActorFC extends Actor {
     {
       let tricks = this.items.filter(function(item) {return (item.type == "trick")});
       tricks = tricks.filter(function(item) {return (item.system.trickType.keyword == action)});
-      tricks = tricks.filter(item => item.system.uses.usesRemaining > 0);
+      tricks = tricks.filter(item => item.system.uses.usesRemaining > 0 || item.system.uses.timeFrame == "unlimited");
 
       let weapons = this.items.filter(function(item) {return (item.type == "weapon" && item.system.readied)});
 
@@ -1728,6 +1784,12 @@ export default class ActorFC extends Actor {
           mastersTouchII = true
       }
 
+      if (actor.martialArts) 
+      {
+        abilityMod = (this.type == "character") ? actor.defense.ability.name : actor.defense.defenseAttribute;
+        item.system.threatRange = (actor.mastersArt) ? item.system.threat - 2 : item.system.threat - 1;
+      }
+
       let stances = this.items.filter(item => item.type == "stance" && item.system.inStance);
       let stance = false
       if (stances.length > 0)
@@ -1774,6 +1836,8 @@ export default class ActorFC extends Actor {
       if (!skipInputs)
       {
         const rollInfo = await this.preRollDialog(item.name, "systems/fantasycraft/templates/chat/attackRoll-Dialog.hbs", rollFormula, tricks, powerAttack, multiAttack, mastersTouch, mastersTouchII, stance);
+        if (rollInfo == null) return;
+
         rollFormula = determinePreRollTrickEffect(rollInfo?.trick1, actor, rollInfo, rollFormula, target, rollInfo?.trick2);
         if (rollFormula == "Error") return;
 
@@ -1835,7 +1899,7 @@ export default class ActorFC extends Actor {
 
       if (actor.martialArts) 
       {
-        abilityMod = actor.defense.ability.name;
+        abilityMod = (this.type == "character") ? actor.defense.ability.name : actor.defense.defenseAttribute;
         threatRange = (actor.mastersArt) ? 18 : 19;
       }
       
@@ -1853,6 +1917,8 @@ export default class ActorFC extends Actor {
       if (!skipInputs)
       {
         const rollInfo = await this.preRollDialog(game.i18n.localize("fantasycraft.unarmedStrike"), "systems/fantasycraft/templates/chat/attackRoll-Dialog.hbs", rollFormula, tricks, powerAttack, multiAttack, mastersTouch, mastersTouchII)
+        if (rollInfo == null) return;
+
         rollFormula = determinePreRollTrickEffect(rollInfo?.trick1, actor, rollInfo, rollFormula, target, rollInfo?.trick2);
         if(rollInfo?.powerAttack) rollFormula += " - " + rollInfo.powerAttack;
         if(rollInfo?.multiAttack) rollFormula += " - " + rollInfo.multiAttack;
@@ -1912,10 +1978,12 @@ export default class ActorFC extends Actor {
       
       
       //check for tricks
-      const rollInfo = await this.preRollDialog(actionShort, "systems/fantasycraft/templates/chat/attackRoll-Dialog.hbs", rollFormula, tricks)
+      const rollInfo = await this.preRollDialog(actionShort, "systems/fantasycraft/templates/chat/attackRoll-Dialog.hbs", rollFormula, tricks);
 
-      const actionRoll = new Roll(rollFormula)
-      actionRoll.evaluate({async: false})
+      if (rollInfo == null) return;
+
+      const actionRoll = new Roll(rollFormula);
+      actionRoll.evaluate({async: false});
 
 
       if (rollInfo == null)
@@ -1924,7 +1992,7 @@ export default class ActorFC extends Actor {
       if (rollInfo?.trick1) this.reduceRemainingAbilityUses(rollInfo.trick1);
   
 
-      Chat.onCombatAction(actionRoll, this, actionShort, rollInfo.trick1)
+      Chat.onCombatAction(actionRoll, this, actionShort, rollInfo.trick1);
     }
     
     naturalOrUnarmedAttackModifiers(actor, attackBonus, abilityMod)

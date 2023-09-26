@@ -192,6 +192,16 @@
 
                 <label>{{localize "fantasycraft.isSpecial"}}</label>
                 <input type="checkbox" name="system.isSpecial" {{checked actor.system.isSpecial}}>
+                {{#if actor.system.martialArts}}
+                    <label>{{localize "fantasycraft.martialArts"}}: </label>
+                    <select name="system.defense.defenseAttribute">
+                        {{#select actor.system.defense.defenseAttribute}}
+                        {{#each config.abilityScores as |v k|}}
+                            <option value="{{k}}">{{localize v}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
+                {{/if}}
             </section>
             <section>
                 <strong>{{! if template then template}}{{actor.name}}({{actor.system.size}} {{actor.system.type.value}} {{localize actor.system.primaryMovement}} - {{actor.system.xp}} XP):</strong> {{localize "fantasycraft.str"}}: {{actor.system.abilityScores.strength.value}}
@@ -256,6 +266,16 @@
                                         , {{localize prop~}}
                                     {{/if}}
                                 {{/each}}
+                                
+                            {{#compare weapon.system.weaponCategory "arrowsAndBolts" operator="!="}}
+                                <a class="readyWeapon">
+                                    {{#if weapon.system.readied}}
+                                    <i class="fa fa-swords"></i>
+                                    {{else}}
+                                    <i class="fa-light fa-swords"></i>
+                                    {{/if}}
+                                </a>
+                            {{/compare}}
                             </span>
                             {{#compare weapon.system.weaponCategory "arrowsAndBolts" operator="=="}}
                             <a class="decreaseItem">
@@ -308,7 +328,7 @@
                                 {{localize "fantasycraft.damageType"}}: {{localize attack.system.damageType}})
                             {{/compare}}
                             {{#compare attack.system.attackType "extraSave" operator="=="}}
-                                [{{localize "fantasycraft.dc"}} {{attack.system.saveDC}}] ({{localize attack.system.attackDescription}} {{attack.system.attackGrade}}
+                                [{{localize "fantasycraft.dc"}} {{attack.system.saveDC}}] ({{localize (lookup ../config.extraordinarySaveDescription attack.system.attackDescription)}} {{attack.system.attackGrade}}
                                 {{~#compare attack.system.saveUpgrade "none" operator="!=" ~}}: 
                                     {{localize attack.system.area.shape}} 
                                     {{#compare attack.system.area.shape "gaze" operator="!="}}
@@ -326,6 +346,31 @@
                         </li>
                     {{/each}}
                 </ul>
+
+                {{#if stances}}
+                <span>{{localize "fantasycraft.stances"}}: </span>
+                <ul class="item-list stance-list">
+                    {{#each stances as |stance id|}}
+                    <li class="item ownnedItem" data-item-id="{{_id}}" data-item-name="{{stance.name}}">
+                        <label class="flex5"> {{#if system.inStance}}<b>{{/if}} {{stance.name}}{{#if system.inStance}}</b>{{/if}}</label>
+                        <a class="adoptStance">
+                            {{#if system.inStance}}
+                            <i class="fas fa-chess"></i>
+                            {{else}}
+                            <i class="fa-light fa-chess"></i>
+                            {{/if}}                    
+                        </a>
+                        <a class="editItem">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a class="deleteItem">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </li>
+                    {{/each}}
+                </ul>
+                {{/if}}
+
                 {{localize "fantasycraft.mounts"}}: {{!each vehicles loop}}
                 {{#if mounts}}
                     <ul class="item-list mount-list">

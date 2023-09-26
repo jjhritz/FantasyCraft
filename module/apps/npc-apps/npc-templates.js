@@ -133,7 +133,7 @@ export default class TemplateSelector extends Application   {
             await this.createNaturalAttack("slam", "III")
         });
         html.find('.dire').click( async ev => {
-            this.templateChanges(npc, 2, 1, [1, 1], "construct")
+            this.templateChanges(npc, 2, 1, [1, 1])
             npc.update({"system.abilityScores.strength.value": npc.system.abilityScores.strength.value + 4});
             npc.update({"system.abilityScores.constitution.value": npc.system.abilityScores.constitution.value + 4});
             await this.addFeature(["Compendium.fantasycraft.npcfeatures.XOOkj3VJPjhAuxuv"], "II");
