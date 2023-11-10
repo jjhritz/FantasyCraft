@@ -507,7 +507,18 @@ export default class FCCharacterSheet extends ActorSheetFC {
 			await act.update({[abilityString]: act.system.abilityScores[itemData.ability].value - itemData.value});
 	}
 
+	
 	_sortTable(event)
+	{
+		let pinnedSpellList = this.actor.items.filter(item => item.type == "spell" && item.system.pinned);
+
+		this._sortFunction(event, pinnedSpellList);
+
+		this._sortFunction(event, null, 1+pinnedSpellList.length);
+
+	}
+
+	_sortFunction(event, pinnedList, startPosition = 1)
 	{
 		let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
 		table = event.currentTarget.parentElement.closest(".item-table");
@@ -516,47 +527,85 @@ export default class FCCharacterSheet extends ActorSheetFC {
 		// Set the sorting direction to ascending:
 		dir = "asc";
 		/* Make a loop that will continue until no switching has been done: */
-		while (switching) {
+		while (switching) 
+		{
 			switching = false;
 			rows = table.rows;
 			/* Loop through all table rows (except the first, which contains table headers): */
-			for (i = 1; i < (rows.length - 1); i++) {
-			// Start by saying there should be no switching:
-			shouldSwitch = false;
-			/* Get the two elements you want to compare, one from current row and one from the next: */
-			x = rows[i].getElementsByTagName("td")[col];
-			y = rows[i + 1].getElementsByTagName("td")[col];
-			/* Check if the two rows should switch place, based on the direction, asc or desc: */
-			if (dir == "asc") {
-				if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-				// If so, mark as a switch and break the loop:
-				shouldSwitch = true;
-				break;
+			for (i = startPosition; i < (rows.length - 1); i++) 
+			{
+				// Start by saying there should be no switching:
+				shouldSwitch = false;
+				/* Get the two elements you want to compare, one from current row and one from the next: */
+				x = (col == 1 ) ? rows[i].getElementsByTagName("td")[col].children[0].children[0] : rows[i].getElementsByTagName("td")[col];
+				let xPin = (pinnedList == null) ? true : pinnedList.filter(item => item.name == rows[i].getElementsByTagName("td")[1].children[0].children[0].innerHTML)[0]?.system.pinned;
+				y = (col == 1 ) ? rows[i+1].getElementsByTagName("td")[col].children[0].children[0] : rows[i+1].getElementsByTagName("td")[col];
+				let yPin = (pinnedList == null) ? true : pinnedList.filter(item => item.name == rows[i+1].getElementsByTagName("td")[1].children[0].children[0].innerHTML)[0]?.system.pinned;
+
+				/* Check if the two rows should switch place, based on the direction, asc or desc: */
+				/* Also, if checking pinned items only, switch if y is a pinned item */
+				if (pinnedList != null)
+				{
+					if (!xPin && yPin)
+					{
+						shouldSwitch = true;
+						break;
+					}
+					else if (xPin && yPin && dir == "asc" && x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase())
+					{
+						shouldSwitch = true;
+						break;
+					}
+					else if (xPin && yPin && dir == "desc" && x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase())
+					{
+						shouldSwitch = true;
+						break;
+					}
 				}
-			} else if (dir == "desc") {
-				if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-				// If so, mark as a switch and break the loop:
-				shouldSwitch = true;
-				break;
+				else
+				{
+					if (dir == "asc") 
+					{
+						if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) 
+						{
+							// If so, mark as a switch and break the loop:
+							shouldSwitch = true;
+							break;
+						}
+					} else if (dir == "desc") 
+					{
+						if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) 
+						{
+							// If so, mark as a switch and break the loop:
+							shouldSwitch = true;
+							break;
+						}
+					}
 				}
 			}
-			}
-			if (shouldSwitch) {
-			/* If a switch has been marked, make the switch and mark that a switch has been done: */
-			rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-			switching = true;
-			// Each time a switch is done, increase this count by 1:
-			switchcount ++;
-			} else {
-			/* If no switching has been done AND the direction is "asc", set the direction to "desc" and run the while loop again. */
-			if (switchcount == 0 && dir == "asc") {
-				dir = "desc";
+			if (shouldSwitch) 
+			{
+				/* If a switch has been marked, make the switch and mark that a switch has been done: */
+				rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
 				switching = true;
+				// Each time a switch is done, increase this count by 1:
+				switchcount ++;
+			} 
+			else 
+			{
+				/* If no switching has been done AND the direction is "asc", set the direction to "desc" and run the while loop again. */
+				if (switchcount == 0 && dir == "asc") 
+				{
+					dir = "desc";
+					switching = true;
+				}
 			}
-			}
-		}
+		}	
 	}
 
+	//If x > y and x is NOT pinned or x and y are both pinned, switch
+	//
+	
 	_filterItems(items, filters, filterType)
 	{
 		if (filterType == "school")

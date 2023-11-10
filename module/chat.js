@@ -375,11 +375,11 @@ async function onDamage(event)
         if (item.type == "weapon")
         {
             let weaponProperties = item.system.weaponProperties;
-
+            let weaponCategory = item.system.weaponCategory;
             if (weaponProperties.finesse && token.system.abilityScores.dexterity.mod > token.system.abilityScores.strength.mod)
                 abilityMod = "dexterity"
 
-            if (item.system.attackType == "ranged")
+            if (item.system.attackType == "ranged" && weaponCategory != "thrown")
                 abilityMod = ""
 
             damageDice = (!!ammo) ? ammo.system.damage : item.system.damage;
@@ -388,7 +388,13 @@ async function onDamage(event)
             damageModifiers = [];
 
             //ability mod, tricks, class bonus, all out attack/bullseye, magic, moral bonuses, misc, sneak attack dice
-            if (abilityMod != "") damageModifiers.push(token.system.abilityScores[abilityMod].mod)
+            if (abilityMod != "") 
+            {
+                if (weaponCategory == "thrown" && token.items.find(item => item.name == game.i18n.localize("fantasycraft.hurledBasics")))
+                    damageModifiers.push(token.system.abilityScores[abilityMod].mod * 2)
+                else
+                    damageModifiers.push(token.system.abilityScores[abilityMod].mod)
+            }
             if (superior != 0) damageModifiers.push(superior)
             if (token.system?.powerAttack && (item.system.attackType == "melee" || item.system.attackType == "unarmed")) damageModifiers.push(actor.system.powerAttack * 2);
             if (token.system?.powerAttack && (item.system.attackType == "ranged")) damageModifiers.push(actor.system.powerAttack);
@@ -450,9 +456,10 @@ async function onDamage(event)
     }
 
     //Add any magic item damage bonus
-    let magicItems = Utils.getMagicItems(actor);
+    let magicItems = Utils.getMagicItems(token);
     let magicBonus = 0;
 
+    console.log("test")
     if (magicItems.length > 0)
     {
         for (let mi of magicItems)

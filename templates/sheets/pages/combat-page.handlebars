@@ -1,4 +1,209 @@
 <div class="inventory-filters flexcol">
+    
+    <ul class="flexrow attributes">
+        <li>
+            <h4 class="category-label"> {{localize "fantasycraft.weapons"}} </h4>
+            <section class="weapons flexcol item-list">
+                <div class="item ownedItem flexrow" data-item-name="unarmedStrike">
+                    <div class="flex2">
+                        <a class="roll-unarmed">
+                            <i class="fas fa-dice-d20"></i>
+                            <span><b>{{localize "fantasycraft.unarmedStrike"}}</b> </span>
+                        </a>
+                    </div>
+                    <div class="flex6">
+                        <span>{{actor.system.unarmedDamage}} 
+                        {{#if actor.system.proficency.unarmed.proficient}}
+                        {{localize "fantasycraft.lethal"}}
+                        {{else}}
+                        {{localize "fantasycraft.subdual"}}
+                        {{/if}}
+                    </div>
+                    <div class="flex4">-</div>
+                </div>
+                {{#each attacks as |attack id|}}
+                    {{> "systems/fantasycraft/templates/partials/attack-part.hbs" attack id=_id name=name inSheet=true}}
+                {{/each}}
+                {{#each weapons as |weapon id|}}
+                {{#compare weapon.system.weaponCategory "arrowsAndBolts" operator="!="}}
+                    {{> "systems/fantasycraft/templates/partials/weapon-part.hbs" weapon id=_id name=name inSheet=true}}
+                {{/compare}}
+                {{/each}}
+            </section>
+        </li>
+    </ul>
+    
+    <ul class="flexrow attributes">
+        <li class="combatActions attribute flex4">
+            <h3 class="category-label">
+                {{localize "fantasycraft.combatActions"}}
+            </h3>
+            <div class="flexrow category-body" style="min-height: 158px">
+                <div class="flexcol">
+                    <div class="flexrow">
+                        <a class="flex3 roll-combat-action">{{localize "fantasycraft.anticipate"}}</a>
+                        <input class="smallBox flex1" type="number" name="system.combatActions.anticipate" value="{{actor.system.combatActions.anticipate}}">
+                        <label class="flex3">{{localize "fantasycraft.full"}} </label>
+                    </div>
+                    {{#if hasCutting}}
+                    <div class="flexrow">
+                        <a class="flex4 roll-save" data-roll-info='reflex'>{{localize "fantasycraft.arrowCutting"}}</a>
+                        <label class="flex3">{{localize "fantasycraft.initiative"}} </label>
+                    </div>
+                    {{/if}}
+                    <div class="flexrow">
+                        <a class="flex3 roll-combat-action">{{localize "fantasycraft.bullRush"}}</a>
+                        <input class="smallBox flex2" type="number" name="system.combatActions.bullRush" value="{{actor.system.combatActions.bullRush}}">
+                        <label class="flex3">{{localize "fantasycraft.full"}} </label>
+                    </div>
+                    <div class="flexrow">
+                        <a class="flex3 roll-combat-action">{{localize "fantasycraft.disarm"}}</a>
+                        <input class="smallBox flex1" type="number" name="system.combatActions.disarm" value="{{actor.system.combatActions.disarm}}">
+                        <label class="flex3">{{localize "fantasycraft.halfAction"}} </label>
+                    </div>
+                    <div class="flexrow">
+                        <a class="flex3 roll-combat-action">{{localize "fantasycraft.distract"}}</a>
+                        <input class="smallBox flex1" type="number" name="system.combatActions.distract" value="{{actor.system.combatActions.distract}}">
+                        <label class="flex3">{{localize "fantasycraft.halfAction"}} </label>
+                    </div>
+                    <div class="flexrow">
+                        <a class="flex3 roll-combat-action">{{localize "fantasycraft.feint"}}</a>
+                        <input class="smallBox flex1" type="number" name="system.combatActions.feint" value="{{actor.system.combatActions.feint}}">
+                        <label class="flex3">{{localize "fantasycraft.halfAction"}} </label>
+                    </div>
+                    <div class="flexrow">
+                        <a class="flex3 roll-combat-action">{{localize "fantasycraft.grapple"}}</a>
+                        <input class="smallBox flex1" type="number" name="system.combatActions.grapple" value="{{actor.system.combatActions.grapple}}">
+                        <label class="flex3">{{localize "fantasycraft.full"}} </label>
+                    </div>
+                </div>
+                <div class="flexcol">
+                    {{#if hasParry}}
+                    <div class="flexrow">
+                        <a class="flex4 roll-save" data-roll-info='reflex'>{{localize "fantasycraft.parry"}}</a>
+                        <label class="flex3">{{localize "fantasycraft.initiative"}} </label>
+                    </div>
+                    {{/if}}
+                    <div class="flexrow">
+                        <a class="flex3 roll-combat-action">{{localize "fantasycraft.pummle"}}</a>
+                        <input class="smallBox flex1" type="number" name="system.combatActions.pummle" value="{{actor.system.combatActions.pummle}}">
+                        <label class="flex3">{{localize "fantasycraft.full"}} </label>
+                    </div>
+                    {{#if hasBlock}}
+                    <div class="flexrow">
+                        <a class="flex4 roll-save" data-roll-info='fortitude'>{{localize "fantasycraft.shieldBlock"}}</a>
+                        <label class="flex3">{{localize "fantasycraft.initiative"}} </label>
+                    </div>
+                    {{/if}}
+                    <div class="flexrow">
+                        <a class="flex3 roll-combat-action">{{localize "fantasycraft.taunt"}}</a>
+                        <input class="smallBox flex1" type="number" name="system.combatActions.taunt" value="{{actor.system.combatActions.taunt}}">
+                        <label class="flex3">{{localize "fantasycraft.halfAction"}} </label>
+                    </div>
+                    <div class="flexrow">
+                        <a class="flex3 roll-combat-action">{{localize "fantasycraft.trip"}}</a>
+                        <input class="smallBox flex1" type="number" name="system.combatActions.trip" value="{{actor.system.combatActions.trip}}">
+                        <label class="flex3">{{localize "fantasycraft.halfAction"}} </label>
+                    </div>
+                    <div class="flexrow">
+                        <a class="flex3 roll-combat-action">{{localize "fantasycraft.threaten"}}</a>
+                        <input class="smallBox flex1" type="number" name="system.combatActions.threaten" value="{{actor.system.combatActions.threaten}}">
+                        <label class="flex3">{{localize "fantasycraft.halfAction"}} </label>
+                    </div>
+                    <div class="flexrow">
+                        <a class="flex3 roll-combat-action">{{localize "fantasycraft.tire"}}</a>
+                        <input class="smallBox flex1" type="number" name="system.combatActions.tire" value="{{actor.system.combatActions.tire}}">
+                        <label class="flex3">{{localize "fantasycraft.halfAction"}} </label>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="attribute flex2">
+            <h3 class="category-label">
+                {{localize "fantasycraft.stances"}}
+            </h3>
+            <div class="category-body" style="min-height: 110px;">
+                {{#each stances as |stance id|}}
+                <div class="item ownnedItem flexrow" data-item-id="{{_id}}" data-item-name="{{stance.name}}">
+                    <label class="flex5">{{stance.name}}</label>
+                    <a class="adoptStance">
+                        {{#if system.inStance}}
+                        <i class="fas fa-chess"></i>
+                        {{else}}
+                        <i class="fa-light fa-chess"></i>
+                        {{/if}}                    
+                    </a>
+                    <a class="editItem">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a class="deleteItem">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </div>
+                {{/each}}
+            </div>
+            <h3 class="category-label">
+                {{localize "fantasycraft.sneakAttack"}}
+            </h3>
+            <div class="category-body" style="min-height: 30px;">
+                <label>{{localize "fantasycraft.totalSneakDice"}}</label>
+                <input class="smallBox" type="number" name="system.sneakAttack" value="{{actor.system.sneakAttack}}" placeholder="0">
+            </div>
+        </li>
+
+        <li class="attribute flex2">
+        <h3 class="category-label">
+            {{localize "fantasycraft.tricks"}}
+        </h3>
+        <div class="category-body" style="min-height: 158px;">
+            {{#each tricks as |trick id|}}
+            <div class="item ownnedItem flexrow" data-item-id="{{_id}}" data-item-name="{{armour.name}}">
+                <label class="flex4">{{trick.name}}</label>
+                <span>
+                    {{#compare trick.system.uses.timeFrame "unlimited" operator="=="}}-{{/compare}}
+                    {{#compare trick.system.uses.timeFrame "unlimited" operator="!="}}{{trick.system.uses.usesRemaining}}/{{trick.system.uses.maxUses}}{{/compare}}
+                </span>
+                <div>
+                    <a class="editItem">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a class="deleteItem">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+        </li>
+    </ul>
+    <ul class="flexrow attributes">
+        <li>
+            <h4 class="category-label"> {{localize "fantasycraft.armour"}} </h4>
+            <section class="armour-list flexcol">
+                {{#each armour as |armour id|}}
+                <div class="item ownedItem item-card flexrow" data-item-id="{{_id}}" data-item-name="{{armour.name}}">
+                    <span class="flex6">{{armour.name}}, {{localize "fantasycraft.dr"}}: {{armour.system.damageReduction}}, {{localize "fantasycraft.acp"}}: {{armour.system.armourCheckPenalty}} {{localize "fantasycraft.dp"}}: {{armour.system.defensePenalty}}</span>
+                    <div class="flex1">
+                        <a class="equipArmour">
+                            {{#if system.equipped}}
+                            <i class="fa fa-shield"></i>
+                            {{else}}
+                            <i class="fa-light fa-shield"></i>
+                            {{/if}}
+                        </a>
+                        <a class="editItem">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a class="deleteItem">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+                </div>
+                {{/each}}
+            </section>
+        </li>
+    </ul>
+
     <ul class="flexrow attributes">
         {{! Initiative field}}
         <li class="init flex4 attribute">
@@ -113,7 +318,7 @@
             <h3 class="category-label">
                 {{localize "fantasycraft.defense"}}
             </h3>
-            <div class="category-body" style="min-height: 158px;">
+            <div class="category-body"  style="border-bottom: 1px groove lightgray; min-height: 161px;">
                 {{!-- total = class + dexterity + (Clockwork) + misc --}}
                 <ul class="flexrow" style="margin: 0%; padding: 0px"> 
                     <li class="centreItems flex3">
@@ -180,7 +385,7 @@
             <h3 class="category-label">
                 {{localize "fantasycraft.savingThrows"}}
             </h3>
-            <div class="flexcol category-body">   
+            <div class="flexcol category-body" style="border-bottom: 1px groove lightgray">
                 {{! Saving throws}}
                 {{#each actor.system.saves as |save id|}}
                 <ul class="flexrow remove-space"> 
@@ -218,7 +423,7 @@
             <h3 class="category-label">
                 {{localize "fantasycraft.attack"}}
             </h3>
-            <div class="flexcol category-body">
+            <div class="flexcol category-body" style="border-bottom: 1px groove lightgray">
                 {{#each actor.system.attackTypes as |name id|}}
                 <ul class="flexrow remove-space"> 
                     <li class="flex5">{{localize name.label}}:</li>
@@ -252,197 +457,5 @@
             </div>
         </li>
     </ul>
-    <ul class="flexrow attributes">
-        <li class="combatActions attribute flex4">
-            <h3 class="category-label">
-                {{localize "fantasycraft.combatActions"}}
-            </h3>
-            <div class="flexrow category-body">
-                <div class="flexcol">
-                    <div class="flexrow">
-                        <a class="flex2 roll-combat-action">{{localize "fantasycraft.anticipate"}}</a>
-                        <input class="smallBox flex1" type="number" name="system.combatActions.anticipate" value="{{actor.system.combatActions.anticipate}}">
-                        <label class="flex4">{{localize "fantasycraft.full"}} </label>
-                    </div>
-                    {{#if hasCutting}}
-                    <div class="flexrow">
-                        <a class="flex4 roll-save" data-roll-info='reflex'>{{localize "fantasycraft.arrowCutting"}}</a>
-                        <label class="flex4">{{localize "fantasycraft.initiative"}} </label>
-                    </div>
-                    {{/if}}
-                    <div class="flexrow">
-                        <a class="flex2 roll-combat-action">{{localize "fantasycraft.bullRush"}}</a>
-                        <input class="smallBox flex2" type="number" name="system.combatActions.bullRush" value="{{actor.system.combatActions.bullRush}}">
-                        <label class="flex4">{{localize "fantasycraft.full"}} </label>
-                    </div>
-                    <div class="flexrow">
-                        <a class="flex2 roll-combat-action">{{localize "fantasycraft.disarm"}}</a>
-                        <input class="smallBox flex1" type="number" name="system.combatActions.disarm" value="{{actor.system.combatActions.disarm}}">
-                        <label class="flex4">{{localize "fantasycraft.halfAction"}} </label>
-                    </div>
-                    <div class="flexrow">
-                        <a class="flex2 roll-combat-action">{{localize "fantasycraft.distract"}}</a>
-                        <input class="smallBox flex1" type="number" name="system.combatActions.distract" value="{{actor.system.combatActions.distract}}">
-                        <label class="flex4">{{localize "fantasycraft.halfAction"}} </label>
-                    </div>
-                    <div class="flexrow">
-                        <a class="flex2 roll-combat-action">{{localize "fantasycraft.feint"}}</a>
-                        <input class="smallBox flex1" type="number" name="system.combatActions.feint" value="{{actor.system.combatActions.feint}}">
-                        <label class="flex4">{{localize "fantasycraft.halfAction"}} </label>
-                    </div>
-                    <div class="flexrow">
-                        <a class="flex2 roll-combat-action">{{localize "fantasycraft.grapple"}}</a>
-                        <input class="smallBox flex1" type="number" name="system.combatActions.grapple" value="{{actor.system.combatActions.grapple}}">
-                        <label class="flex4">{{localize "fantasycraft.full"}} </label>
-                    </div>
-                </div>
-                <div class="flexcol">
-                    {{#if hasParry}}
-                    <div class="flexrow">
-                        <a class="flex4 roll-save" data-roll-info='reflex'>{{localize "fantasycraft.parry"}}</a>
-                        <label class="flex4">{{localize "fantasycraft.initiative"}} </label>
-                    </div>
-                    {{/if}}
-                    <div class="flexrow">
-                        <a class="flex2 roll-combat-action">{{localize "fantasycraft.pummle"}}</a>
-                        <input class="smallBox flex1" type="number" name="system.combatActions.pummle" value="{{actor.system.combatActions.pummle}}">
-                        <label class="flex4">{{localize "fantasycraft.full"}} </label>
-                    </div>
-                    {{#if hasBlock}}
-                    <div class="flexrow">
-                        <a class="flex4 roll-save" data-roll-info='fortitude'>{{localize "fantasycraft.shieldBlock"}}</a>
-                        <label class="flex4">{{localize "fantasycraft.initiative"}} </label>
-                    </div>
-                    {{/if}}
-                    <div class="flexrow">
-                        <a class="flex2 roll-combat-action">{{localize "fantasycraft.taunt"}}</a>
-                        <input class="smallBox flex1" type="number" name="system.combatActions.taunt" value="{{actor.system.combatActions.taunt}}">
-                        <label class="flex4">{{localize "fantasycraft.halfAction"}} </label>
-                    </div>
-                    <div class="flexrow">
-                        <a class="flex2 roll-combat-action">{{localize "fantasycraft.trip"}}</a>
-                        <input class="smallBox flex1" type="number" name="system.combatActions.trip" value="{{actor.system.combatActions.trip}}">
-                        <label class="flex4">{{localize "fantasycraft.halfAction"}} </label>
-                    </div>
-                    <div class="flexrow">
-                        <a class="flex2 roll-combat-action">{{localize "fantasycraft.threaten"}}</a>
-                        <input class="smallBox flex1" type="number" name="system.combatActions.threaten" value="{{actor.system.combatActions.threaten}}">
-                        <label class="flex4">{{localize "fantasycraft.halfAction"}} </label>
-                    </div>
-                    <div class="flexrow">
-                        <a class="flex2 roll-combat-action">{{localize "fantasycraft.tire"}}</a>
-                        <input class="smallBox flex1" type="number" name="system.combatActions.tire" value="{{actor.system.combatActions.tire}}">
-                        <label class="flex4">{{localize "fantasycraft.halfAction"}} </label>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li class="attribute flex2">
-            <h3 class="category-label">
-                {{localize "fantasycraft.stances"}}
-            </h3>
-            <div class="category-body" style="min-height: 110px;">
-                {{#each stances as |stance id|}}
-                <div class="item ownnedItem flexrow" data-item-id="{{_id}}" data-item-name="{{stance.name}}">
-                    <label class="flex5">{{stance.name}}</label>
-                    <a class="adoptStance">
-                        {{#if system.inStance}}
-                        <i class="fas fa-chess"></i>
-                        {{else}}
-                        <i class="fa-light fa-chess"></i>
-                        {{/if}}                    
-                    </a>
-                    <a class="editItem">
-                        <i class="fas fa-edit"></i>
-                    </a>
-                    <a class="deleteItem">
-                        <i class="fas fa-trash"></i>
-                    </a>
-                </div>
-                {{/each}}
-            </div>
-            <h3 class="category-label">
-                {{localize "fantasycraft.sneakAttack"}}
-            </h3>
-            <div class="category-body" style="min-height: 30px;">
-                <label>{{localize "fantasycraft.totalSneakDice"}}</label>
-                <input class="smallBox" type="number" name="system.sneakAttack" value="{{actor.system.sneakAttack}}" placeholder="0">
-            </div>
-        </li>
 
-        <li class="attribute flex2">
-        <h3 class="category-label">
-            {{localize "fantasycraft.tricks"}}
-        </h3>
-        <div class="category-body" style="min-height: 158px;">
-            {{#each tricks as |trick id|}}
-            <div class="item ownnedItem flexrow" data-item-id="{{_id}}" data-item-name="{{armour.name}}">
-                <label class="flex4">{{trick.name}}</label>
-                <span>
-                    {{#compare trick.system.uses.timeFrame "unlimited" operator="=="}}-{{/compare}}
-                    {{#compare trick.system.uses.timeFrame "unlimited" operator="!="}}{{trick.system.uses.usesRemaining}}/{{trick.system.uses.maxUses}}{{/compare}}
-                </span>
-                <div>
-                    <a class="editItem">
-                        <i class="fas fa-edit"></i>
-                    </a>
-                    <a class="deleteItem">
-                        <i class="fas fa-trash"></i>
-                    </a>
-                </div>
-            </div>
-            {{/each}}
-        </div>
-        </li>
-    </ul>
-
-    <ul class="flexrow attributes">
-        <li>
-            <h4 class="category-label"> {{localize "fantasycraft.weapons"}} </h4>
-            <section class="weapons flexcol item-list">
-                <div class="item ownedItem flexrow" data-item-name="unarmedStrike">
-                    <div class="flex6">
-                        <a class="roll-unarmed">
-                            <i class="fas fa-dice-d20"></i>
-                            <span>{{localize "fantasycraft.unarmedStrike"}} </span>
-                        </a>
-                        <span>{{actor.system.unarmedDamage}}</span>
-                    </div>
-                </div>
-                {{#each attacks as |attack id|}}
-                    {{> "systems/fantasycraft/templates/partials/attack-part.hbs" attack id=_id name=name inSheet=true}}
-                {{/each}}
-                {{#each weapons as |weapon id|}}
-                {{#compare weapon.system.weaponCategory "arrowsAndBolts" operator="!="}}
-                    {{> "systems/fantasycraft/templates/partials/weapon-part.hbs" weapon id=_id name=name inSheet=true}}
-                {{/compare}}
-                {{/each}}
-            </section>
-        </li>
-        <li>
-            <h4 class="category-label"> {{localize "fantasycraft.armour"}} </h4>
-            <section class="armour-list flexcol">
-                {{#each armour as |armour id|}}
-                <div class="item ownedItem item-card flexrow" data-item-id="{{_id}}" data-item-name="{{armour.name}}">
-                    <span class="flex6">{{armour.name}}, {{localize "fantasycraft.dr"}}: {{armour.system.damageReduction}}, {{localize "fantasycraft.acp"}}: {{armour.system.armourCheckPenalty}} {{localize "fantasycraft.dp"}}: {{armour.system.defensePenalty}}</span>
-                    <div class="flex1">
-                        <a class="equipArmour">
-                            {{#if system.equipped}}
-                            <i class="fa fa-shield"></i>
-                            {{else}}
-                            <i class="fa-light fa-shield"></i>
-                            {{/if}}
-                        </a>
-                        <a class="editItem">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <a class="deleteItem">
-                            <i class="fas fa-trash"></i>
-                        </a>
-                    </div>
-                </div>
-                {{/each}}
-            </section>
-        </li>
-    </ul>
 </div>

@@ -105,7 +105,7 @@
                     <i class="fas fa-plus"></i> {{localize "fantasycraft.addItem"}}
                 </a>
             </h3>
-            <div class="category-body">
+            <div class="category-body" style="padding: 0px">
                 <section class="two-column">
                 {{#each ownedItems as |item id|}}
                     {{> "systems/fantasycraft/templates/partials/item-part.hbs" item id=_id inSheet=true}}
@@ -120,6 +120,7 @@
             </div>
             <div style="border-left: 1px groove lightgray">
                 {{localize "fantasycraft.Dialog.totalWeight"}}: {{actor.system.totalWeight}} {{localize "fantasycraft.lbs"}}
+                <b>{{localize "fantasycraft.carryingCapacity"}}</b> <i>{{localize "fantasycraft.light"}}:</i> {{actor.system.carryingCapacity.light}} <i>{{localize "fantasycraft.heavy"}}: </i>{{actor.system.carryingCapacity.heavy}}  <i>{{localize "fantasycraft.overloaded"}}: </i>{{actor.system.carryingCapacity.overloaded}}+
             </div>
         </li>
     </ul>
@@ -133,7 +134,16 @@
                     {{item.name}} {{localize "fantasycraft.level"}}: {{item.system.itemLevel}}
                     {{localize "fantasycraft.reputation"}} {{item.system.totalReputation}}
                     <br> 
-                    {{localize "fantasycraft.essences"}}: {{#each essences as |essence id|}} {{~#compare essence.ability "none" operator="!="}}{{~#unless @first~}}, {{/unless}}{{localize (lookup ../../config.magicItemEssences essence.ability)~}} {{#compare essence.target "" operator="!="~}}({{~essence.target~}}){{/compare~}}{{/compare~}}{{/each}}
+                    {{localize "fantasycraft.essences"}}: 
+                    {{#each essences as |essence id|}} 
+                        {{~#compare essence.ability "none" operator="!="}}
+                            {{~#unless @first~}}, {{/unless}}
+                            {{localize (lookup ../../config.magicItemEssences essence.ability)~}} 
+                            {{#compare essence.target "" operator="!="}}
+                                ({{~essence.target~}})
+                            {{/compare~}}
+                        {{/compare~}}
+                    {{/each}}
                     <br>
                     {{localize "fantasycraft.charms"}}: {{#each charms as |charm id|}} {{~#compare charm.ability "none" operator="!="}}{{~#unless @first~}}, {{/unless}}{{localize (lookup ../../config.magicItemCharms charm.ability)~}}{{#compare charm.target "none" operator="!="~}}({{charm.target}}){{/compare~}}{{/compare~}} {{/each}}
                     <br>
@@ -146,7 +156,7 @@
             </h3>
             <div class="category-body flexcol">
                 {{#each mounts as |mount id|}}
-                <div class="mount" data-mount-id="{{mount._id}}">
+                <div class="actor" data-actor-id="{{mount._id}}">
                     <span>{{mount.name}} 
                         ({{#if mount.system.movement.ground.value}}{{localize "fantasycraft.spd"}} {{mount.system.movement.ground.value}} {{localize "fantasycraft.ft"}} {{localize "fantasycraft.ground"}} 
                         ({{localize "fantasycraft.run"}} {{mount.system.movement.ground.run}} {{localize "fantasycraft.ft"}}){{/if}}
@@ -176,7 +186,7 @@
             </h3>
             <div class="category-body flexcol">
                 {{#each actor.system.contacts as |contact id|}}
-                <div class="contact" data-contact-id="{{contact.id}}">
+                <div class="actor" data-actor-id="{{contact.id}}">
                     {{contact.name}}
                     <a class="openActor">
                         <i class="fas fa-edit"></i>
@@ -195,31 +205,31 @@
             <div class="category-body flexcol">
                 <div>
                     <label>{{localize "fantasycraft.holdingName"}}</label>
-                    <input class="wideField underline" type="text" name="system.holding1.name" value="{{system.holding1.name}}">
+                    <input class="wideField underline" type="text" name="system.holding1.name" value="{{actor.system.holding1.name}}">
                     <label>{{localize "fantasycraft.scale"}}</label>
-                    <input class="narrowField underline" type="number" name="system.holding1.scale" value="{{system.holding1.scale}}">
+                    <input class="narrowField underline" type="number" name="system.holding1.scale" value="{{actor.system.holding1.scale}}">
                     <label>{{localize "fantasycraft.guests"}}</label>
-                    <input class="mediumField underline" type="number" name="system.holding1.guests" value="{{system.holding1.guests}}">
+                    <input class="mediumField underline" type="number" name="system.holding1.guests" value="{{actor.system.holding1.guests}}">
                     <label>{{localize "fantasycraft.max"}}</label>
-                    <input class="mediumField underline" type="number" name="system.holding1.max" value="{{system.holding1.max}}">
+                    <input class="mediumField underline" type="number" name="system.holding1.max" value="{{actor.system.holding1.max}}">
                     <div class="flexrow"><label flex="flex1">{{localize "fantasycraft.upgrades"}}</label>
-                    <input class="flex6 underline" type="text" name="system.holding1.upgrades" value="{{system.holding1.upgrades}}"></div>
+                    <input class="flex6 underline" type="text" name="system.holding1.upgrades" value="{{actor.system.holding1.upgrades}}"></div>
                     <label>{{localize "fantasycraft.repCost"}}</label>
-                    <input class="mediumField underline" type="number" name="system.holding1.repCost" value="{{system.holding1.repCost}}">
+                    <input class="mediumField underline" type="number" name="system.holding1.repCost" value="{{actor.system.holding1.repCost}}">
                 </div>
                 <div>
                     <label>{{localize "fantasycraft.holdingName"}}</label>
-                    <input class="wideField underline" type="text" name="system.holding2.name" value="{{system.holding2.name}}">
+                    <input class="wideField underline" type="text" name="system.holding2.name" value="{{actor.system.holding2.name}}">
                     <label>{{localize "fantasycraft.scale"}}</label>
-                    <input class="narrowField underline" type="number" name="system.holding2.scale" value="{{system.holding2.scale}}">
+                    <input class="narrowField underline" type="number" name="system.holding2.scale" value="{{actor.system.holding2.scale}}">
                     <label>{{localize "fantasycraft.guests"}}</label>
-                    <input class="mediumField underline" type="number" name="system.holding2.guests" value="{{system.holding2.guests}}">
+                    <input class="mediumField underline" type="number" name="system.holding2.guests" value="{{actor.system.holding2.guests}}">
                     <label>{{localize "fantasycraft.max"}}</label>
-                    <input class="mediumField underline" type="number" name="system.holding2.max" value="{{system.holding2.max}}">
+                    <input class="mediumField underline" type="number" name="system.holding2.max" value="{{actor.system.holding2.max}}">
                     <div class="flexrow"><label flex="flex1">{{localize "fantasycraft.upgrades"}}</label>
-                    <input class="flex6 underline" type="text" name="system.holding2.upgrades" value="{{system.holding2.upgrades}}"></div>
+                    <input class="flex6 underline" type="text" name="system.holding2.upgrades" value="{{actor.system.holding2.upgrades}}"></div>
                     <label>{{localize "fantasycraft.repCost"}}</label>
-                    <input class="mediumField underline" type="number" name="system.holding2.repCost" value="{{system.holding2.repCost}}">
+                    <input class="mediumField underline" type="number" name="system.holding2.repCost" value="{{actor.system.holding2.repCost}}">
                 </div>
             </div>
         </li>

@@ -399,6 +399,12 @@
 			"actionDiceSize": 4,
 			"startingActionDice": 3,
 			"unarmedDamage": "1d3",
+			"carryingCapacity": 
+			{
+				"light": 50,
+				"heavy": 150,
+				"overloaded": 151 
+			},
 			"proficency":
 			{
 				"unarmed": 
@@ -1356,7 +1362,8 @@
 				"ap": 0,
 				"secondaryDamage": "none",
 				"secondaryDamagetype": "stress"
-			}
+			},
+			"pinned": false
 		},
 		"specialty":
 		{

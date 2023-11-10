@@ -142,6 +142,7 @@ export default class ActorSheetFC extends ActorSheet
       html.find('.item-create').click(this._createItem.bind(this));
       html.find('.roll-treasure').click(this._rollTreasure.bind(this));
       html.find('.open-gm-screen').click(this.openGMScreen.bind(this));
+      html.find('.pin-spell').click(this.pinSpell.bind(this));
       
       
       const filterLists = html.find(".filter-list");
@@ -440,15 +441,15 @@ export default class ActorSheetFC extends ActorSheet
     async _onEditMount(event)
     {
       event.preventDefault();
-      const li = event.currentTarget.closest(".mount");
-      const actor = game.actors.get(li.dataset.mountId);
+      const li = event.currentTarget.closest(".actor");
+      const actor = game.actors.get(li.dataset.actorId);
       return actor.sheet.render(true);  
     }
 
     async _onRemoveMount(event)
     {
       event.preventDefault();
-      const li = event.currentTarget.closest(".mount");
+      const li = event.currentTarget.closest(".actor");
 
       this.actor.removeItemFromArray("mount", li)
     }
@@ -456,7 +457,7 @@ export default class ActorSheetFC extends ActorSheet
     async _onRemoveContact(event)
     {
       event.preventDefault();
-      const li = event.currentTarget.closest(".contact");
+      const li = event.currentTarget.closest(".actor");
 
       this.actor.removeItemFromArray("contacts", li)
     }
@@ -1093,5 +1094,20 @@ export default class ActorSheetFC extends ActorSheet
         '../../../module/apps/gm-screen.js'
         )
       ).default();
+    }
+
+    async pinSpell(event)
+    {
+      const li = event.currentTarget.closest(".item");
+      const item = this.actor.items.get(li.dataset.itemId);
+
+      if (item.system.pinned)
+      {
+        item.update({'system.pinned': false});
+        this.render(true)
+        return;
+      }
+
+      item.update({'system.pinned': true});
     }
 }

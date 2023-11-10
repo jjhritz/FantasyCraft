@@ -33,7 +33,7 @@ export default class ActorFC extends Actor {
     {
       const actorData = this;
       const data = actorData.system;
-      
+            
       // Ability modifiers
       for (let [id, abl] of Object.entries(data.abilityScores)) 
         abl.mod = Math.floor(((abl.value + abl.adjustment) - 10) / 2);
@@ -54,6 +54,8 @@ export default class ActorFC extends Actor {
         this._prepareskills(actorData);
         this._prepareLifeStyle();
         this._renownInformation();
+        this._carryingCapacity(data);
+
         this._equipmentWeight();
         this._calculateMovementSpeed();
 
@@ -454,7 +456,7 @@ export default class ActorFC extends Actor {
             penalty = this._getArmourPenalty(item);
           //get guard bonus
           if(item.type == "weapon")
-            this.system.defense.guard = this._getGuardBonus(item, guard);
+            guard = this._getGuardBonus(item, guard);
         }
 
         //if get any size modifier
@@ -471,6 +473,7 @@ export default class ActorFC extends Actor {
         }
 
         actorData.system.defense.size = size;
+        actorData.system.defense.guard = guard;
         magic = this._calculateCharmBonus("defenseBonus");
         
         actorData.system.flatFootedDefense = (def.ability.value > 0) ? 10 + def.class + size - penalty : 10 + def.ability.value + def.class + size - penalty ;
@@ -964,7 +967,7 @@ export default class ActorFC extends Actor {
       this._calculateDefense(actorData, traits, sizeNumber);
 
       actorData.defense.dexPositive = (actorData.abilityScores.dexterity.mod >= 0) ? true : false;
-      actorData.defense.dexNormalized = (actorData.defense.dexNormalized) ? actorData.abilityScores.dexterity.mod : actorData.abilityScores.dexterity.mod * -1;
+      actorData.defense.dexNormalized = (actorData.defense.dexPositive) ? actorData.abilityScores.dexterity.mod : actorData.abilityScores.dexterity.mod * -1;
 
       traits.initiative.total = traits.initiative.value + actorData.abilityScores[initMod].mod;
       traits.attack.meleeTotal = traits.attack.value + actorData.abilityScores.strength.mod;
@@ -1011,6 +1014,30 @@ export default class ActorFC extends Actor {
 
     }
 
+    _carryingCapacity(actorData)
+    {
+      let str = actorData.abilityScores.strength.value;
+      if (CONFIG.fantasycraft.sizeNumber[actorData.size] > 0)
+        str += CONFIG.fantasycraft.sizeNumber[actorData.size] * 5;
+      if (CONFIG.fantasycraft.sizeNumber[actorData.size] < 0)
+        str -= CONFIG.fantasycraft.sizeNumber[actorData.size] * 2;
+
+      if (str < 1) str = 1;
+      
+      if (str <= 45)
+      {
+        actorData.carryingCapacity.light = CONFIG.fantasycraft.carryingCapacity.light[str-1];
+        actorData.carryingCapacity.heavy = CONFIG.fantasycraft.carryingCapacity.heavy[str-1];
+        actorData.carryingCapacity.overloaded = CONFIG.fantasycraft.carryingCapacity.heavy[str-1] + 1;
+      }
+      if (str > 45)
+      {
+        actorData.carryingCapacity.light = "Dost";
+        actorData.carryingCapacity.heavy = "thou";
+        actorData.carryingCapacity.overloaded = "even lift?";
+      }
+    }
+
     _equipmentWeight()
     {
       let totalWeight = 0
@@ -1028,6 +1055,7 @@ export default class ActorFC extends Actor {
 
       totalWeight += Math.floor(this.system.coin.inHand/25);
 
+      totalWeight = Math.round(totalWeight * 100) / 100
       this.system.totalWeight = totalWeight
     }
 
@@ -1805,7 +1833,7 @@ export default class ActorFC extends Actor {
       }
       
       //if the attack is instead a damage extrodanary attack needs to roll damage and output the total as well as damage type and save.
-      if (attackType == "extraDamage" || attackType == "extraSave")
+      if (attackType == "playerBreathWeapon" || attackType == "extraDamage" || attackType == "extraSave")
       {
         if (item.system.area.shape != "")
           abilityMod = "dexterity"

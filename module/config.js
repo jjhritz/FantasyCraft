@@ -68,6 +68,11 @@ fantasycraft.classBAB =
 	Medium: [0, 1, 2, 3, 3, 4, 5, 6, 6, 7, 8, 9, 9, 10, 11, 12, 12, 13, 14, 15],
 	High: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 }
+fantasycraft.carryingCapacity = 
+{
+	light: [5 , 10, 15, 20, 25, 30,  35,  40,  45,  50,  60,  70,  80,  90, 100, 120, 140, 160, 180, 200, 250, 300,  350,  400,  450,  500,  600,  700,  800,  900, 1000, 1200, 1400, 1600, 1800, 2000, 2400, 2800, 3200,  3600,  4000,  4800,  5600,  6400, 7200],
+	heavy: [15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 180, 210, 240, 270, 300, 360, 420, 480, 540, 600, 750, 900, 1050, 1200, 1350, 1500, 1800, 2050, 2400, 2700, 3000, 3600, 4100, 4800, 5400, 6000, 7200, 8200, 9600, 10800, 12000, 14400, 16400, 19200, 21600],
+}
 fantasycraft.classLegend = 
 {
 	Low: [0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5],
@@ -542,7 +547,8 @@ fantasycraft.npcAttackTypes =
 {
 	naturalAttack: "fantasycraft.naturalAttack",
 	extraDamage: "fantasycraft.extraDamage",
-	extraSave: "fantasycraft.extraSave"
+	extraSave: "fantasycraft.extraSave",
+	playerBreathWeapon: "fantasycraft.playerBreathWeapon"
 }
 fantasycraft.npcAttackAreas = 
 {

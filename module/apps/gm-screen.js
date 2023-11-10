@@ -59,8 +59,7 @@ function gmActionDice(event)
     let numPlayers = element.children[1].value;
     let menace = element.children[3].value;
 
-    //This is the dumbest hack ever. I hate HTML. All of this is to set the startingAD value
-    let gmAD = this._element[0].children[1].children[2].children[5];
+    let gmAD = element.parentElement.children[5];
     gmAD.children[3].value = parseInt(numPlayers) + (parseInt(menace) *2);
     
     gmAD.children[1].value = gmAD.children[3].value;

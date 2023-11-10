@@ -183,6 +183,51 @@
                         {{/if}}
                     {{/compare}}
                 </li>
+            </ul>
+            {{/compare}}
+            {{#compare item.system.attackType "playerBreathWeapon" operator="=="}}
+            <ul>
+                <label>{{localize "fantasycraft.damage"}}</label>
+                <input style="height: 20px; width: 50px; border-radius: 1px; font-weight: 200; font-size: 12px;" type="text" name="system.damage.value" value={{item.system.damage.value}} placeholder="2d6+Con">
+                <label>{{localize "fantasycraft.damageType"}}</label>
+                <select class="dropdown" name="system.damageType">
+                    {{selectOptions config.damageTypes selected=item.system.damageType localize=true}}
+                </select>
+                <li class="flexrow">
+                    <label class="flex1">{{localize "fantasycraft.aligned"}}</label>
+                    <input class="flex2" type="text" name="system.naturalUpgrades.aligned" value="{{item.system.naturalUpgrades.aligned}}"/>
+                    <label class="flex1">{{localize "fantasycraft.diseased"}}</label>
+                    <input class="flex2" type="text" name="system.naturalUpgrades.diseased" value="{{item.system.naturalUpgrades.diseased}}"/>
+                    <label class="flex1">{{localize "fantasycraft.venomous"}}</label>
+                    <input class="flex2" type="text" name="system.naturalUpgrades.venomous" value="{{item.system.naturalUpgrades.venomous}}"/>
+                </li>
+                <li>
+                    <label>{{localize "fantasycraft.armourPiercing"}}</label>
+                    <select class="dropdown" name="system.naturalUpgrades.armourPiercing">
+                        {{selectOptions apDropdown selected=item.system.naturalUpgrades.armourPiercing}}
+                    </select>                    
+                    <label>{{localize "fantasycraft.keen"}}</label>
+                    <select class="dropdown" name="system.naturalUpgrades.keen">
+                        {{selectOptions keenDropdown selected=item.system.naturalUpgrades.keen}}
+                    </select>
+                </li>
+                <li>
+                    <label>{{localize "fantasycraft.bleed"}}</label>
+                    <input type="checkbox" name="system.naturalUpgrades.bleed" data-dtype="Boolean" {{checked item.system.naturalUpgrades.bleed}}>
+                </li>
+                <li>
+                    <label>{{localize "fantasycraft.area"}}</label>
+                    <select class="dropdown" name="system.area.shape">
+                        {{selectOptions config.npcAttackAreas selected=item.system.area.shape localize=true}}
+                    </select>
+                    {{#if (lookup config.areaRangeMultiplier item.system.area.shape)}}
+                    {{lookup config.areaRangeMultiplier item.system.area.shape}}{{localize "fantasycraft.ft"}} {{localize "fantasycraft.range"}} x 
+                    <select class="dropdown" name="system.area.value">
+                        {{selectOptions reachDropdown selected=item.system.area.value}}
+                    </select>
+                    {{/if}}
+                </li>
+            </ul>
             {{/compare}}
         </div>
     </section>

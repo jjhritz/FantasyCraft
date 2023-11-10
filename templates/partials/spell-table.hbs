@@ -1,16 +1,44 @@
 <tr data-spell={{id}}>
-    <td><a class="spellCard">{{name}}</a></td>
+        
+    <td>
+        <div class="item" data-item-id="{{id}}" data-item-name="{{name}}">
+            <a class="pin-spell">
+                {{#if system.pinned}}                
+                <i class="fas fa-thumb-tack"></i>
+                {{else}}
+                <i class="fa-light fa-thumb-tack"></i>
+                {{/if}}
+            </a>
+        </div>
+    </td>
+    <td>
+        <div class="item" data-item-id="{{id}}" data-item-name="{{name}}">
+        <a class="spellCard">{{name}}</a>
+        </div>
+    </td>
     <td class="table-item">{{system.level}}</td>
     <td class="table-item">{{system.castingTime.value}} {{localize system.castingTime.increment}}</td>
     <td class="table-item">{{localize system.distance.description}} {{#if system.distance.rangedAttack}}({{localize "fantasycraft.rangedAttack"}}){{/if}}</td>
     {{! Spell Area }}
     <td class="table-item">
         {{#compare system.area.value "0" operator="!="}}
-            {{system.area.value}} 
-            {{#if system.area.customShape}}{{else}}{{localize "fantasycraft.ft"}}{{/if}} 
-            {{#if system.area.perLevel}}{{localize "fantasycraft.perCastingLevel"}}{{/if}} 
-            {{#if system.area.penetrating}}{{localize "fantasycraft.penetrating"}}{{/if}} 
-            {{#if system.area.customShape}}{{else}}{{localize system.area.shape}}{{/if}}
+            {{#compare system.area.shape "custom" operator="=="}}
+                <span class="tooltip" style="border-radius: 50%;"> ?
+                    <div class="tooltiptext" style="position:relative; width:300px;">
+                        {{system.area.value}} 
+                        {{localize "fantasycraft.ft"}}
+                        {{#if system.area.perLevel}}{{localize "fantasycraft.perCastingLevel"}}{{/if}} 
+                        {{#if system.area.penetrating}}{{localize "fantasycraft.penetrating"}}{{/if}} 
+                    </div>
+                </span>
+            {{/compare}}
+                {{#compare system.area.shape "custom" operator="!="}}
+                {{system.area.value~}} 
+                {{~localize "fantasycraft.ft"}}
+                {{#if system.area.perLevel}}{{~localize "fantasycraft.perCastingLevelAB"}}{{/if}} 
+                {{#if system.area.penetrating}}{{localize "fantasycraft.penetrating"}}{{/if}} 
+                {{localize system.area.shape}}
+            {{/compare}}
         {{/compare}}
         {{#compare system.area.value "0" operator="=="}}
         -
@@ -19,22 +47,22 @@
     {{! Spell Duration }}
     <td class="table-item">
         {{#if system.duration.isNotInstantOrPermanent}}
-            {{system.duration.number}}    {{localize system.duration.increment}} 
+            {{system.duration.number}}    {{localize system.duration.increment~}} 
             {{#if system.duration.perCastingLevel}}
-                {{localize "fantasycraft.perCastingLevel"}}
+                {{~localize "fantasycraft.perCastingLevelAB"}}
             {{/if}}
         {{else}}
             {{system.duration.value}}
         {{/if}}
         {{#if system.duration.durationKeyword}} ({{~/if~}}
         {{~#if system.duration.dismissable~}}
-            {{~localize "fantasycraft.dismissable"~}}
+            {{~localize "fantasycraft.dismissableAB"~}}
         {{~/if~}}
         {{~#if system.duration.enduring~}}
             {{~#if system.duration.dismissable~}}
             , 
             {{/if}}
-            {{~localize "fantasycraft.enduring"~}}
+            {{~localize "fantasycraft.enduringAB"~}}
         {{~/if~}}
         {{~#if system.duration.durationKeyword~}}){{/if}}
     </td>

@@ -1,26 +1,27 @@
 <div class="item ownedItem flexrow" data-item-id="{{id}}" data-item-name="{{name}}">
-    <div class="flex6">
+    <div class="flex2">
         <a class="roll-natural-attack" data-roll-info='{{id}}'>
             <i class="fas fa-dice-d20"></i>
-            <span>{{name}} </span>
+            <span><b>{{name}}</b></span>
         </a>
-            {{#if inSheet}} 
-                {{system.damage.value}} {{localize system.damageType}} {{localize "fantasycraft.threat"}} {{system.threat}} 
-                {{else}} 
-                <br> 
-            {{/if}} 
-        <div>
-            {{localize "fantasycraft.qualities"}}: 
-            {{#each system.naturalUpgrades as |prop id|}}
-                {{#if prop}}
-                {{#compare prop "" operator="!="}}
-                {{#compare prop "0" operator="!="}}
-                    {{id}}{{#if (isBool prop)}}{{else}} {{prop}}{{/if}}
-                    {{/compare}}
-                    {{/compare}}
-                {{/if}}
-            {{/each}}
-        </div>
+    </div>
+    <div class="flex2">
+        {{system.damage.value}} {{localize system.damageType}} 
+    </div>
+    <div class="flex1">
+        {{localize "fantasycraft.threat"}} {{system.threat}} 
+    </div>
+    <div class="flex6">
+        {{localize "fantasycraft.qualities"}}: 
+        {{#each system.naturalUpgrades as |prop id|}}
+            {{#if prop}}
+            {{#compare prop "" operator="!="}}
+            {{#compare prop "0" operator="!="}}
+                {{id}}{{#if (isBool prop)}}{{else}} {{prop}}{{/if}}
+                {{/compare}}
+                {{/compare}}
+            {{/if}}
+        {{/each}}
     </div>
     <div class="flex1">
         <a class="editItem">

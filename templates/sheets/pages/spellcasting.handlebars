@@ -230,14 +230,15 @@
         </div>
         <table class="item-table">
             <tr>
-                <th> <a class="sortTable" value="0">{{localize "fantasycraft.spellName"}}</a></th>
-                <th> <a class="sortTable" value="1">{{localize "fantasycraft.spellLevel"}}</a></th>
-                <th> <a class="sortTable" value="2">{{localize "fantasycraft.castingTime"}}</a></th>
-                <th> <a class="sortTable" value="3">{{localize "fantasycraft.distance"}}</a></th>
-                <th> <a class="sortTable" value="4">{{localize "fantasycraft.area"}}</a></th>
-                <th> <a class="sortTable" value="5">{{localize "fantasycraft.spellDuration"}}</a></th>
-                <th> <a class="sortTable" value="6">{{localize "fantasycraft.savingThrow"}}</a></th>
-                <th> <a class="sortTable" value="7">{{localize "fantasycraft.prepCost"}}</a></th>
+                <th> <a class="sortTable" value="0">{{localize "fantasycraft.pin"}}</a></th>
+                <th> <a class="sortTable" value="1">{{localize "fantasycraft.spellName"}}</a></th>
+                <th> <a class="sortTable" value="2">{{localize "fantasycraft.spellLevel"}}</a></th>
+                <th> <a class="sortTable" value="3">{{localize "fantasycraft.castingTime"}}</a></th>
+                <th> <a class="sortTable" value="4">{{localize "fantasycraft.distance"}}</a></th>
+                <th> <a class="sortTable" value="5">{{localize "fantasycraft.area"}}</a></th>
+                <th> <a class="sortTable" value="6">{{localize "fantasycraft.spellDuration"}}</a></th>
+                <th> <a class="sortTable" value="7">{{localize "fantasycraft.savingThrow"}}</a></th>
+                <th> <a class="sortTable" value="8">{{localize "fantasycraft.prepCost"}}</a></th>
             </tr>
             {{#each spells as |spell id|}}
                 {{> "systems/fantasycraft/templates/partials/spell-table.hbs" spell id=spell._id}}

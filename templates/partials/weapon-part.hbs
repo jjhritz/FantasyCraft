@@ -1,16 +1,17 @@
 <div class="item ownedItem flexrow" data-item-id="{{id}}" data-item-name="{{name}}">
-    <div class="flex6">
+    <div class="flex2">
         <a class="roll-weapon" data-roll-info='{{id}}'>
             <i class="fas fa-dice-d20"></i>
-            <span>{{name}} </span>
+            <span><b>{{name}}</b> </span>
         </a>
-        {{#if inSheet}} 
-            {{system.damage}} {{localize "fantasycraft.threat"}} {{system.threatRange}} 
-            {{else}} 
-            <br> 
-        {{/if}} 
-
-        <br>
+    </div>
+    <div class="flex2">
+        {{system.damage}} {{system.damageType}}
+    </div>
+    <div class="flex1">
+        {{localize "fantasycraft.threat"}} {{system.threatRange}}  
+    </div>
+    <div class="flex6">
         {{localize "fantasycraft.qualities"}}: 
         {{#each system.weaponProperties as |prop id|}}
             {{#if prop}}
