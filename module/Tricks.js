@@ -9,7 +9,10 @@ export function determinePreRollTrickEffect(trick, actor, rollInfo, rollFormula,
     if (!trick) return rollFormula;
 
     //if attack trick
-    if (checkTargets(trick, target)) return "Error";
+    if (checkTargets(trick, target)) 
+    {
+        return "Error";
+    }
 
     if (trick.system.uses.timeFrame != "unlimited")
     {

@@ -26,7 +26,9 @@
                 {{/each}}
                 {{#each weapons as |weapon id|}}
                 {{#compare weapon.system.weaponCategory "arrowsAndBolts" operator="!="}}
-                    {{> "systems/fantasycraft/templates/partials/weapon-part.hbs" weapon id=_id name=name inSheet=true}}
+                    {{#compare weapon.system.weaponCategory "powder" operator="!="}}
+                    {{> "systems/fantasycraft/templates/partials/weapon-part.hbs" weapon id=_id name=name weapons=../weapons inSheet=true}}
+                    {{/compare}}
                 {{/compare}}
                 {{/each}}
             </section>

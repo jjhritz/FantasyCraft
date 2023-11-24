@@ -276,6 +276,12 @@
                 {{/compare}}
             </div>
             {{/compare}}
+            {{#compare item.system.trickType.keyword "spellcasting" operator="=="}}
+            <div class="form-group item-customization-section">
+                <label>{{localize "fantasycraft.spellPointCost"}}</label>
+                <input type="number" name="system.effect.secondaryCheck" value="{{item.system.effect.secondaryCheck}}" >
+            </div>
+            {{/compare}}
             <div class="form-group item-customization-section">
                 <label>{{localize "fantasycraft.uses"}}</label>
                 {{!per refresh Number, based on number of feats)}}

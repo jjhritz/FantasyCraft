@@ -13,6 +13,7 @@ export function addChatListeners(html)
     html.on('click', 'button.minimumDamage', minimumDamage);
     html.on('click', 'button.linkOption', linkOption);
     html.on('click', 'button.spellDamage', spellDamage);
+    html.on('click', 'button.spellcastingRoll', spellCasting);
 }
 
 export function spellCard(spell, actor)
@@ -101,7 +102,7 @@ export function onSavingThrow(diceRoll, actor, savingThrow, dc=0)
     setRenderTemplate(diceRoll, 'systems/fantasycraft/templates/chat/skill-chat.hbs', rollInfo, chatData);
 }
 
-export function onSkillCheck(diceRoll, actor, skillName, flawless)
+export function onSkillCheck(diceRoll, actor, skillName, flawless, trick = null)
 {
     let skill = actor.type == "character" ? actor.system.skills[skillName] : actor.system.signatureSkills[skillName];
     
@@ -111,9 +112,12 @@ export function onSkillCheck(diceRoll, actor, skillName, flawless)
     if (skillName == "spellcasting") 
     {
         skill = actor.type == "character" ? actor.system.arcane[skillName] : actor.system[skillName];
-        if (actor.type == "npc") skill.threat = skill.threat -= 2;
-        skill.error = (game.settings.get('fantasycraft', 'wildMagic')) ? 3 : 1;
-        let mPouch = actor.items.filter(item => item.name == game.i18n.localize("fantasycraft.magesPouch"))
+        if (game.settings.get('fantasycraft', 'wildMagic'))
+        {
+            if (actor.type == "npc") skill.threat = skill.threat -= 2;
+            skill.error = 3;
+        }
+        let mPouch = actor.items.filter(item => item.name == game.i18n.localize("fantasycraft.magesPouch"));
         mPouch = mPouch[0];
         if (!!mPouch && mPouch.system.itemUpgrades.masterwork)
             skill.error --;
@@ -136,6 +140,7 @@ export function onSkillCheck(diceRoll, actor, skillName, flawless)
     d['diceRoll'] = diceRoll.terms[0].results[0].result;
     d['threat'] = (diceRoll.dice[0].results[0].result >= skill.threat) ? true : false;
     d['error'] = (diceRoll.dice[0].results[0].result <= skill.error || diceRoll.total < 0) ? true : false;
+    if (trick) d['trick'] = trick;
 
     const chatData = getChatBaseData(actor);
 
@@ -459,7 +464,6 @@ async function onDamage(event)
     let magicItems = Utils.getMagicItems(token);
     let magicBonus = 0;
 
-    console.log("test")
     if (magicItems.length > 0)
     {
         for (let mi of magicItems)
@@ -507,10 +511,11 @@ async function onDamage(event)
     }
 }
 
-async function preRollDialog(attackName, template, formula)
+async function preRollDialog(attackName, template, formula, tricks=null)
 {
     const content = await renderTemplate(template, {
-    formula: formula
+        formula: formula,
+        tricks: tricks
     });
 
     return new Promise(resolve => {
@@ -538,6 +543,7 @@ function onDialogSubmit(html)
         dialogOptions.morale = form.moraleValue.value
 
     dialogOptions.sneakAttack = form.sneakAttack;
+    dialogOptions.trick = form.trick;
 
     return dialogOptions;
 }
@@ -603,6 +609,88 @@ export function linkOption(event)
     let template = 'systems/fantasycraft/templates/chat/spellCard-chat.hbs';
 
     setDicelessRenderTemplate(template, spell, chatdata);
+}
+
+async function spellCasting(event)
+{
+    event.preventDefault()
+    let element = event.currentTarget.parentElement;
+    let parentElement = element.parentElement;
+    let act = game.actors.get(parentElement.dataset.actorId)
+    let actor = act.system;
+    let skillName ="spellcasting"
+    let spell = act.items.get(parentElement.dataset.optionId)
+    let tricks = act.items.filter(item => (item.type == "trick" && item.system.trickType.keyword == "spellcasting"));
+    let skill = act.type == "character" ? actor.arcane[skillName] : actor[skillName];
+    let trick = null;
+    let skillModifiers = []
+
+    let magicItems = Utils.getMagicItems(act);
+    let magicBonus = 0;
+
+    //ranks, ability mod, misc, threat range
+    if (act.type == "character")
+    {
+        if (!skill.ranks) skill.ranks = 0;
+        let arcaneMight = 0;
+        if (spell.system.arcaneMight)
+            arcaneMight = 2;
+        skillModifiers =
+        [
+            actor.abilityScores[skill.ability].mod,
+            skill.ranks,
+            skill.misc,
+            arcaneMight
+        ]
+    }
+    else if (act.type == "npc")
+    {
+        skillModifiers = 
+        [
+            actor.abilityScores.intelligence.mod,
+            actor[skillName].value,
+            arcaneMight
+        ]
+    }
+
+    if (magicItems.length > 0)
+    {
+        for (let item of magicItems)
+        {
+            let charm = Utils.getSpecificCharm(item, "skillRanks")
+            if (charm != null && charm[1].target == skillName)
+            magicBonus = (Utils.getCharmBonus(item, charm[1].greater) > magicBonus) ? Utils.getCharmBonus(item, charm[1].greater) : magicBonus;
+        }
+    }
+
+    if (magicBonus > 0)
+        skillModifiers.push(magicBonus);
+
+    let rollFormula = ["1d20"];
+    for (let bonus of skillModifiers)
+    {
+        rollFormula += Utils.returnPlusOrMinusString(bonus);
+    }
+
+    const rollInfo = await preRollDialog("spellcasting", "systems/fantasycraft/templates/chat/attackRoll-Dialog.hbs", rollFormula, tricks);
+    if (rollInfo == null) return;
+
+    //check for spellcasting trick
+    if (rollInfo.trick.value != "")
+        trick = act.items.get(rollInfo.trick.value);
+
+    //roll the dice
+    const skillRoll = new Roll(rollFormula)
+    skillRoll.evaluate({async: false})
+
+    onSkillCheck(skillRoll, act, skillName, null, trick);
+
+    //reduce spellpoints by the spell level, or spell level modified by the trick
+    let spellPointCost = parseInt(spell.system.level);
+    if (trick != null)
+        spellPointCost += trick.system.effect.secondaryCheck;
+
+    await act.update({"system.arcane.spellPoints": actor.arcane.spellPoints - spellPointCost});
 }
 
 function spellDamage(event)

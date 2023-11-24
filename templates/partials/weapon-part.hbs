@@ -1,39 +1,64 @@
-<div class="item ownedItem flexrow" data-item-id="{{id}}" data-item-name="{{name}}">
-    <div class="flex2">
-        <a class="roll-weapon" data-roll-info='{{id}}'>
-            <i class="fas fa-dice-d20"></i>
-            <span><b>{{name}}</b> </span>
-        </a>
+<div class="item ownedItem" data-item-id="{{id}}" data-item-name="{{name}}">
+    <div class="flexrow">
+        <div class="flex2">
+            <a class="roll-weapon" data-roll-info='{{id}}'>
+                <i class="fas fa-dice-d20"></i>
+                <span><b>{{name}}</b> </span>
+            </a>
+        </div>
+        <div class="flex2">
+            {{system.damage}} {{system.damageType}}
+        </div>
+        <div class="flex1">
+            {{localize "fantasycraft.threat"}} {{system.threatRange}}  
+        </div>
+        <div class="flex6">
+            {{localize "fantasycraft.qualities"}}: 
+            {{#each system.weaponProperties as |prop id|}}
+                {{#if prop}}
+                    {{#compare prop "none" operator="!="}}
+                    {{id}}{{#if (isBool prop)}}{{else}} {{prop}}{{/if}}
+                    {{/compare}}
+                {{/if}}
+            {{/each}}
+        </div>
+        <div class="flex1">
+            <a class="readyWeapon">
+                {{#if system.readied}}
+                <i class="fa fa-swords"></i>
+                {{else}}
+                <i class="fa-light fa-swords"></i>
+                {{/if}}
+            </a>
+            <a class="editItem">
+                <i class="fas fa-edit"></i>
+            </a>
+            <a class="deleteItem">
+                <i class="fas fa-trash"></i>
+            </a>
+        </div>
     </div>
-    <div class="flex2">
-        {{system.damage}} {{system.damageType}}
+    {{#compare system.weaponCategory "bow" operator="=="}}
+    <div style="margin-left: 40px">
+        {{#each weapons as |weapon id|}}
+            {{#compare weapon.system.weaponCategory "arrowsAndBolts" operator="=="}}
+                - {{weapon.name}}: {{weapon.system.quantity}}
+            {{/compare}}
+        {{/each}} 
     </div>
-    <div class="flex1">
-        {{localize "fantasycraft.threat"}} {{system.threatRange}}  
+    <div>
+
     </div>
-    <div class="flex6">
-        {{localize "fantasycraft.qualities"}}: 
-        {{#each system.weaponProperties as |prop id|}}
-            {{#if prop}}
-            {{#compare prop "none" operator="!="}}
-                {{id}}{{#if (isBool prop)}}{{else}} {{prop}}{{/if}}
+    {{/compare}}
+    {{#compare system.weaponProficiency "blackPowder" operator="=="}}
+    <div style="margin-left: 40px">
+        <span> - {{localize "fantasycraft.powderAndShot"}}: 
+            {{#each weapons as |weapon id|}}
+                {{#compare weapon.system.weaponCategory "powder" operator="=="}}
+                    {{weapon.system.quantity}}
                 {{/compare}}
-            {{/if}}
-        {{/each}}
+            {{/each}} 
+        </span>
     </div>
-    <div class="flex1">
-        <a class="readyWeapon">
-            {{#if system.readied}}
-            <i class="fa fa-swords"></i>
-            {{else}}
-            <i class="fa-light fa-swords"></i>
-            {{/if}}
-        </a>
-        <a class="editItem">
-            <i class="fas fa-edit"></i>
-        </a>
-        <a class="deleteItem">
-            <i class="fas fa-trash"></i>
-        </a>
-    </div>
+    {{/compare}}
 </div>

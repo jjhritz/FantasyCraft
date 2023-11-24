@@ -7,27 +7,27 @@
                 <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'fantasycraft.ItemName' }}"/>
             </h1>
             
-            <ul class="attributes flexrow">
+            <ul class="attributes flexrow" style="border-top: 1px solid white; margin-bottom: -15px">
                 <li class="attribute">
-                    <h4 class="box-title">{{localize "fantasycraft.spellSchool"}}</h4>
+                    <h4 class="box-title" style="color: white;">{{localize "fantasycraft.spellSchool"}}</h4>
                     <div class="attribute-value">
-                        <label>{{item.system.school}}</label>
+                        <label style="text-transform: capitalize">{{item.system.school}}</label>
                     </div>
                 </li>
                 <li class="flex2 attribute">
-                    <h4 class="box-title">{{localize "fantasycraft.spellDiscipline"}}</h4>
+                    <h4 class="box-title" style="color: white;">{{localize "fantasycraft.spellDiscipline"}}</h4>
                     <div class="attribute-value">
-                        <label>{{item.system.discipline}} {{#if item.system.secondaryTerms.value}} ({{item.system.secondaryTerms.value}}) {{/if}}</label>    
+                        <label style="text-transform: capitalize">{{item.system.discipline}} {{#if item.system.secondaryTerms.value}} ({{item.system.secondaryTerms.value}}) {{/if}}</label>    
                     </div>
                 </li>
                 <li class="attribute">
-                    <h4 class="box-title">{{ localize "fantasycraft.spellLevel" }} </h4>
+                    <h4 class="box-title" style="color: white;">{{ localize "fantasycraft.spellLevel" }} </h4>
                     <div class="attribute-value">
                         <label>{{localize "fantasycraft.level"}} {{item.system.level}}</label>
                     </div>
                 </li>
-                <li class="flex2 attribute">
-                    <h4 class="box-title">{{ localize 'fantasycraft.source' }} </h4>
+                <li class="flex2 attribute" style="border-right: 1px solid white">
+                    <h4 class="box-title" style="color: white;">{{ localize 'fantasycraft.source' }} </h4>
                     <div class="attribute-value">
                         <input type="text" name="system.source" value="{{item.system.source}}" placeholder="{{ localize 'fantasycraft.source' }}"/>
                     </div>
@@ -49,6 +49,9 @@
             <div>
                 <strong><label>{{ localize "fantasycraft.castingTime"}}: </label></strong>
                 <span> {{item.system.castingTime.value}} {{localize item.system.castingTime.increment}}</span>
+                <div style="float: right">
+                    <label>{{ localize "fantasycraft.arcaneMight"}} <input type="checkbox" name="system.arcaneMight" {{checked item.system.arcaneMight}}></label>
+                </div>
             </div>
             <div>
                 <strong><label>{{ localize "fantasycraft.distance"}}: </label></strong>

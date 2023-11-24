@@ -51,8 +51,7 @@ export default class ItemFC extends Item {
       this.charms = [data.charms.charm1, data.charms.charm2,
         data.charms.charm3, data.charms.charm4]
       
-      console.log("test");
-        this._calculateMagicItemReputationCost(itemData)
+      this._calculateMagicItemReputationCost(itemData)
 
 
       for (let i = itemData.system.charms.charmNumber+1; i <= 4; i++)

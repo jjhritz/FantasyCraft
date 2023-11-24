@@ -1363,6 +1363,7 @@
 				"secondaryDamage": "none",
 				"secondaryDamagetype": "stress"
 			},
+			"arcaneMight": false,
 			"pinned": false
 		},
 		"specialty":

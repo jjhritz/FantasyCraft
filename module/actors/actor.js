@@ -398,6 +398,7 @@ export default class ActorFC extends Actor {
       let castingLevel = actorData.system.castingLevel;
       careerLevel = 0;
       castingLevel = 0;
+      let moreThanLuck = actorData.items.find(item => item.name == game.i18n.localize("fantasycraft.moreThanLuck"))
 
       let classList = actorData.items.filter(item => item.type == "class");
 
@@ -410,6 +411,8 @@ export default class ActorFC extends Actor {
       }
 
       actorData.system.startingActionDice = 3 + Math.floor((careerLevel-1)/5);
+      if (moreThanLuck != null)
+        actorData.system.startingActionDice += 1;
       actorData.system.actionDiceSize = 4 + (Math.floor((careerLevel-1)/5)*2);
       actorData.system.careerLevel.value = careerLevel;
       actorData.system.castingLevel = castingLevel;
@@ -1017,6 +1020,8 @@ export default class ActorFC extends Actor {
     _carryingCapacity(actorData)
     {
       let str = actorData.abilityScores.strength.value;
+      let improvedStability = this.items.find(item => item.name == game.i18n.localize("fantasycraft.improvedStability"));
+      
       if (CONFIG.fantasycraft.sizeNumber[actorData.size] > 0)
         str += CONFIG.fantasycraft.sizeNumber[actorData.size] * 5;
       if (CONFIG.fantasycraft.sizeNumber[actorData.size] < 0)
@@ -1024,6 +1029,10 @@ export default class ActorFC extends Actor {
 
       if (str < 1) str = 1;
       
+      let backpack = this.items.find(item => item.name == game.i18n.localize("fantasycraft.backpack"));
+      if (backpack != null)
+        str += 2;
+
       if (str <= 45)
       {
         actorData.carryingCapacity.light = CONFIG.fantasycraft.carryingCapacity.light[str-1];

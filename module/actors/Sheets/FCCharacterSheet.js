@@ -46,8 +46,8 @@ export default class FCCharacterSheet extends ActorSheetFC {
 		data.specialty = data.actor.items.filter(function(item) {return item.type == "specialty"});
 		data.specialties = data.actor.items.filter(function(item) {return (item.type == "feature" && item.system.featureType == "origin" && item.system.source != data.ancestries[0]?.name && item.system.source != data.ancestries[1]?.name)});
 		data.spells = data.actor.items.filter(function(item) {return item.type == "spell"});
-		data.weapons = data.actor.items.filter(function(item) {return item.type == "weapon"});
 		data.attacks = data.actor.items.filter(function(item) {return item.type == "attack"});
+		data.weapons = data.actor.items.filter(function(item) {return item.type == "weapon"});
 		data.effects = data.actor.getEmbeddedCollection("ActiveEffect").contents;
 		data.tricks = data.actor.items.filter(item => item.type == "trick" && (item.system.trickType.keyword != "pathSpellCasting" && item.system.trickType.keyword != "spellcasting"));
 		data.spellTricks = data.actor.items.filter(item => item.type == "trick" && (item.system.trickType.keyword == "pathSpellCasting" || item.system.trickType.keyword == "spellcasting"));
@@ -57,6 +57,7 @@ export default class FCCharacterSheet extends ActorSheetFC {
 		data.hasParry = data.actor.items.filter(item => item.name == game.i18n.localize("fantasycraft.parry"));
 		data.hasBlock = data.actor.items.filter(item => item.name == game.i18n.localize("fantasycraft.shieldBlock"));
 		
+		data.weapons = this._ammoSort(data.weapons);
 		let feats = this._getFeatNumber(data);
 		for (let feat of Object.keys(feats))
 		{
@@ -87,6 +88,26 @@ export default class FCCharacterSheet extends ActorSheetFC {
 		//html.find('.school-filter').click(this._filterSpells.bind(this));
 
 		super.activateListeners(html);
+	}
+
+	_ammoSort(weapons)
+	{
+		let sortedArr = weapons.reduce((acc, element) => {
+			if (element.system.weaponCategory == "arrowsAndBolts") {
+			  return [element, ...acc];
+			}
+			return [...acc, element];
+		  }, []);
+
+		  sortedArr = weapons.reduce((acc, element) => {
+			if (element.name == "Standard ammo") {
+			  return [element, ...acc];
+			}
+			return [...acc, element];
+		  }, []);
+
+		  
+		return sortedArr;
 	}
 
 	_getFeatNumber(data)
