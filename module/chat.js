@@ -291,6 +291,7 @@ export function onNaturalAttack(attackRoll, attacker, item, trick, trick2, super
     const d = attackInfo.data
     d['areaSize'] = item.system.area.value * CONFIG.fantasycraft.areaRangeMultiplier[item.system.area.shape]
     d['areaShape'] = item.system.area.shape
+    d['properties'] = CONFIG.fantasycraft.attackPropertiesList
 
     setUpTricks(attackInfo, this, trick)
     setUpTricks(attackInfo, this, trick2)
@@ -648,8 +649,7 @@ async function spellCasting(event)
         skillModifiers = 
         [
             actor.abilityScores.intelligence.mod,
-            actor[skillName].value,
-            arcaneMight
+            actor[skillName].value
         ]
     }
 
@@ -685,12 +685,15 @@ async function spellCasting(event)
 
     onSkillCheck(skillRoll, act, skillName, null, trick);
 
-    //reduce spellpoints by the spell level, or spell level modified by the trick
-    let spellPointCost = parseInt(spell.system.level);
-    if (trick != null)
-        spellPointCost += trick.system.effect.secondaryCheck;
+    if (act.tpe =="character")
+    {
+        //reduce spellpoints by the spell level, or spell level modified by the trick
+        let spellPointCost = parseInt(spell.system.level);
+        if (trick != null)
+            spellPointCost += trick.system.effect.secondaryCheck;
 
-    await act.update({"system.arcane.spellPoints": actor.arcane.spellPoints - spellPointCost});
+        await act.update({"system.arcane.spellPoints": actor.arcane.spellPoints - spellPointCost});
+    }
 }
 
 function spellDamage(event)
@@ -745,7 +748,7 @@ function applyDamage(event)
      
     let targets = Utils.getTargets();
 
-    if (event.currentTarget.innerText == game.i18n.localize("fantasycraft.applyDamage"))
+    if (event.currentTarget.innerText == game.i18n.localize("fantasycraft.normal"))
         targets.forEach(token => token.actor.applyDamage(parseInt(element.dataset.damage), {damageType: element.dataset.type, ap: ap, trick1: trick1, trick2: trick2}));
 
     //Crit
@@ -753,7 +756,7 @@ function applyDamage(event)
         targets.forEach(token => token.actor.applyDamage(parseInt(element.dataset.damage), {damageType: element.dataset.type, crit: true, ap: ap, trick1: trick1, trick2: trick2}));
 
     //halfDamage
-    if (event.currentTarget.innerText == game.i18n.localize("fantasycraft.halfDamage"))
+    if (event.currentTarget.innerText == game.i18n.localize("fantasycraft.half"))
         targets.forEach(token => token.actor.applyDamage(Math.floor(parseInt(element.dataset.damage)/2), {damageType: element.dataset.type, ap: ap, trick1: trick1, trick2: trick2}));
 
 }

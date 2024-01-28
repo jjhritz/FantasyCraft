@@ -2,10 +2,9 @@
 
     <header class="card-header">
       <div class="attackbox">
-        <div class="boxline">
-          <div><b>{{localize "fantasycraft.damage"}}:</b></div>
-          <div class="headertext">{{item.name}}</div>
-        </div>
+        <h1 class="boxline chat-window-header" style="margin: 0px">
+          <div>{{localize "fantasycraft.damage"}} - {{item.name}}</div>
+        </h1>
     </header>
 
     <div class="dice-roll">
@@ -34,15 +33,12 @@
             </div>
         </div>
     </div>
-    <div class="card-buttons" data-ap="{{data.ap}}" data-damage="{{data.roll}}" data-type="{{data.damageType}}">
-        <button class="apply">{{localize "fantasycraft.applyDamage"}} </button>
-    </div>
-    
-    <div class="card-buttons" data-ap="{{data.ap}}" data-damage="{{data.roll}}" data-type="{{data.damageType}}">
+    <h1 style="text-align: center; border-top: 2px solid var(--color-underline-header); margin: 3px">{{localize "fantasycraft.applyDamage"}}</h1>
+    <div class="card-buttons flexrow" data-ap="{{data.ap}}" data-damage="{{data.roll}}" data-type="{{data.damageType}}">
+        <button class="apply">{{localize "fantasycraft.half"}} </button>
+
+        <button class="apply">{{localize "fantasycraft.normal"}} </button>
+
         <button class="apply">{{localize "fantasycraft.criticalHit"}} </button>
-    </div>
-    
-    <div class="card-buttons" data-ap="{{data.ap}}" data-damage="{{data.roll}}" data-type="{{data.damageType}}">
-        <button class="apply">{{localize "fantasycraft.halfDamage"}} </button>
     </div>
 </div>

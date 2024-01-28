@@ -930,6 +930,43 @@ fantasycraft.weaponProperties =
 	unreliable: "fantasycraft.unreliable"
 }
 
+
+fantasycraft.attackPropertiesList = 
+{
+	armourPiercing: "fantasycraft.ap",
+	ap: "fantasycraft.ap",
+	blast: "fantasycraft.blast",
+	guard: "fantasycraft.guard",
+	keen: "fantasycraft.keen",
+	load: "fantasycraft.load",
+	reach: "fantasycraft.reach",
+	aligned: "fantasycraft.aligned",
+	bleed: "fantasycraft.bleed",
+	bludgeon: "fantasycraft.bludgeon",
+	cavalry: "fantasycraft.cavalry",
+	cord: "fantasycraft.cord",
+	double: "fantasycraft.double",
+	excruciating: "fantasycraft.excruciating",
+	finesse: "fantasycraft.finesse", 
+	grip: "fantasycraft.grip",
+	heavy: "fantasycraft.heavy",
+	hook: "fantasycraft.hook",
+	hurl: "fantasycraft.hurl",
+	inaccurate: "fantasycraft.inaccurate",
+	indirect: "fantasycraft.indirect",
+	lightweight: "fantasycraft.lightweight",
+	lure: "fantasycraft.lure",
+	massive: "fantasycraft.massive",
+	poisonous: "fantasycraft.poisonous",
+	pummeling: "fantasycraft.pummeling",
+	return: "fantasycraft.return",
+	spread: "fantasycraft.spread",
+	spike: "fantasycraft.spike",
+	stationary: "fantasycraft.stationary",
+	trip: "fantasycraft.trip",
+	unreliable: "fantasycraft.unreliable"
+}
+
 fantasycraft.trapTarget = 
 {
 	area: "fantasycraft.area",

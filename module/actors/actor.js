@@ -2327,22 +2327,29 @@ export default class ActorFC extends Actor {
         if (!options.crit)
           this.npcDamageSave(damage, lethal);
         else
-          this.npcDamageSave(damage, lethal, autoKill=true);
+          this.npcDamageSave(damage, lethal, true);
       }
     }
 
     async npcDamageSave(damage, lethal, autoKill=false)
     {
-      //add the damage to the npcs "total damage"
-      let totalDamage = this.system.damageTaken;
+      let saveRoll;
+      let saveDC;
+      let totalDamage;
 
-      totalDamage += damage;
-      const saveDC = Math.floor((totalDamage/2) + 10);
+      if (!autoKill)
+      {
+        //add the damage to the npcs "total damage"
+        totalDamage = this.system.damageTaken;
 
-      //roll 1d20 + con + health grade value, if that value is less than 10 + (total damage/2)
-      const saveRoll = this.rollHealthSave(saveDC);
+        totalDamage += damage;
+        saveDC = Math.floor((totalDamage/2) + 10);
 
-      if (saveRoll < saveDC || autoKill)
+        //roll 1d20 + con + health grade value, if that value is less than 10 + (total damage/2)
+        saveRoll = this.rollHealthSave(saveDC);
+      }
+
+      if (autoKill || saveRoll < saveDC)
       {
         this.system.failedSaves ++;
         //check to see if the NPC has "Tough"

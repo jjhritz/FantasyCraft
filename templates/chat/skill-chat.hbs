@@ -2,10 +2,19 @@
 
     <header class="card-header">
       <div class="attackbox">
+        {{#if data.dc}}
+        <div class="flexrow" style="align-content: center; justify-content: space-between;">
+        {{else}}
         <div class="boxline">
-            <div><b>{{localize "fantasycraft.action"}}:</b></div>
-            <div class="headertext"><b>{{rollDescription}}</b></div>
+        {{/if}}
+            <div class="headertext">
+                <b>{{localize "fantasycraft.action"}}: {{rollDescription}}</b>
+            </div>
+            {{#if data.dc}}
+                <div style="text-align: end"><b>{{localize "fantasycraft.dc"}}: </b>{{data.dc}}</div>
+            {{/if}}
         </div>
+        
     </header>
 
     <div class="dice-roll">
@@ -38,10 +47,6 @@
             <div class="card-content">
                 <div><b>{{localize "fantasycraft.trick"}}: </b>{{data.trick.name}}</div>
             </div>
-            {{/if}}
-
-            {{#if data.dc}}
-                <div><b>{{localize "fantasycraft.dc"}}: </b>{{data.dc}}</div>
             {{/if}}
 
              {{#if data.hasDamage}}       

@@ -77,7 +77,7 @@
             <i class="flex1">{{localize "fantasycraft.skills"}}:</i>
             {{#each actor.system.signatureSkills as |skill name|}}
             <div class="flex3" data-skill={{name}}>
-                <button class="roll-skill smallButton" data-roll-info={{name}}>{{localize skill.skillName}}</button> {{skill.total}} = {{skill.skillBonus}} + {{skill.attributeBonus}}
+                <button class="roll-skill smallButton" data-roll-info={{name}}>{{localize (lookup ../config.skills skill.skillName)}}</button> {{skill.total}} = {{skill.skillBonus}} + {{skill.attributeBonus}}
             </div>
             {{/each}} 
         </div>

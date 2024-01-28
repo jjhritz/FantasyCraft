@@ -2,10 +2,9 @@
 
     <header class="card-header">
       <div class="attackbox">
-        <div class="boxline">
-          <div><b>{{localize "fantasycraft.attack"}}:</b></div>
-          <div class="headertext">{{item.name}}</div>
-        </div>
+        <h1 class="boxline chat-window-header" style="margin: 0px">
+          <span>{{localize "fantasycraft.attack"}} - {{item.name}}</span>
+        </h1>
     </header>
 
     <div class="dice-roll">
@@ -46,8 +45,8 @@
     {{/if}}
 
     <div class="card-content">
-        <div><b>{{localize "fantasycraft.weaponProperties"}}: </b></div>
         <div>
+            <b>{{localize "fantasycraft.weaponProperties"}}: </b>
             {{#each data.qualities as |quality id|}}
                 {{#if quality}}
                     {{#compare quality "none" operator="!="}}

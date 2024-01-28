@@ -429,13 +429,12 @@
   /* ----------------------------------------- */
 }
 .sheet .window-content {
-  overflow-y: hidden;
   padding: 0px;
   font-size: 13px;
   color: #111;
 }
 .sheet .window-content form {
-  overflow: hidden;
+  overflow: auto;
 }
 .sheet .window-content .tab {
   height: 100%;
@@ -722,6 +721,11 @@ h4.ability-name {
   font-weight: 700;
   font-size: 17px;
   text-align: center;
+}
+h1.chat-window-header {
+  justify-content: center;
+  border-bottom: 0px;
+  font-size: x-large;
 }
 input.narrowField {
   width: 25px;

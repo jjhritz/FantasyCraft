@@ -3,10 +3,9 @@
 
     <header class="card-header">
       <div class="attackbox">
-        <div class="boxline">
-          <div><b>{{localize "fantasycraft.attack"}}:</b></div>
-          <div class="headertext">{{item.name}}</div>
-        </div>
+        <h1 class="boxline chat-window-header" style="margin: 0px">
+          <span>{{localize "fantasycraft.attack"}} - {{item.name}}</span>
+        </h1>
     </header>
 
         <div class="dice-roll">
@@ -51,16 +50,18 @@
         <div><b>{{localize "fantasycraft.area"}}: </b></div>
         <div>{{data.areaSize}} {{localize "fantasycraft.ft"}} {{data.areaShape}}</div>
         {{/if}}
-        <div><b>{{localize "fantasycraft.weaponProperties"}}: </b></div>
         <div>
+            <b>{{localize "fantasycraft.weaponProperties"}}: </b>
             {{#compare data.attackType "extraSave" operator="=="}}
                 {{data.saveType}}
             {{/compare}}
             {{#each data.qualities as |quality id|}}
                 {{#if quality}}
+                {{#compare quality "0" operator="!="}}
                 {{#compare quality "none" operator="!="}}
-                    {{id}}{{#if (isBool quality)}}{{else}} {{quality}}{{/if}}
-                    {{/compare}}
+                    {{localize (lookup ../data.properties id)}}{{#if (isBool quality)}}{{else}} {{quality}}{{/if}}
+                {{/compare}}
+                {{/compare}}
                 {{/if}}
             {{/each}}
         </div>

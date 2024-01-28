@@ -149,11 +149,11 @@ export function multipleDamageRolls(attackRoll, target, trick)
 {
     const condition = trick.system.effect.condition;
 
-    if (condition == "hitBy4" && attackRoll.total >= target.system.defense.value + 4)
+    if (condition == "hitBy4" && attackRoll.total >= target.system.traits.defense.total + 4)
         return 1;
-    if (condition == "hitBy10" && attackRoll.total >= target.system.defense.value + 4 && attackRoll.total < target.system.defense.value + 10)
+    if (condition == "hitBy10" && attackRoll.total >= target.system.traits.defense.total + 4 && attackRoll.total < target.system.traits.defense.total + 10)
         return 1;
-    if (condition == "hitBy10" && attackRoll.total >= target.system.defense.value + 10)
+    if (condition == "hitBy10" && attackRoll.total >= target.system.traits.defense.total + 10)
         return 2;
 
     return 0;

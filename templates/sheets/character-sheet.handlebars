@@ -353,7 +353,7 @@
                                     </section>
                                     <ul class="traits-list flexrow">
                                     {{#each actor.system.focuses.rideFocus.value as |v k|}}
-                                        <li class="tag {{k}} bordered-text">{{v}}</li>
+                                        <li class="tag {{k}} bordered-text">{{localize (lookup ../config.focusRide v)}}</li>
                                     {{/each}}
                                     </ul>
                                 </div>
