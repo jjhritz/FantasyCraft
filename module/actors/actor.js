@@ -844,19 +844,33 @@ export default class ActorFC extends Actor {
     {
       const char = actorData.system;
       let castingFeats = [];
-      
-      //Go through all feats and add any spellcasting feats to the castingFeats array
+      let grantsSpellcastingItems = 0;
+
+      // Get information from every item on the character
+      for(let [l, i] of Object.entries(this.items || {}))
+      {
+          // add any spellcasting feats to the castingFeats array
+          if (i.type === "feat" && i.system.featType == "fantasycraft.spellcasting")
+              castingFeats.push(i);
+
+          if(i.system.grantsSpellcasting === true)
+              grantsSpellcastingItems++;
+      }
+
+/*      //Go through all feats and add any spellcasting feats to the castingFeats array
       for ( let [l, f] of Object.entries(this.itemTypes.feat || {}) ) 
       {
         if (f.system.featType == "fantasycraft.spellcasting")
           castingFeats.push(f);
-      }
+      }*/
       //Casting feats equals the length of the array we just created
       char.castingFeats = castingFeats.length;
 
       //Characters spellsave equals number of spellcasting feats plus Charisa modifier.
       char.spellSave = 10 + char.abilityScores.charisma.mod + char.castingFeats;
 
+      if(grantsSpellcastingItems > 0)
+          char.isSpellcaster = true;
 
       if (char.isArcane)
       {
