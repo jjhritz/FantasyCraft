@@ -74,6 +74,7 @@ export default class ActorFC extends Actor {
       if (data.castingLevel > 0)
         this._prepareCasting(actorData);
 
+      this._calculateDamageReduction(actorData);
       this._compileResistances(actorData);
       this._getTrickUses(actorData);
 
@@ -512,6 +513,25 @@ export default class ActorFC extends Actor {
       return guard
     }
 
+    _calculateDamageReduction(actorData)
+    {
+        let dr = this.system.dr;
+        const armour = this.items.find(item => (item.type == "armour" && item.system.equipped == true))
+        if (armour != null)
+        {
+            console.log(`Found armor with DR ${armour.system.damageReduction}`);
+            dr += armour.system.damageReduction;
+        }
+
+        console.log(`DR is now ${dr}`);
+
+        let magic = this._calculateEssenceBonus("damageReduction");
+        console.log(`Got magic DR ${magic}`);
+        dr += magic;
+        console.log(`DR should be ${dr}`);
+    }
+
+
     _prepareAttack(actorData)
     {
         //total = BAB + ability + misc + magic
@@ -708,7 +728,11 @@ export default class ActorFC extends Actor {
       {
         greaterBonus = 3;
         lesserBonus = 1;
-      } 
+      }
+      else if (type == "damageReduction")
+      {
+          greaterBonus = 2;
+      }
 
       for (let item of magicItems)
       {
@@ -2216,11 +2240,7 @@ export default class ActorFC extends Actor {
       if (this.effects.find(e => e.flags?.core?.statusId === 'unconscious') && options.damageType == "subdual") 
         options.damageType = "lethal";
 
-        let dr = this.system.dr;
-        const armour = this.items.find(item => (item.type == "armour" && item.system.equipped == true))
-      if (armour != null)
-        dr += armour.system.damageReduction;
-
+      let dr = this.system.dr;
       dr = (dr - options.ap < 0) ? 0 : dr - options.ap;
 
 
