@@ -515,7 +515,7 @@ export default class ActorFC extends Actor {
 
     _calculateDamageReduction(actorData)
     {
-        let dr = this.system.dr;
+        let dr = 0;
         const armour = this.items.find(item => (item.type == "armour" && item.system.equipped == true))
         if (armour != null)
         {
