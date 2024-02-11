@@ -70,9 +70,8 @@ export default class ActorFC extends Actor {
       this._prepareSaves(actorData);
       this._calculateWounds(actorData);
       this._linkAttacks(actorData);
-      
-      if (data.castingLevel > 0)
-        this._prepareCasting(actorData);
+
+      this._prepareCasting(actorData);
 
       this._compileResistances(actorData);
       this._getTrickUses(actorData);
@@ -847,14 +846,18 @@ export default class ActorFC extends Actor {
       let grantsSpellcastingItems = 0;
 
       // Get information from every item on the character
-      for(let [l, i] of Object.entries(this.items || {}))
+    let items = actorData.items.filter(function(item) {return true})
+    for (let [key, item] of Object.entries(items))
       {
           // add any spellcasting feats to the castingFeats array
-          if (i.type === "feat" && i.system.featType == "fantasycraft.spellcasting")
-              castingFeats.push(i);
+          if (item.type === "feat" && item.system.featType == "fantasycraft.spellcasting")
+              castingFeats.push(item);
 
-          if(i.system.grantsSpellcasting === true)
+          if(item.system.grantsSpellcasting === true)
+          {
               grantsSpellcastingItems++;
+              console.log(`${grantsSpellcastingItems} spellcasting items`);
+          }
       }
 
 /*      //Go through all feats and add any spellcasting feats to the castingFeats array
@@ -870,7 +873,14 @@ export default class ActorFC extends Actor {
       char.spellSave = 10 + char.abilityScores.charisma.mod + char.castingFeats;
 
       if(grantsSpellcastingItems > 0)
+      {
           char.isSpellcaster = true;
+      }
+      else
+      {
+         char.isSpellcaster = false;
+      }
+    console.log(`char.isSpellcaster ${char.isSpellcaster}`);
 
       if (char.isArcane)
       {
