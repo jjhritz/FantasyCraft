@@ -1161,7 +1161,7 @@ export default class ActorFC extends Actor {
       }
 
       //get resistances from items(armour and magic items)
-      let items = actor.items.filter(function(item) {return item.type == "armour" || item.type == "general" || item.type == "weapon"})
+      let items = actor.items.filter(function(item) {return (item.type == "armour" && item.system.equipped) || item.type == "general" || (item.type == "weapon" && item.system.readied) })
       for (let [key, item] of Object.entries(items))
       {
         if (item.type == "armour")
