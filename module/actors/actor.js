@@ -1690,7 +1690,7 @@ export default class ActorFC extends Actor {
       }
 
         //if a character has heartseeker then there attack bonus is equal to their career level
-      if ((target[0]?.document._actor.system?.type == "special" || target[0]?.document._actor.type == "character") && this.items.find(item => item.type == "feature" && item.name == game.i18n.localize("fantasycraft.heartseeker")))
+      if (( target[0]?.document.actor.type == "character" ||  target[0]?.document.actor.system?.type == "special") && this.items.find(item => item.type == "feature" && item.name == game.i18n.localize("fantasycraft.heartseeker")))
       {
         attackBonus = actor.careerLevel.value;
       }
