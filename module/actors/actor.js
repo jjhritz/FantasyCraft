@@ -532,7 +532,6 @@ export default class ActorFC extends Actor {
         this.system.dr = dr;
     }
 
-
     _prepareAttack(actorData)
     {
         //total = BAB + ability + misc + magic
@@ -732,7 +731,7 @@ export default class ActorFC extends Actor {
       }
       else if (type == "damageReduction")
       {
-          greaterBonus = 2;
+          greaterBonus = 2;   // Only available in Greater form
       }
 
       for (let item of magicItems)
