@@ -891,10 +891,12 @@ export default class ActorFC extends Actor {
 
         // Get information from every item on the character that has a castingLevel
         let items = actorData.items.filter(function(item) {return item.system.castingLevel})
+        // Drop weapons and armor that are not equipped
+        items = items.filter(item => ((item.type != "weapon" && item.type != "armour") || item.system.readied || item.system.equipped) )
         if(items.length > 0)
         {
             // Only set the casting level if we don't already have a class that gives us casting levels
-            if((items.filter(function(item) {return item.system.type === 'class'}).length === 0))
+            if(items.filter(function(item) {return item.system.type === 'class'}).length === 0)
             {
                 char.castingLevel = 1;
             }
