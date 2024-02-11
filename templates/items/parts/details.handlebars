@@ -159,8 +159,9 @@
         {{/if}}
     </div>
     <div class="form-group item-customization-section">
-        <label>{{localize "fantasycraft.grantsSpellcasting"}}</label>
-        <input type="checkbox" name="system.grantsSpellcasting" data-dtype="Boolean" {{checked item.system.grantsSpellcasting}} />
+        {{!-- Item grants casting --}}
+        {{localize "fantasycraft.casting"}}:
+        <input type="checkbox" name="system.castingLevel" {{checked item.system.castingLevel}}/>
     </div>
     {{!-- If the checkbox is checked set a flag based on the name of the feat --}}
     <div class="form-group item-customization-section">

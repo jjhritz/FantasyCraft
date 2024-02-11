@@ -70,8 +70,10 @@ export default class ActorFC extends Actor {
       this._prepareSaves(actorData);
       this._calculateWounds(actorData);
       this._linkAttacks(actorData);
+      this._prepareCastingFromItems(actorData);
 
-      this._prepareCasting(actorData);
+      if (data.castingLevel > 0)
+        this._prepareCasting(actorData);
 
       this._compileResistances(actorData);
       this._getTrickUses(actorData);
@@ -843,44 +845,18 @@ export default class ActorFC extends Actor {
     {
       const char = actorData.system;
       let castingFeats = [];
-      let grantsSpellcastingItems = 0;
 
-      // Get information from every item on the character
-    let items = actorData.items.filter(function(item) {return true})
-    for (let [key, item] of Object.entries(items))
-      {
-          // add any spellcasting feats to the castingFeats array
-          if (item.type === "feat" && item.system.featType == "fantasycraft.spellcasting")
-              castingFeats.push(item);
-
-          if(item.system.grantsSpellcasting === true)
-          {
-              grantsSpellcastingItems++;
-              console.log(`${grantsSpellcastingItems} spellcasting items`);
-          }
-      }
-
-/*      //Go through all feats and add any spellcasting feats to the castingFeats array
+      //Go through all feats and add any spellcasting feats to the castingFeats array
       for ( let [l, f] of Object.entries(this.itemTypes.feat || {}) ) 
       {
         if (f.system.featType == "fantasycraft.spellcasting")
           castingFeats.push(f);
-      }*/
+      }
       //Casting feats equals the length of the array we just created
       char.castingFeats = castingFeats.length;
 
       //Characters spellsave equals number of spellcasting feats plus Charisa modifier.
       char.spellSave = 10 + char.abilityScores.charisma.mod + char.castingFeats;
-
-      if(grantsSpellcastingItems > 0)
-      {
-          char.isSpellcaster = true;
-      }
-      else
-      {
-         char.isSpellcaster = false;
-      }
-    console.log(`char.isSpellcaster ${char.isSpellcaster}`);
 
       if (char.isArcane)
       {
@@ -907,6 +883,26 @@ export default class ActorFC extends Actor {
         char.arcane.spellPointMax = (this.getFlag("fantasycraft", "Spell Power")) ? classSpellPoints + char.startingActionDice + magicBonus : classSpellPoints + magicBonus
 
       }
+    }
+
+    _prepareCastingFromItems(actorData)
+    {
+        const char = actorData.system;
+
+        // Get information from every item on the character that has a castingLevel
+        let items = actorData.items.filter(function(item) {return item.system.castingLevel})
+        if(items.length > 0)
+        {
+            // Only set the casting level if we don't already have a class that gives us casting levels
+            if((items.filter(function(item) {return item.system.type === 'class'}).length === 0))
+            {
+                char.castingLevel = 1;
+            }
+        }
+        else
+        {
+            char.castingLevel = 0;
+        }
     }
 
     _prepareLifeStyle()
