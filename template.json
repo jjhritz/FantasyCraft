@@ -927,7 +927,7 @@
 		},
 		"armour":
 		{
-			"templates": ["object", "description, enchanted"],
+			"templates": ["object", "description", "enchanted"],
 			"armourCoverage": "Partial",
 			"damageReduction": 0,
 			"armourCheckPenalty": 0,
