@@ -519,16 +519,13 @@ export default class ActorFC extends Actor {
         const armour = this.items.find(item => (item.type == "armour" && item.system.equipped == true))
         if (armour != null)
         {
-            console.log(`Found armor with DR ${armour.system.damageReduction}`);
             dr += armour.system.damageReduction;
         }
 
         console.log(`DR is now ${dr}`);
 
         let magic = this._calculateEssenceBonus("damageReduction");
-        console.log(`Got magic DR ${magic}`);
         dr += magic;
-        console.log(`DR should be ${dr}`);
         this.system.dr = dr;
     }
 
