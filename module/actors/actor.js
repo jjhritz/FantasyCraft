@@ -529,6 +529,7 @@ export default class ActorFC extends Actor {
         console.log(`Got magic DR ${magic}`);
         dr += magic;
         console.log(`DR should be ${dr}`);
+        this.system.dr = dr;
     }
 
 
