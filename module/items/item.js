@@ -51,8 +51,9 @@ export default class ItemFC extends Item {
       this.charms = [data.charms.charm1, data.charms.charm2,
         data.charms.charm3, data.charms.charm4]
       
-      this._calculateMagicItemReputationCost(itemData)
+      this._calculateMagicItemReputationCost(itemData);
 
+      this._calculateCharmCastingLevel(itemData);
 
       for (let i = itemData.system.charms.charmNumber+1; i <= 4; i++)
       {
@@ -198,6 +199,18 @@ export default class ItemFC extends Item {
       totalRepCost -= repDiscount;
 
     itemData.system.totalReputation = totalRepCost;
+  }
+
+  _calculateCharmCastingLevel(itemData)
+  {
+    for (let i = 1; i <= itemData.system.charms.charmNumber; i++)
+    {
+      let charmNum = "charm" + i;
+      let charmInfo = itemData.system.charms[charmNum];
+
+      if (charmInfo.ability == "spellEffect")
+        itemData.system.castingLevel = itemData.system.itemLevel;
+    }
   }
 
   _separateSpellTerms(terms) 
