@@ -70,7 +70,8 @@ export default class ActorFC extends Actor {
       this._prepareSaves(actorData);
       this._calculateWounds(actorData);
       this._linkAttacks(actorData);
-      
+      this._prepareCastingFromItems(actorData);
+
       if (data.castingLevel > 0)
         this._prepareCasting(actorData);
 
@@ -844,7 +845,7 @@ export default class ActorFC extends Actor {
     {
       const char = actorData.system;
       let castingFeats = [];
-      
+
       //Go through all feats and add any spellcasting feats to the castingFeats array
       for ( let [l, f] of Object.entries(this.itemTypes.feat || {}) ) 
       {
@@ -856,7 +857,6 @@ export default class ActorFC extends Actor {
 
       //Characters spellsave equals number of spellcasting feats plus Charisa modifier.
       char.spellSave = 10 + char.abilityScores.charisma.mod + char.castingFeats;
-
 
       if (char.isArcane)
       {
@@ -883,6 +883,28 @@ export default class ActorFC extends Actor {
         char.arcane.spellPointMax = (this.getFlag("fantasycraft", "Spell Power")) ? classSpellPoints + char.startingActionDice + magicBonus : classSpellPoints + magicBonus
 
       }
+    }
+
+    _prepareCastingFromItems(actorData)
+    {
+        const char = actorData.system;
+
+        // Get information from every item on the character that has a castingLevel
+        let items = actorData.items.filter(function(item) {return item.system.castingLevel})
+        // Drop weapons and armor that are not equipped
+        items = items.filter(item => ((item.type != "weapon" && item.type != "armour") || item.system.readied || item.system.equipped) )
+        if(items.length > 0)
+        {
+            // Only set the casting level if we don't already have a class that gives us casting levels
+            if(items.filter(function(item) {return item.system.type === 'class'}).length === 0)
+            {
+                char.castingLevel = 1;
+            }
+        }
+        else
+        {
+            char.castingLevel = 0;
+        }
     }
 
     _prepareLifeStyle()
